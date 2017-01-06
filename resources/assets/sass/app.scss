@@ -1,0 +1,106 @@
+// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+$color-primary: #fff;
+
+.register-step{
+    margin-bottom: 20px;
+    .step{
+        display: inline-block;
+        padding: 3px 20px;
+        border: solid #5DC76F;
+        font-size: 20px;
+        margin-left: 14px;
+        
+        position: relative;
+      background: #FFFFFF;
+      border: 2px solid #5DC76F;
+      opacity: 0.4;
+    }
+    .step.active {
+      opacity: 1;
+    }
+    .step:after,
+    .step:before {
+      left: 100%;
+      top: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+    .step:after {
+      border-color: rgba(136, 183, 213, 0);
+      border-left-color: #FFFFFF;
+      border-width: 17px;
+      margin-top: -17px;
+    }
+    .step:before {
+      border-color: rgba(194, 225, 245, 0);
+      border-left-color: #5DC76F;
+      border-width: 20px;
+      margin-top: -20px;
+    }
+}
+
+.parsley-error{
+    border-color: #FB9191;
+    background-color: antiquewhite;
+}
+.parsley-errors-list{
+  color: red;
+  
+}
+ul.parsley-errors-list{
+  margin-bottom: 0;
+}
+
+.form-primary{
+  label{
+    font-weight: initial;
+  }
+}
+.country-group{
+  .group-count{
+    text-decoration: underline;
+    color: gray;
+    cursor: pointer;
+  }
+}
+
+.add-more-country, .remove-choice,
+.add-more-school, .remove-school, 
+.add-more-language, .remove-language,
+.add-more-national, .remove-national,
+.add-more-destination, .remove-destination,
+.add-more-major, .remove-major,
+.remove-schoolarship{
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.form-horizontal.label-primary label.control-label{
+  color: #337ab7;
+}
+
+.modal-footer{
+  button{
+    display: inline-block;
+    .btn-default{
+      color: #333;
+      background-color: #fff;
+      border-color: #ccc;
+    }
+  }
+}
+
+table.mail{
+  tr[data-status='0']{
+    background-color: #ffa7ba;
+    cursor: pointer;
+  }
+  td .message{
+    max-width: 400px;
+  }
+}
+

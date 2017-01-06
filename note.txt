@@ -1,0 +1,46 @@
+====================== C9 ======================
+mysql-user:
+    + root, 'password'
+    + ptc-mickey, null
+    
+-- setting laravel --
+sudo nano /etc/apache2/sites-enabled/001-cloud9.conf
+
+// Change this line
+DocumentRoot /home/ubuntu/workspace/public
+
+// Install phpmyadmin
+
+=================================================
+
+20160524_②Comments on profile page_v3_ys
++	E: only remove search and show item
++			
++	
+20160524_⑦Comments on Scholarship registration page_ys
++	A: Chưa rõ
++	B:
++
+20160524_①Comments on Scholarship list for student_v2_ys
++
++
++
+
+
+==================================
+QUERY:
+-	2016_05_29_164503_edit_type_current_education_of_schoolarships_table
+	+ UPDATE `schoolarships` SET `current_education` = '["1"]'
+
+-	2016_05_31_171618_change_data_type_some_field_schoolaships_table
+	+ UPDATE `schoolarships` SET `education` = '["1"]'
+	+ UPDATE `schoolarships` SET `academic` = '["1"]'
+	+ UPDATE `schoolarships` SET `major` = '["1"]'
+
+-	2016_05_31_175025_edit_data_type_major_field_students_table
+	+ UPDATE `students` SET `major` = '["1"]'
+
+
+=========
+Mapping: B,C,D,E,F,G
+
