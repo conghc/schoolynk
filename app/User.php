@@ -53,5 +53,17 @@ class User extends Authenticatable
     public function sponsorInfo(){
         return $this->hasOne('App\SponsorInfo','user_id', 'id');
     }
+
+    public function images(){
+        return $this->hasMany('App\Images', 'record_id', 'id')->orderBy('sort', 'ASC')->orderBy('created_at', 'DESC');
+    }
+
+    public function schoolInfo(){
+        return $this->hasOne('App\SchoolInfo','school_id', 'id');
+    }
+
+    public function faculty(){
+        return $this->hasMany('App\Faculty', 'school_id', 'id');
+    }
     
 }

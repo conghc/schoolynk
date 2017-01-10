@@ -1,3 +1,6 @@
+.form-horizontal .control-label{
+    text-align: left;
+}
 #sponsor-logo{
     border:1px solid #e7eaec;
     with:200px;
@@ -68,4 +71,19 @@
     /*min-height:50px;*/
     max-height:400px;
     overflow: auto;
+}
+.name_faculty{
+    margin-bottom:15px
+}
+#box-gallery{
+    max-height:425px;
+    overflow-x: auto;
+}
+#list1{
+    list-style: none;
+}
+#list1 li{
+    float:left;
+    margin:5px 5px 0px 0px
+
 }

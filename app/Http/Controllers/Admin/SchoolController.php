@@ -15,8 +15,13 @@ use App\Currency;
 use App\TypeOfStudy;
 use App\Category;
 use App\Academic;
+use App\SchoolInfo;
+use App\Faculty;
+use App\FacultySchool;
 use Auth;
 use Flash;
+use File;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class SchoolController extends Controller
 {
@@ -392,10 +397,12 @@ class SchoolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, User $user)
     {
-//        $months = [['Jan','1'],['Feb','2'],['Mar','3'],['Apr','4'],['May','5'],['Jun','6'],['Jul','7'],['Aug','8'],['Sep','9'],['Oct','10'],['Nov','11'],['Dec','12']];
-//
+        $id = $request->input('id', 0);
+        $addNew = true;
+        if($id != 0) $addNew = false;
+
         $currencies = Currency::all();
         $countries = \CountryState::getCountries();
         $states = \CountryState::getStates('JP');
@@ -406,8 +413,12 @@ class SchoolController extends Controller
             $dataMajors[$major->type][$k] = $major->text;
         }
 
-
-        return view('admin.school.create', compact('currencies', 'countries', 'states', 'nationalities', 'dataMajors'));
+        $school = $user->with('images','schoolInfo','faculty')->where('id', $id)->first();
+        //dd($school->toArray());
+        if($school){
+            $school->img_profile = $school->img_profile != '' ? $school->img_profile : 'img/no-image.png';
+        }
+        return view('admin.school.create', compact('school', 'addNew','currencies', 'countries', 'states', 'nationalities', 'dataMajors'));
     }
 
     /**
@@ -479,35 +490,6 @@ class SchoolController extends Controller
         return view('admin.schoolarship.edit', compact('schoolarship', 'editors', 'typeOrans', 'majors', 'degrees', 'academics', 'typeOfStudies', 'currencies', 'months', 'countries', 'states', 'langs', 'categories') );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // $user = Auth::user();
-        $schoolarship = Schoolarship::find($id);
-        $requests = $request->all();
-        // dd($requests);
-        $data = $request->only(
-            'user_id', 'type', 'name', 'oranization', 'type_of_oran', 'origin_of_oran', 'covering_cost', 'amount_paid', 'currency', 
-            'amount_currency', 'amount_currency_max', 'benefit_period_month', 'benefit_period_year', 'benefit_period_month_max', 
-            'benefit_period_year_max', 'process','url', 'current_education', 'education', 'academic', 'major','min_age','max_age',
-            'gender', 'nationality', 'state', 'city', 'destination_country', 'destination_state', 'competition', 'language', 'limit',
-            'orther', 'category', 'organization_email', 'organization_phone', 'other_message', 'purpose_of_scholarship_establishment',
-            'organization_address');
-        // $data['user_id'] = $user->id;
-        $data['covering_cost'] = isset($requests['covering_cost']) ? $requests['covering_cost'] : [];
-        $data['amount_currency'] = str_replace(',','',$requests['amount_currency']);
-        $data['date_app_start'] = $requests['year_start'].'-'.$requests['month_start'].'-'.$requests['day_start'];
-        $data['date_app_end'] = $requests['year_end'].'-'.$requests['month_end'].'-'.$requests['day_end'];
-        // dd($data);
-        $schoolarship->update($data);
-        return redirect()->route('admin.schoolarship.index');
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -519,5 +501,70 @@ class SchoolController extends Controller
     {
         Schoolarship::find($id)->delete();
         return redirect()->route('admin.schoolarship.index');
+    }
+
+    public function schoolStructure(Request $request, Faculty $faculty, FacultySchool $facultySchool){
+        $structure = $request->input('structure', []);
+        $school_id = $request->input('school_id', 0);
+
+        $fs_id_remove = $request->input('fs_id_remove', '0');
+        $f_id_remove = $request->input('f_id_remove', '0');
+        $fs_id_remove = explode('|', $fs_id_remove);
+        $f_id_remove = explode('|', $f_id_remove);
+
+        $faculty->destroy($f_id_remove);
+        $facultySchool->whereIn('faculty_id', $f_id_remove)->delete();
+        
+        $facultySchool->destroy($fs_id_remove);
+
+        if($school_id > 0){
+            if(count($structure) > 0){
+                foreach($structure as $struct){
+                    if(isset($struct['faculty_id'])){
+                        $faculty->where('id',$struct['faculty_id'])->update(['name' => $struct['name_faculty']]);
+                    }else{
+                        $faculty = Faculty::create(['name' => $struct['name_faculty'], 'school_id' => $school_id]);
+                    }
+                    $faculty_id = $faculty->id ? $faculty->id : $struct['faculty_id'];
+                    foreach($struct['school'] as $fs){
+                        if(isset($fs['fs_id'])){
+                            $facultySchool->where('id',$fs['fs_id'])->update(['name' => $fs['name_school'], 'academic_level' => $fs['child']]);
+                        }else{
+                            $facultySchool = FacultySchool::create(['name' => $fs['name_school'], 'academic_level' => $fs['child'], 'faculty_id' => $faculty_id]);
+                        }
+                    }
+                }
+            }
+        }
+        return redirect('admin/school/create?id=' . $school_id);
+    }
+
+    public function schoolInfoUpdate(Request $request, User $user, SchoolInfo $schoolInfo){
+        $school_id = $request->input('school_id', 0);
+        $school_info_id = $request->input('school_info_id', 0);
+        $user = $user->where('id', $school_id)->where('role', 4)->first();
+        if($user){
+            $file = $request->brochure ? $request->brochure : null;
+
+            $data = $request->except('_token', 'school_info_id', 'brochure');
+            $schoolInfo = $schoolInfo->where('id', $school_info_id)->first();
+            // process file
+            if($file){
+                $filename  = 'user-brochure-' . time() . rand() . '.' . $file->getClientOriginalExtension();
+                File::makeDirectory(public_path('users/'. $school_id. '/'),0777, true, true);
+                $path = public_path('users/'. $school_id . '/');
+
+                $request->file('brochure')->move($path, $filename);
+                //Image::make($file->getRealPath())->save($path);
+
+                $data['brochure'] = 'users/'. $school_id . '/' . $filename;
+            }
+            if($schoolInfo){
+                $rs = $schoolInfo->update($data);
+            }else{
+                $rs = SchoolInfo::create($data);
+            }
+        }
+        return redirect('admin/school/create?id=' . $school_id);
     }
 }

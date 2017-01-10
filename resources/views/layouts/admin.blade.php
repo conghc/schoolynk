@@ -268,7 +268,7 @@
     <!-- Custom and plugin javascript -->
     <script src="/js/inspinia.js"></script>
     <script src="/js/plugins/pace/pace.min.js"></script>
-    <link src="/js/plugins/jquery-ui/jquery-ui.min.js"></link>
+    <script src="/js/plugins/dragsort/jquery.dragsort-0.5.2.min.js"></script>
     @yield('js')
 </body>
 </html>

@@ -14,11 +14,16 @@
     <!-- TouchSpin -->
     <script src="/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script>
     <!-- SUMMERNOTE -->
-    <script src="/js/plugins/summernote/summernote.min.js"></script>
+    <script src="/js/plugins/summernote/summernote.js"></script>
     <!-- Chosen -->
     <script src="/js/plugins/chosen/chosen.jquery.js"></script>
     <!-- DROPZONE -->
     <script src="/js/plugins/dropzone/dropzone.js"></script>
+    <script>
+        var add_more_school = "{{ trans('school.add_more_school') }}";
+    </script>
+    <!-- add some js -->
+    <script src="/js/js_app/school.js"></script>
     <script>
         $(document).ready(function(){
             $('#data_1 .input-group.date, #data_2 .input-group.date').datepicker({
@@ -32,12 +37,8 @@
                 buttondown_class: 'btn btn-white',
                 buttonup_class: 'btn btn-white'
             });
-            $('.summernote').summernote();
-            $('#profile-image').on('click', function() {
-                $('#profile-image-upload').click();
-            });
-            $("#profile-image-upload").change(function(){
-                readURL(this);
+            $('.summernote').summernote({
+                minHeight: 250
             });
             // chosen select
             var config = {
@@ -57,59 +58,22 @@
                     $(this).parent().parent().find('.chosen-select option').prop('selected', $(this).hasClass('select')).parent().trigger('chosen:updated');
                 });
             });
-
-            Dropzone.options.myAwesomeDropzone = {
-
-                autoProcessQueue: false,
-                uploadMultiple: true,
-                parallelUploads: 100,
-                maxFiles: 100,
-                maxFilesize: 2, //MB
-
-                // Dropzone settings
-                init: function() {
-                    var myDropzone = this;
-                    this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        myDropzone.processQueue();
-                    });
-                    this.on("sendingmultiple", function() {
-                        alert('send');
-                    });
-                    this.on("successmultiple", function(files, response) {
-                        alert('success');
-                    });
-                    this.on("errormultiple", function(files, response) {
-                        alert('123');
-                    });
-                }
-
-            }
         });
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#sponsor-logo').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
     </script>
+    @include('partials.form_errors_school')
 @endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
-                <form method="get" class="form-horizontal">
+                <input type="hidden" name="school_id" id="school_id" value="{{ $school->id or 0 }}">
+                <input type="hidden" name="user_type" id="user_type" value="school">
+                <form method="POST" role="form" class="form-horizontal" id="account_information">
+                    <input type="hidden" name="sponsor_id" id="sponsor_id" value="{{ $school->id or 0 }}">
                     <div class="ibox-title">
                         <h5>{{ trans('label.account_information') }}</h5>
                         <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
-                            </a>
+                            <button class="btn btn-primary btn-xs save_acc_information" type="submit">{{ trans('label.save_changes') }}</button>
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
@@ -119,25 +83,27 @@
                         <div class="row">
                             <div class="col-sm-8 b-r">
                                 <div class="form-group"><label class="col-sm-3 control-label">{{ trans('school.name_of_school') }}</label>
-                                    <div class="col-sm-9"><input type="text" name="name" class="form-control"></div>
+                                    <div class="col-sm-9"><input type="text" name="name" value="{{ $school->name or '' }}" class="form-control sponsor_name"></div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-3 control-label">{{ trans('label.contact_email') }}</label>
-                                    <div class="col-sm-9"><input type="email" name="contact_email" class="form-control"></div>
+                                    <div class="col-sm-9"><input type="email" name="email" value="{{ $school->email or '' }}" class="form-control sponsor_email"></div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-3 control-label">{{ trans('label.password') }}</label>
-                                    <div class="col-sm-9"><input type="password" name="password" class="form-control"></div>
+                                    <div class="col-sm-9"><input type="password" id="password" name="password" class="form-control sponsor_password"></div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-3 control-label">{{ trans('label.re_enter_password') }}</label>
-                                    <div class="col-sm-9"><input type="password" name="re_password" class="form-control"></div>
+                                    <div class="col-sm-9"><input type="password" name="re_password" class="form-control sponsor_repassword"></div>
                                 </div>
                             </div>
                             <div class="col-sm-4"><h4>{{ trans('school.school_logo_photo') }}</h4>
                                 <p class="text-center">
                                     <input id="profile-image-upload" name="img_profile" class="hidden" type="file">
-                                    <a id="profile-image" href="javascript:;"><img id="sponsor-logo" style="border-radius: 50%" src="/img/no-image.png" /></a>
+                                    <a id="profile-image" href="javascript:;">
+                                        <img id="sponsor-logo"src="/{{ isset($school) ? $school->img_profile : 'img/no-image.png' }}" />
+                                    </a>
                                 </p>
                             </div>
                         </div>
@@ -145,79 +111,79 @@
                 </form>
             </div>
             <div class="ibox float-e-margins">
-                <form method="get" class="form-horizontal">
+                <form method="post" role="form"  action="/admin/school-info-update" class="form-horizontal" id="profile_board" enctype="multipart/form-data">
+                    <input type="hidden" name="school_id" value="{{ $school->id or 0 }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="school_info_id" value="{{ $school->schoolInfo->id or 0 }}">
                     <div class="ibox-title">
-                        <h5>{{ trans('label.profile_board') }}</h5>
-                        <div class="ibox-tools">
+                        <h5>{{ trans('school.profile_board') }}</h5>
+                        <div class="ibox-tools col-hidden">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
+                                <button onclick="$('#profile_board').submit();" class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
                             </a>
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content">
+                    <div class="ibox-content ibc-hidden">
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.university_ranking') }}</label>
-                            <div class="col-sm-10"><input type="text" name="name" class="form-control"></div>
+                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->ranking or '' }}" name="ranking" class="form-control"></div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.type_of_school') }}</label>
                             <div class="col-sm-10">
-                                <select class="form-control m-b" name="account">
-                                    <option value="month" selected>Month</option>
-                                    <option value="quarter">Quarter</option>
-                                    <option value="year">Year</option>
-                                    <option value="single payment">Single payment</option>
+                                <?php $type_of_school = isset($school->schoolInfo) ? $school->schoolInfo->type_of_school : 'public'?>
+                                <select class="form-control m-b" name="type_of_school">
+                                    <option value="public" {{ $type_of_school == 'public' ? 'selected' : ''}}>Public</option>
+                                    <option value="private" {{ $type_of_school == 'private' ? 'selected' : ''}}>private</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.setting') }}</label>
                             <div class="col-sm-10">
-                                <select class="form-control m-b" name="account">
-                                    <option value="month" selected>Month</option>
-                                    <option value="quarter">Quarter</option>
-                                    <option value="year">Year</option>
-                                    <option value="single payment">Single payment</option>
+                                <?php $setting = isset($school->schoolInfo) ? $school->schoolInfo->setting : 'city'?>
+                                <select class="form-control m-b" name="setting">
+                                    <option value="city" {{ $setting == 'city' ? 'selected' : ''}}>City</option>
+                                    <option value="suburb" {{ $setting == 'suburb' ? 'selected' : ''}}>Suburb</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.english_course') }}</label>
                             <div class="col-sm-10">
-                                <select class="form-control m-b" name="account">
-                                    <option value="month" selected>Month</option>
-                                    <option value="quarter">Quarter</option>
-                                    <option value="year">Year</option>
-                                    <option value="single payment">Single payment</option>
+                                <?php $english_course = isset($school->schoolInfo) ? $school->schoolInfo->english_course : 1?>
+                                <select class="form-control m-b" name="english_course">
+                                    <option value="1" {{ $english_course == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value="0" {{ $english_course == 0 ? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.web_application') }}</label>
                             <div class="col-sm-10">
-                                <select class="form-control m-b" name="account">
-                                    <option value="month" selected>Month</option>
-                                    <option value="quarter">Quarter</option>
-                                    <option value="year">Year</option>
-                                    <option value="single payment">Single payment</option>
+                                <?php $web_application = isset($school->schoolInfo) ? $school->schoolInfo->web_application : 1?>
+                                <select class="form-control m-b" name="web_application">
+                                    <option value="1" {{ $web_application == 1 ? 'selected' : ''}}>Yes</option>
+                                    <option value="0" {{ $web_application == 0 ? 'selected' : ''}}>No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.school_website') }}</label>
-                            <div class="col-sm-10"><input type="text" name="name" class="form-control"></div>
+                            <div class="col-sm-10"><input type="text" name="website" value="{{ $school->schoolInfo->website or '' }}" class="form-control"></div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.total_no_of_students') }}</label>
-                            <div class="col-sm-10"><input type="text" name="name" class="form-control"></div>
+                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_students or '' }}" name="total_no_of_students" class="form-control"></div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.total_no_of_international_students') }}</label>
-                            <div class="col-sm-10"><input type="text" name="name" class="form-control"></div>
+                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_international_students or '' }}" name="total_no_of_international_students" class="form-control"></div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.tuition_fee') }}</label>
-                            <div class="col-md-2"><input type="text" placeholder="Number" class="form-control"></div>
-                            <div class="col-md-2"><input type="text" placeholder="Number" class="form-control"></div>
+                            <div class="col-md-2"><input name="tuition_fee" value="{{ $school->schoolInfo->tuition_fee or '' }}" type="number" placeholder="Number" class="form-control"></div>
+                            <div class="col-md-2"><input name="tuition_fee_max" value="{{ $school->schoolInfo->tuition_fee_max or '' }}" type="number" placeholder="Number" class="form-control"></div>
                             <div class="col-md-3">
-                                <select class="form-control m-b" name="amount">
+                                <?php $tuition_fee_currency = isset($school->schoolInfo) ? $school->schoolInfo->tuition_fee_currency : 'JPY'?>
+                                <select class="form-control m-b" name="tuition_fee_currency">
                                     @foreach($currencies as $currence)
-                                        <option value='{{ $currence->soft_name }}'>
+                                        <option value='{{ $currence->sort_name }}' {{ $tuition_fee_currency == $currence->sort_name ? 'selected' : '' }}>
                                             {{ $currence->full_name }}
                                         </option>
                                     @endforeach
@@ -225,12 +191,13 @@
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.cost_of_living') }}</label>
-                            <div class="col-md-2"><input type="text" placeholder="Number" class="form-control"></div>
-                            <div class="col-md-2"><input type="text" placeholder="Number" class="form-control"></div>
+                            <div class="col-md-2"><input name="cost_of_living" value="{{ $school->schoolInfo->cost_of_living or '' }}" type="number" placeholder="Number" class="form-control"></div>
+                            <div class="col-md-2"><input name="cost_of_living_max" value="{{ $school->schoolInfo->cost_of_living_max or '' }}" type="number" placeholder="Number" class="form-control"></div>
                             <div class="col-md-3">
-                                <select class="form-control m-b" name="amount">
+                                <?php $cost_of_living_currency = isset($school->schoolInfo) ? $school->schoolInfo->cost_of_living_currency : 'JPY'?>
+                                <select class="form-control m-b" name="cost_of_living_currency">
                                     @foreach($currencies as $currence)
-                                        <option value='{{ $currence->soft_name }}'>
+                                        <option value='{{ $currence->soft_name }}' {{ $cost_of_living_currency == $currence->sort_name ? 'selected' : '' }}>
                                             {{ $currence->full_name }}
                                         </option>
                                     @endforeach
@@ -239,18 +206,21 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.download_brochure') }}</label>
-                            <div class="col-sm-10"><input type="file" name="name" ></div>
+                            <div class="col-sm-10">
+                                <input type="file" name="brochure" >
+                                <a target="_blank" href="/{{ $school->schoolInfo->brochure or '' }}">{{ $school->schoolInfo->brochure or '' }}</a>
+                            </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.contact_admission') }}</label>
-                            <div class="col-sm-10"><input type="text" name="name" class="form-control"></div>
+                            <div class="col-sm-10"><input type="email" value="{{ $school->schoolInfo->contact_admission or '' }}" name="contact_admission" class="form-control"></div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>{{ trans('label.picture_library') }}</h5>
-                    <div class="ibox-tools">
+                    <h5>{{ trans('school.picture_library') }}</h5>
+                    <div class="ibox-tools col-hidden">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
                         </a>
@@ -259,21 +229,126 @@
                         </a>
                     </div>
                 </div>
-                <div class="ibox-content">
-                    <form id="my-awesome-dropzone" class="dropzone" action="#" style="min-height:150px">
+                <div class="ibox-content ibc-hidden">
+                    <form method="POST" id="my-awesome-dropzone" class="dropzone" action="/admin/upload-images?id={{ $school->id or 0 }}&type=school" style="min-height:150px">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="dropzone-previews"></div>
                         <button type="submit" class="btn btn-primary pull-right">Submit this form!</button>
                     </form>
                 </div>
-                <div class="ibox-content box-gallery">
-
+                <div class="ibox-content ibc-hidden" id="box-gallery">
+                    <ul id="list1">
+                        @if(isset($school->images))
+                            @if($school->images->count() > 0)
+                                @foreach($school->images as $image)
+                                    <li class="ui-state-default"><div><img class="child-image" id="{{ $image->id }}" width="128" height="128" src="/{{ $image->path }}" /></div></li>
+                                @endforeach
+                            @endif
+                        @endif
+                    </ul>
+                    <input name="list1SortOrder" type="hidden" />
                 </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <form method="post" role="form"  action="/admin/school-structure" class="form-horizontal" id="school_structure" enctype="multipart/form-data">
+                    <input type="hidden" name="school_id" value="{{ $school->id or 0 }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="school_structure_id" id="school_structure_id" value="{{ $school->structure->id or 0 }}">
+                    <div class="ibox-title">
+                        <h5>{{ trans('school.academics_board') }} <small>{{ trans('school.school_structure') }}</small></h5>
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="ibox-tools col-hidden">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <button onclick="$('#school_structure').submit();" class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
+                                <input type="hidden" name="fs_id_remove" id="fs_id_remove" value="0" />
+                                <input type="hidden" name="f_id_remove" id="f_id_remove" value="0" />
+                            </a>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content ibc-hidden">
+                        <div class="form-group">
+                            <div class="col-sm-9">
+                                <button type="button" class="btn btn-primary btn-xs add-more-faculty">{{ trans('school.add_more_faculty') }}</button>
+                            </div>
+                        </div>
+                        <div class="list-faculty">
+                            @if(isset($school->faculty))
+                                @if($school->faculty->count() > 0)
+                                    @foreach($school->faculty as $k=>$faculty)
+                                        <div class="form-group child-faculty">
+                                            <div class="col-sm-1"><a f_id="{{ $faculty->id }}" class="btn btn-white" onclick="removeElem(this);"><i class="fa fa-minus"></i></a></div>
+                                            <div class="col-sm-8">
+                                                <input type="text" value="{{ $faculty->name }}" name="structure[{{ $k+1 }}][name_faculty]" class="form-control name_faculty">
+                                                <input type="hidden" name="structure[{{ $k+1 }}][faculty_id]" value="{{ $faculty->id }}" />
+                                                <div class="list-school" stt="{{ $k+1 }}">
+                                                    @foreach($faculty->facultySchool as $x=>$fs)
+                                                        <div class="child-school">
+                                                            <input type="hidden" name="structure[{{ $k+1 }}][school][{{ $x+1 }}][fs_id]" value="{{ $fs->id }}" />
+                                                            <div class="col-sm-1">
+                                                                <a class="btn btn-white" fs_id="{{ $fs->id }}" onclick="removeElem(this);"><i class="fa fa-minus"></i></a>
+                                                            </div>
+                                                            <div class="col-sm-7">
+                                                                <input type="text" value="{{ $fs->name }}" name="structure[{{ $k+1 }}][school][{{ $x+1 }}][name_school]" class="form-control name_school">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <select class="form-control m-b s_child" name="structure[{{ $k+1 }}][school][{{ $x+1 }}][child]">
+                                                                    <option value="undergraduate" {{ $fs->academic_level == 'undergraduate' ? 'selected' : '' }}>Undergraduate</option>
+                                                                    <option value="graduate" {{ $fs->academic_level == 'graduate' ? 'selected' : '' }}>Graduate</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                                <div>
+                                                    <div class="col-sm-1"></div>
+                                                    <div class="col-sm-11">
+                                                        <button onclick="addMoreSchool(this);" type="button" class="btn btn-primary btn-xs">{{ trans('school.add_more_school') }}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            @else
+                                <div class="form-group child-faculty">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="structure[1][name_faculty]" class="form-control name_faculty">
+                                        <div class="list-school" stt="1">
+                                            <div class="child-school">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-7">
+                                                    <input type="text" name="structure[1][school][1][name_school]" class="form-control name_school">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control m-b s_child" name="structure[1][school][1][child]">
+                                                        <option value="undergraduate">Undergraduate</option>
+                                                        <option value="graduate">Graduate</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-sm-1"></div>
+                                            <div class="col-sm-11">
+                                                <button onclick="addMoreSchool(this);" type="button" class="btn btn-primary btn-xs">{{ trans('school.add_more_school') }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="ibox float-e-margins">
                 <form method="get" class="form-horizontal">
                     <div class="ibox-title">
-                        <h5>{{ trans('label.academics_board') }}</h5>
-                        <div class="ibox-tools">
+                        <h5>{{ trans('school.academics_board') }} <small>{{ trans('school.school_information') }}</small></h5>
+                        <div class="ibox-tools structure-hidden">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
                             </a>
@@ -282,394 +357,114 @@
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.type_of_award') }}</label>
-                            <div class="col-sm-10">
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="" value="1" name="type_of_scholarship" checked="">
-                                    <label for="type_of_scholarship">Scholarship</label>
-                                </div>
-                                <div class="radio radio-inline">
-                                    <input type="radio" id="" value="2" name="type_of_scholarship">
-                                    <label for="type_of_scholarship">No interest loan</label>
-                                </div>
-                                <div class="radio radio-inline">
-                                    <input type="radio" id="" value="3" name="type_of_scholarship">
-                                    <label for="type_of_scholarship">Loan</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.amount_of_award') }}</label>
-                            <div class="col-md-2"><input type="text" placeholder="Number" class="form-control"></div>
-                            <div class="col-md-3">
-                                <select class="form-control m-b" name="amount">
-                                    @foreach($currencies as $currence)
-                                        <option value='{{ $currence->soft_name }}'>
-                                            {{ $currence->full_name }}
-                                        </option>
-                                    @endforeach
+                    <div class="ibox-content structure-hidden">
+                        <div class="form-group">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-6">
+                                <select class="form-control m-b" name="age">
+                                    @if(isset($school->faculty))
+                                        @if($school->faculty->count() > 0)
+                                            @foreach($school->faculty as $faculty)
+                                                @foreach($faculty->facultySchool as $fs)
+                                                    <option value="{{ $fs['id'] }}" >{{ $fs['name'] }}</option>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
+                                    @endif
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <select class="form-control m-b" name="account">
-                                    <option value="month" selected>Month</option>
-                                    <option value="quarter">Quarter</option>
-                                    <option value="year">Year</option>
-                                    <option value="single payment">Single payment</option>
-                                </select>
+                                <button class="btn btn-primary" type="submit">{{ trans('label.add') }}</button>
                             </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.type_of_cost_covered') }}</label>
-                            <div class="col-sm-10">
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="" value="1" name="type_of_cost_covered" checked="">
-                                    <label for="type_of_cost_covered">Tuition fee</label>
-                                </div>
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="" value="2" name="type_of_cost_covered">
-                                    <label for="type_of_cost_covered">Living cost</label>
-                                </div>
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="" value="3" name="type_of_cost_covered">
-                                    <label for="type_of_cost_covered">Others</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.number_of_awards_granted') }}</label>
-                            <div class="col-sm-4"><input class="touchspin1" type="text" value="66" name="number_of_awards_granted"></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.applicable_scholarship_year') }}</label>
-                            <div class="col-md-3">
-                                <select class="form-control m-b" name="applicable_year['from']">
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <select class="form-control m-b" name="applicable_year['to']">
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.application_deadline') }}</label>
-                            <div class="col-sm-10" id="data_2">
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.scholarship_url') }}</label>
-                            <div class="col-sm-10"><input type="text" class="form-control"></div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>{{ trans('label.eligibility_requirement') }}</h5>
-                    <div class="ibox-tools">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
-                        </a>
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
+                <form method="post" role="form"  action="/admin/school-info-update" class="form-horizontal" id="basic_information" enctype="multipart/form-data">
+                    <input type="hidden" name="school_id" value="{{ $school->id or 0 }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="school_info_id" value="{{ $school->schoolInfo->id or 0 }}">
+                    <div class="ibox-title">
+                        <h5>{{ trans('school.basic_information') }}</h5>
+                        <div class="ibox-tools col-hidden">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <button onclick="$('#basic_information').submit();" class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
+                            </a>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.age') }}</label>
-                            <div class="col-md-3">
-                                <select class="form-control m-b" name="account">
-                                    <option>18</option>
-                                    <option>19</option>
-                                    <option>20</option>
-                                    <option>21</option>
-                                    <option>22</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <select class="form-control m-b" name="account">
-                                    <option>18</option>
-                                    <option>19</option>
-                                    <option>20</option>
-                                    <option>21</option>
-                                    <option>22</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.gender') }}</label>
+                    <div class="ibox-content ibc-hidden">
+                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.overview') }}</label>
                             <div class="col-sm-10">
-                                <div class="col-sm-10">
-                                    <div class="radio radio-info radio-inline">
-                                        <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
-                                        <label for="inlineRadio1">Male</label>
-                                    </div>
-                                    <div class="radio radio-inline">
-                                        <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
-                                        <label for="inlineRadio2">Female</label>
-                                    </div>
-                                    <div class="radio radio-inline">
-                                        <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
-                                        <label for="inlineRadio2">Both</label>
-                                    </div>
-                                </div>
+                                <textarea class="summernote" id="" name="overview" rows="40">
+                                    {{ $school->schoolInfo->overview or '' }}
+                                </textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.nationality') }}</label>
-                            <div class="col-sm-7">
-                                <select name="test" data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
-                                    @foreach($nationalities as $nationality)
-                                        <option value='{{ $nationality }}'>
-                                            {{ $nationality }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle select">Select All</button>
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle deselect">Deselect All</button>
+                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.college_feature') }}</label>
+                            <div class="col-sm-10">
+                                <textarea class="summernote" id="" name="college_feature" rows="40">
+                                    {{ $school->schoolInfo->college_feature or '' }}
+                                </textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.applicants_current_academic_level') }}</label>
-                            <div class="col-sm-7">
-                                <select data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
-
-                                        <option value="123">123/option>
-
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle select">Select All</button>
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle deselect">Deselect All</button>
+                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.texts') }}</label>
+                            <div class="col-sm-10">
+                                <textarea class="summernote" id="" name="texts" rows="40">
+                                    {{ $school->schoolInfo->texts or '' }}
+                                </textarea>
                             </div>
                         </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.current_place_of_residence') }}</label>
-                            <div class="col-sm-7">
-                                <select data-placeholder="{{ trans('label.choice') }}" class="chosen-select" multiple style="width:100%" tabindex="4">
-                                    @foreach ( $countries as $k => $country)
-                                        <option value="{{ $k }}">{{ $country }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle select">Select All</button>
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle deselect">Deselect All</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
             <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>{{ trans('label.qualified_school_&_academics') }}</h5>
-                    <div class="ibox-tools">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
-                        </a>
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
+                <form method="post" role="form"  action="/admin/school-info-update" class="form-horizontal" id="map" enctype="multipart/form-data">
+                    <input type="hidden" name="school_id" value="{{ $school->id or 0 }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="school_info_id" value="{{ $school->schoolInfo->id or 0 }}">
+                    <div class="ibox-title">
+                        <h5>{{ trans('school.map') }}</h5>
+                        <div class="ibox-tools col-hidden">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <button onclick="$('#map').submit();" class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
+                            </a>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.award_can_be_used_for') }}</label>
-                            <div class="col-sm-10">
-                                <select data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
-                                    <option value="123">123</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.award_can_be_used_at') }}</label>
-                            <div class="col-sm-10">
-                                <select data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
-                                    <option value="university">University</option>
-                                    <option value="vocational_school">Vocational school</option>
-                                    <option value="language_school">Language school</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.qualified_majors') }}</label>
-                            <div class="col-sm-7">
-                                <select data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
-                                    @foreach($dataMajors as $k=>$majors)
-                                        <optgroup label="{{ $k }}">
-                                            @foreach($majors as $k=>$major)
-                                                <option value="{{ $k }}">{{ $major }}</option>
-                                            @endforeach
-                                        </optgroup>
-                                    @endforeach
-                                </select>
-                            </div>
+                    <div class="ibox-content ibc-hidden">
+                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.country') }}</label>
                             <div class="col-sm-3">
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle select">Select All</button>
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle deselect">Deselect All</button>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.designated_area') }}</label>
-                            <div class="col-sm-3">
-                                <select data-placeholder="{{ trans('label.choice') }}" class="chosen-select" style="width:100%" tabindex="2">
+                                <select name="country_code" data-placeholder="{{ trans('label.choice') }}" class="chosen-select" style="width:100%" tabindex="2">
                                     <option value="JP" selected>Japan</option>
                                 </select>
                             </div>
                             <div class="col-sm-7">
-                                <select data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
+                                <?php $state = isset($school->schoolInfo) ? $school->schoolInfo->state : 23?>
+                                <select name="state" data-placeholder="..." class="form-control m-b s_child">
                                     @foreach ( $states as $k => $state)
-                                        <option value="{{ $k }}">{{ $state }}</option>
+                                        <option value="{{ $k }}" {{ $state == $k ? 'Selected' : '' }}> {{ $state }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.designated_school') }}</label>
-                            <div class="col-sm-7">
-                                <select data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
-                                </select>
+                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.google_map') }}</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="longitude" placeholder="{{ trans('label.longitude') }}" class="form-control" value="{{ $school->schoolInfo->longitude or '' }}" />
                             </div>
-                            <div class="col-sm-3">
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle select">Select All</button>
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle deselect">Deselect All</button>
+                            <div class="col-sm-4">
+                                <input type="text" name="latitude" placeholder="{{ trans('label.latitude') }}" class="form-control" value="{{ $school->schoolInfo->latitude or '' }}" />
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>{{ trans('label.application_requirement_&_process') }}</h5>
-                    <div class="ibox-tools">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
-                        </a>
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
                     </div>
-                </div>
-                <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.application_method') }}</label>
-                            <div class="col-sm-10">
-                                <div class="col-sm-10">
-                                    <div class="radio radio-info radio-inline">
-                                        <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
-                                        <label for="inlineRadio1">Document screening</label>
-                                    </div>
-                                    <div class="radio radio-inline">
-                                        <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
-                                        <label for="inlineRadio2">Interview</label>
-                                    </div>
-                                    <div class="radio radio-inline">
-                                        <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
-                                        <label for="inlineRadio2">Examination</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.application_requirement') }}</label>
-                            <div class="col-sm-10">
-                                <div class="summernote">
-                                    <h3>Lorem Ipsum is simply</h3>
-                                    dummy text of the printing and typesetting industry. <strong>Lorem Ipsum has been the industry's</strong> standard dummy text ever since the 1500s,
-                                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-                                    typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-                                    <br/>
-                                    <br/>
-                                    <ul>
-                                        <li>Remaining essentially unchanged</li>
-                                        <li>Make a type specimen book</li>
-                                        <li>Unknown printer</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>{{ trans('label.sponsors_information') }}</h5>
-                    <div class="ibox-tools">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
-                        </a>
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.name_of_sponsor') }}</label>
-                            <div class="col-sm-10">Show what is written above</div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.sponsor_type') }}</label>
-                            <div class="col-sm-10">
-                                <select class="form-control m-b" name="account">
-                                    <option value="123">123</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.sponsors_address') }}</label>
-                            <div class="col-sm-10"><input type="text" class="form-control"></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.sponsors_website') }}</label>
-                            <div class="col-sm-10"><input type="text" class="form-control"></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.contact') }}</label>
-                            <div class="col-sm-10">Show what is written above</div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.other_information') }}</label>
-                            <div class="col-sm-10">
-                                <div class="summernote">
-                                    <h3>Lorem Ipsum is simply</h3>
-                                    dummy text of the printing and typesetting industry. <strong>Lorem Ipsum has been the industry's</strong> standard dummy text ever since the 1500s,
-                                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-                                    typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-                                    <br/>
-                                    <br/>
-                                    <ul>
-                                        <li>Remaining essentially unchanged</li>
-                                        <li>Make a type specimen book</li>
-                                        <li>Unknown printer</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>

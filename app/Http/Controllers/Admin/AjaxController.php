@@ -19,6 +19,7 @@ use App\ScholarshipAwardUsedAt;
 use App\ScholarshipMajor;
 use App\ScholarshipDesignatedArea;
 use App\ScholarshipSchool;
+use App\Images;
 use Auth;
 use Flash;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -62,18 +63,30 @@ class AjaxController extends Controller
         $data = $request->except(['re_password']);
         $sponsor_id = $request->input('sponsor_id', 0);
         $scholarship_id = $request->input('scholarship_id', 0);
+        $type = $request->input('user_type', 'sponsor');
+        $role = $type == 'sponsor' ? 3 : 4;
         unset($data['scholarship_id']);
-        $returns = [];
+        unset($data['user_type']);
+        $returns = ['code' => 0];
         if($sponsor_id == 0){
-            $data['password'] = bcrypt($data['password']);
-            $data['role'] = 3;
-            unset($data['sponsor_id']);
-            $us = $user->create($data);
-            $act = 'add';
-            $returns = ['act' => $act, 'id' => $us->id, 'name' => $us->name, 'email' => $us->email];
-            $sponsor_id = $us->id;
+            $u_exist = $user->where('email', 'LIKE', $data['email'])->first();
+            if($u_exist){
+                $returns['msg'] = trans('label.user_exist');
+                $returns['code'] = 1;
+            }else{
+                $data['password'] = bcrypt($data['password']);
+                $data['role'] = $role;
+                unset($data['sponsor_id']);
+                $us = $user->create($data);
+                $act = 'add';
+                $returns = ['act' => $act, 'id' => $us->id, 'name' => $us->name, 'email' => $us->email, 'msg' => trans('label.insert_success')];
+                if($type == 'school'){
+                    $returns['rdr'] = route('admin.school.create', ['id' => $us->id]);
+                }
+                $sponsor_id = $us->id;
+            }
         }else{
-            $sponsor = $user->where('role',3)->where('id',$data['sponsor_id'])->first();
+            $sponsor = $user->where('role',$role)->where('id',$data['sponsor_id'])->first();
             unset($data['sponsor_id']);
             unset($data['email']);
             if($data['password'] == ''){
@@ -83,11 +96,12 @@ class AjaxController extends Controller
             }
             $us = $sponsor->update($data);
             $act = 'update';
-            $returns = ['act' => $act];
+            $returns = ['act' => $act, 'msg' => trans('label.update_success')];
         }
         if($scholarship_id != 0){
             $scholarship->where('id',$scholarship_id)->update(['sponsor_id' => $sponsor_id]);
         }
+
         return response()->json($returns);
     }
 
@@ -111,20 +125,20 @@ class AjaxController extends Controller
         return $rs;
     }
 
-    public function uploadSponsorLogo(Request $request){
+    public function uploadUserLogo(Request $request){
         if ($request->hasFile('img_profile')) {
-            $sponsor_id = $request->input('sponsor_id', 0);
-            $sponsor = User::where('id',$sponsor_id)->first();
+            $user_id = $request->input('sponsor_id', 0);
+            $user = User::where('id',$user_id)->first();
 
             $image = $request->img_profile;
-            $filename  = 'sponsor-' . time() . '.' . $image->getClientOriginalExtension();
+            $filename  = 'user-' . time() . '.' . $image->getClientOriginalExtension();
 
             //File::exists(storage_path('files/profile/'));
-            File::makeDirectory(public_path('sponsor/'),0777, true, true);
-            $path = public_path('sponsor/'. $filename);
+            File::makeDirectory(public_path('users/'),0777, true, true);
+            $path = public_path('users/'. $filename);
             Image::make($image->getRealPath())->resize(200, 200)->save($path);
-            $sponsor->img_profile = 'sponsor/'. $filename;
-            $sponsor->save();
+            $user->img_profile = 'users/'. $filename;
+            $user->save();
             return 'success';
         }else{
             return 'failed';
@@ -274,5 +288,50 @@ class AjaxController extends Controller
             }
 
         }
+    }
+
+    public function uploadImages(Request $request, Images $images){
+        if ($request->hasFile('file')) {
+            $record_id = $request->input('id', 0);
+            $type = $request->input('type', '');
+            if(in_array($type, ['school'])){
+                $user = User::where('id',$record_id)->first();
+                if($user){
+                    $files = $request->file;
+                    foreach($files as $file){
+                        $filename  = 'user-' . time() . rand() . '.' . $file->getClientOriginalExtension();
+                        //File::exists(storage_path('files/profile/'));
+                        File::makeDirectory(public_path('users/'. $user->id. '/'),0777, true, true);
+                        $path = public_path('users/'. $user->id . '/' .$filename);
+                        //Image::make($image->getRealPath())->resize(200, 200)->save($path);
+                        Image::make($file->getRealPath())->save($path);
+                        // save to images table
+                        $data = ['type' => 'school', 'record_id' => $user->id];
+                        $data['name'] = $file->getClientOriginalName();
+                        $data['path'] = 'users/'. $user->id . '/' . $filename;
+                        $data['sort'] = 1;
+                        $images->create($data);
+                    }
+                    return trans('label.insert_success');
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return 'failed';
+        }
+    }
+    public function sortImages(Request $request, Images $images){
+        $files = $request->input('files', '');
+        if($files != ''){
+            $files = explode('|||', $files);
+            $files = array_flip($files);
+            foreach($files as $k=>$sort){
+                $images->where('id', $k)->update(['sort' => (int) $sort]);
+            }
+        }
+        return ['msg' => trans('label.sort_success')];
     }
 }

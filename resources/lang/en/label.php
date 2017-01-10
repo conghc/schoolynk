@@ -430,6 +430,15 @@
 		'sponsors_address' => 'Sponsors address',
 		'sponsors_website' => 'Sponsors website',
 		'contact' => 'Contact',
-		'other_information' => 'Other information'
+		'other_information' => 'Other information',
+
+        'upload' => 'Upload',
+        'user_exist' => 'User existed.',
+        'insert_success' => 'Insert success.',
+        'update_success' => 'Update success.',
+        'sort_success'       => 'Sort success',
+		'google_map'		=> 	'Google map',
+		'longitude' => 'Longitude',
+		'latitude' => 'Latitude',
 	];
 ?>

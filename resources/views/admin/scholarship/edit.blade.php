@@ -53,16 +53,6 @@
                 });
             });
         });
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#sponsor-logo').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
     </script>
     @include('partials.form_errors')
 @endsection
@@ -492,12 +482,12 @@
                                 </textarea>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-10 test_showtext">
-                                {!! $scholarship->application_requirement !!}
-                            </div>
-                        </div>
+                        {{--<div class="form-group">--}}
+                            {{--<label class="col-sm-2 control-label"></label>--}}
+                            {{--<div class="col-sm-10 test_showtext">--}}
+                                {{--{!! $scholarship->application_requirement !!}--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                     </div>
                 </form>
             </div>

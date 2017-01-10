@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 /**
  * Route Admin group
  */
@@ -47,10 +48,15 @@ Route::group([
         Route::post('advance-search', 'ScholarshipController@advanceSearch');
 
         Route::post('add-sponsor', 'AjaxController@addSponsor');
-        Route::post('update-sponsor-logo', 'AjaxController@uploadSponsorLogo');
+        Route::post('upload-user-logo', 'AjaxController@uploadUserLogo');
         Route::post('update-sponsor-info', 'AjaxController@updateSponsorInfo');
         Route::post('info-sponsor', 'AjaxController@infoSponsor');
         Route::post('add-scholarship', 'AjaxController@addScholarship');
+        Route::post('upload-images', 'AjaxController@uploadImages');
+        Route::post('sort-images', 'AjaxController@sortImages');
+
+        Route::post('school-structure', 'SchoolController@schoolStructure');
+        Route::post('school-info-update', 'SchoolController@schoolInfoUpdate');
     });
     
 });

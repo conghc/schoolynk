@@ -9,7 +9,7 @@
         "laravel/framework": "5.2.*",
         "marcelgwerder/laravel-api-handler": "dev-master",
         "barryvdh/laravel-debugbar": "^2.2",
-        "rap2hpoutre/laravel-log-viewer": "^0.6.0",
+        "rap2hpoutre/laravel-log-viewer": "^0.8.0",
         "barryvdh/laravel-ide-helper": "^2.1",
         "doctrine/dbal": "^2.5",
         "laracasts/flash": "^2.0",

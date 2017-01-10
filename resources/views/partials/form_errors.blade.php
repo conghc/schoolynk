@@ -2,6 +2,17 @@
 <!-- Jquery Validate -->
 <script src="/js/plugins/validate/jquery.validate.min.js"></script>
 <script>
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function (e) {
+				$('#sponsor-logo').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 	$(document).ready(function(){
 		{
 			@if($addNew)
@@ -79,7 +90,6 @@
 			}
 		});
 
-
 		$('#profile-image').on('click', function() {
 			sponsor_id = $('#select-sponsor').val();
 			if(sponsor_id == 0){
@@ -89,10 +99,10 @@
 			}
 		});
 		$("#profile-image-upload").change(function(){
-			//readURL(this);
+			readURL(this);
 			$.ajax({
 				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-				url: '/admin/update-sponsor-logo',
+				url: '/admin/upload-user-logo',
 				type: 'POST',
 				data:new FormData($("#account_information")[0]),
 				dataType:'json',
@@ -102,7 +112,7 @@
 				contentType: false,
 				success:function(response){
 					console.log(response);
-				},
+				}
 			});
 		});
 
