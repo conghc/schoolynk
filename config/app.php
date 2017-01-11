@@ -172,6 +172,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
     ],
 
     /*

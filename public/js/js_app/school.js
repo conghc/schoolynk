@@ -29,6 +29,24 @@ $(document).ready(function(){
         $('.list-faculty').append(html_faculty);
     });
 
+    $('#add_fs_info').click(function(){
+        fsId = $('#fs_id').val();
+        if(fsId == 0){ return false; }
+
+        $('#loading-fixed').show();
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: '/admin/add-fs-info',
+            type: 'POST',
+            data: {'fsId': fsId},
+            success: function (data) {
+                $('#fs_id option[value='+ fsId +']').attr('disabled','disabled');
+                $('#fs_id').trigger("chosen:updated");
+                $('#loading-fixed').hide();
+            }
+        });
+    });
+
 });
 function addMoreSchool(elem){
     stt = $(elem).parents().eq(2).before().find('.list-school').attr('stt');

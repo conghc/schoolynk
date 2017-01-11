@@ -20,6 +20,7 @@ use App\ScholarshipMajor;
 use App\ScholarshipDesignatedArea;
 use App\ScholarshipSchool;
 use App\Images;
+use App\FacultySchool;
 use Auth;
 use Flash;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -333,5 +334,15 @@ class AjaxController extends Controller
             }
         }
         return ['msg' => trans('label.sort_success')];
+    }
+
+    public function addFacultySchoolInfo(Request $request, FacultySchool $fs){
+        $fsId = $request->input('fsId', 0);
+        $fs = $fs->find($fsId);
+        if($fs){
+            $fs->update(['added_info' => 1]);
+        }else{
+            //echo(trans('label.cannot_find_record'));
+        }
     }
 }

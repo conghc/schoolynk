@@ -85,5 +85,17 @@
 #list1 li{
     float:left;
     margin:5px 5px 0px 0px
+}
+#listFsInfo button{
+    text-align:left
+}
 
+.schoolModal .modal-dialog{
+    padding-top:0px;
+}
+.schoolModal h4.modal-title{
+    /*text-align:left*/
+}
+.summernote-modal{
+    min-height:200px
 }

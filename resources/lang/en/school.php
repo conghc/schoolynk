@@ -32,5 +32,11 @@ return [
     'texts'                                 =>  'Texts',
     'school'                                =>  'School',
     'school_logo_photo'                     =>  'School logo photo',
-    'profile_board'                         =>  'Profile board'
+    'add_more_major'                        =>  '(+) ADD MORE MAJOR',
+    'add_sub_category'                      =>  '(+) ADD SUB-CATEGORY',
+    'degree_level'                          =>  'Degree level',
+    'course_term'                           =>  'Course term',
+    'enrollment'                            =>  'Enrollment',
+    'language'                              =>  'Language',
+    'application_period'                    =>  'Application period',
 ];

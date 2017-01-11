@@ -193,4 +193,40 @@
 			}
 		});
 	};
+
+	function schoolMajoir(elem) {
+		fs_name = $(elem).parent().find('.fs_name').val();
+		$('#modalMajor .modal-title').text($(elem).parent().find('.fs_name').val());
+		$('#modalMajor h4.modal-title-body').text($(elem).text());
+
+		$("#modalMajor").modal('show');
+	}
+	function schoolAdmission(elem) {
+		fs_name = $(elem).parent().find('.fs_name').val();
+		$('#schoolAdmission .modal-title').text($(elem).parent().find('.fs_name').val());
+		$('#schoolAdmission h4.modal-title-body').text($(elem).text());
+
+		$("#schoolAdmission").modal('show');
+	}
+	function schoolTuitionFee(elem) {
+		fs_name = $(elem).parent().find('.fs_name').val();
+		$('#schoolTuitionFee .modal-title').text($(elem).parent().find('.fs_name').val());
+		$('#schoolTuitionFee h4.modal-title-body').text($(elem).text());
+
+		$("#schoolTuitionFee").modal('show');
+	}
+	function schoolScholarships(elem) {
+		school_id = $('#school_id').val();
+		$('#schoolScholarships .modal-title').text($(elem).parent().find('.fs_name').val());
+		$('#schoolScholarships h4.modal-title-body').text($(elem).text());
+
+		$("#schoolScholarships").modal('show');
+	}
+	function schoolOthers(elem) {
+		fs_name = $(elem).parent().find('.fs_name').val();
+		$('#schoolOthers .modal-title').text($(elem).parent().find('.fs_name').val());
+		$('#schoolOthers h4.modal-title-body').text($(elem).text());
+
+		$("#schoolOthers").modal('show');
+	}
 </script>

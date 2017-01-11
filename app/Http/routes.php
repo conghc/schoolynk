@@ -54,6 +54,7 @@ Route::group([
         Route::post('add-scholarship', 'AjaxController@addScholarship');
         Route::post('upload-images', 'AjaxController@uploadImages');
         Route::post('sort-images', 'AjaxController@sortImages');
+        Route::post('add-fs-info', 'AjaxController@addFacultySchoolInfo');
 
         Route::post('school-structure', 'SchoolController@schoolStructure');
         Route::post('school-info-update', 'SchoolController@schoolInfoUpdate');

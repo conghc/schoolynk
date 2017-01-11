@@ -358,7 +358,7 @@
 		'active'			  		 	   => 'アクティブ',
 		'inactive'			  		 	   => '非アクティブな',
 		'ordering'			  		 	   => '発注',
-		'cancel'			  		 	   => 'キャンセル',
+		'cancel'			  		 	   => 'Cancel',
 		'list_languages'	  		 	   => 'リスト言語',
 		'add_languages'	  			 	   => '言語を追加します。',
 		'created_date'	  			 	   => '作成日付',
@@ -440,5 +440,6 @@
 		'google_map'		=> 	'Google map',
 		'longitude' => 'Longitude',
 		'latitude' => 'Latitude',
+		'add'		=> 'Add',
 	];
 ?>
