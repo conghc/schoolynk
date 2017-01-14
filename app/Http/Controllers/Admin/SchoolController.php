@@ -18,9 +18,11 @@ use App\Academic;
 use App\SchoolInfo;
 use App\Faculty;
 use App\FacultySchool;
+use App\OtherText;
 use Auth;
 use Flash;
 use File;
+use Illuminate\Support\Facades\View;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class SchoolController extends Controller
@@ -52,9 +54,11 @@ class SchoolController extends Controller
      * Display a listing of the resource.
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        return view('admin.school.index');
+        $schools = $user->where('role',4)->with('schoolInfo')->get();
+        //dd($schools->toArray());
+        return view('admin.school.index', compact('schools'));
     }
 
     /**
@@ -399,6 +403,8 @@ class SchoolController extends Controller
      */
     public function create(Request $request, User $user)
     {
+
+        $sType = $request->input('sType', 'university');
         $id = $request->input('id', 0);
         $addNew = true;
         if($id != 0) $addNew = false;
@@ -406,19 +412,21 @@ class SchoolController extends Controller
         $currencies = Currency::all();
         $countries = \CountryState::getCountries();
         $states = \CountryState::getStates('JP');
+        $degreelevel = getDegreelevel();
+        $courseTerm = getCourseTerm();
+        $enrollment = getEnrollment();
+        $majorLanguage = getMajorLanguage();
         $nationalities = getNationalities();
 //        $currentY = intval(date('Y'));
-        $majors = Major::all();
-        foreach($majors as $k=>$major){
-            $dataMajors[$major->type][$k] = $major->text;
-        }
 
-        $school = $user->with('images','schoolInfo','faculty')->where('id', $id)->first();
-        //dd($school->toArray());
+
+        $school = $user->with('images','schoolInfo','faculty', 'otherText', 'scholarships', 'facultySchool')->where('id', $id)->first();
         if($school){
+            $sType = $school->school_type;
             $school->img_profile = $school->img_profile != '' ? $school->img_profile : 'img/no-image.png';
         }
-        return view('admin.school.create', compact('school', 'addNew','currencies', 'countries', 'states', 'nationalities', 'dataMajors'));
+        //dd($school->toArray());
+        return view('admin.school.create', compact('sType','majorLanguage','enrollment','courseTerm','degreelevel','school', 'addNew','currencies', 'countries', 'states', 'nationalities'));
     }
 
     /**
@@ -459,36 +467,7 @@ class SchoolController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $schoolarship = Schoolarship::find($id);
-        if(!$schoolarship){
-            Flash::warning('Can\'t find Schoolarship '.$id);
-            return redirect()->route('admin.schoolarship.index');
-        }
-        $months = [['Jan','1'],['Feb','2'],['Mar','3'],['Apr','4'],['May','5'],['Jun','6'],['Jul','7'],['Aug','8'],['Sep','9'],['Oct','10'],['Nov','11'],['Dec','12']];
-        $typeOrans = OranizationType::all();
-        $majors = Major::all();
-        $degrees = Degree::all();
-        $academics = Academic::all();
-        $typeOfStudies = TypeOfStudy::all();
-        $currencies = Currency::all();
-        $countries = \CountryState::getCountries();
-        $states = \CountryState::getStates('US');
-        $langs = ["Afar","Abkhazian","Avestan","Afrikaans","Akan","Amharic","Aragonese","Arabic","Assamese","Avaric","Aymara","Azerbaijani","Bashkir","Belarusian","Bulgarian","Bihari languages","Bislama","Bambara","Bengali","Tibetan","Breton","Bosnian","Catalan; Valencian","Chechen","Chamorro","Corsican","Cree","Czech","Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic","Chuvash","Welsh","Danish","German","Divehi; Dhivehi; Maldivian","Dzongkha","Ewe","Greek, Modern (1453-)","English","Esperanto","Spanish; Castilian","Estonian","Basque","Persian","Fulah","Finnish","Fijian","Faroese","French","Western Frisian","Irish","Gaelic; Scottish Gaelic","Galician","Guarani","Gujarati","Manx","Hausa","Hebrew","Hindi","Hiri Motu","Croatian","Haitian; Haitian Creole","Hungarian","Armenian","Herero","Interlingua (International Auxiliary Language Association)","Indonesian","Interlingue; Occidental","Igbo","Sichuan Yi; Nuosu","Inupiaq","Ido","Icelandic","Italian","Inuktitut","Japanese","Javanese","Georgian","Kongo","Kikuyu; Gikuyu","Kuanyama; Kwanyama","Kazakh","Kalaallisut; Greenlandic","Central Khmer","Kannada","Korean","Kanuri","Kashmiri","Kurdish","Komi","Cornish","Kirghiz; Kyrgyz","Latin","Luxembourgish; Letzeburgesch","Ganda","Limburgan; Limburger; Limburgish","Lingala","Lao","Lithuanian","Luba-Katanga","Latvian","Malagasy","Marshallese","Maori","Macedonian","Malayalam","Mongolian","Marathi","Malay","Maltese","Burmese","Nauru","Bokmål, Norwegian; Norwegian Bokmål","Ndebele, North; North Ndebele","Nepali","Ndonga","Dutch; Flemish","Norwegian Nynorsk; Nynorsk, Norwegian","Norwegian","Ndebele, South; South Ndebele","Navajo; Navaho","Chichewa; Chewa; Nyanja","Occitan (post 1500); Provençal","Ojibwa","Oromo","Oriya","Ossetian; Ossetic","Panjabi; Punjabi","Pali","Polish","Pushto; Pashto","Portuguese","Quechua","Romansh","Rundi","Romanian; Moldavian; Moldovan","Russian","Kinyarwanda","Sanskrit","Sardinian","Sindhi","Northern Sami","Sango","Sinhala; Sinhalese","Slovak","Slovenian","Samoan","Shona","Somali","Albanian","Serbian","Swati","Sotho, Southern","Sundanese","Swedish","Swahili","Tamil","Telugu","Tajik","Thai","Tigrinya","Turkmen","Tagalog","Tswana","Tonga (Tonga Islands)","Turkish","Tsonga","Tatar","Twi","Tahitian","Uighur; Uyghur","Ukrainian","Urdu","Uzbek","Venda","Vietnamese","Volapük","Walloon","Wolof","Xhosa","Yiddish","Yoruba","Zhuang; Chuang","Chinese","Zulu"];
-        $editors = User::where('role', 2)->get();
 
-        // Get lists categories
-        $categories = Category::lists('title', 'id');
-
-        return view('admin.schoolarship.edit', compact('schoolarship', 'editors', 'typeOrans', 'majors', 'degrees', 'academics', 'typeOfStudies', 'currencies', 'months', 'countries', 'states', 'langs', 'categories') );
-    }
 
 
     /**
@@ -506,48 +485,88 @@ class SchoolController extends Controller
     public function schoolStructure(Request $request, Faculty $faculty, FacultySchool $facultySchool){
         $structure = $request->input('structure', []);
         $school_id = $request->input('school_id', 0);
+        $sType = $request->input('sType', 'university');
 
-        $fs_id_remove = $request->input('fs_id_remove', '0');
-        $f_id_remove = $request->input('f_id_remove', '0');
-        $fs_id_remove = explode('|', $fs_id_remove);
-        $f_id_remove = explode('|', $f_id_remove);
+        if($sType == 'university'){
+            $fs_id_remove = $request->input('fs_id_remove', '0');
+            $f_id_remove = $request->input('f_id_remove', '0');
+            $fs_id_remove = explode('|', $fs_id_remove);
+            $f_id_remove = explode('|', $f_id_remove);
 
-        $faculty->destroy($f_id_remove);
-        $facultySchool->whereIn('faculty_id', $f_id_remove)->delete();
-        
-        $facultySchool->destroy($fs_id_remove);
+            $faculty->destroy($f_id_remove);
+            $facultySchool->whereIn('faculty_id', $f_id_remove)->delete();
 
-        if($school_id > 0){
-            if(count($structure) > 0){
-                foreach($structure as $struct){
-                    if(isset($struct['faculty_id'])){
-                        $faculty->where('id',$struct['faculty_id'])->update(['name' => $struct['name_faculty']]);
-                    }else{
-                        $faculty = Faculty::create(['name' => $struct['name_faculty'], 'school_id' => $school_id]);
-                    }
-                    $faculty_id = $faculty->id ? $faculty->id : $struct['faculty_id'];
-                    foreach($struct['school'] as $fs){
-                        if(isset($fs['fs_id'])){
-                            $facultySchool->where('id',$fs['fs_id'])->update(['name' => $fs['name_school'], 'academic_level' => $fs['child']]);
+            $facultySchool->destroy($fs_id_remove);
+
+            if($school_id > 0){
+                if(count($structure) > 0){
+                    foreach($structure as $struct){
+                        if(isset($struct['faculty_id'])){
+                            $faculty->where('id',$struct['faculty_id'])->update(['name' => $struct['name_faculty']]);
                         }else{
-                            $facultySchool = FacultySchool::create(['name' => $fs['name_school'], 'academic_level' => $fs['child'], 'faculty_id' => $faculty_id]);
+                            $faculty = Faculty::create(['name' => $struct['name_faculty'], 'school_id' => $school_id]);
+                        }
+                        $faculty_id = $faculty->id ? $faculty->id : $struct['faculty_id'];
+                        foreach($struct['school'] as $fs){
+                            if(isset($fs['fs_id'])){
+                                $facultySchool->where('id',$fs['fs_id'])->update(['name' => $fs['name_school'], 'academic_level' => $fs['child']]);
+                            }else{
+                                $facultySchool = FacultySchool::create(['school_id' => $school_id,'name' => $fs['name_school'], 'academic_level' => $fs['child'], 'faculty_id' => $faculty_id]);
+                            }
                         }
                     }
                 }
             }
+        }elseif($sType == 'vocational'){
+            $fSchoolOld = $request->input('fSchoolOld', []);
+            $fSchool = $request->input('fSchool', []);
+            if(count($fSchoolOld) > 0){
+                foreach($fSchoolOld as $k=>$name){
+                    $facultySchool->where('id', $k)->update(['name' => $name]);
+                }
+            }
+            if(count($fSchool) > 0){
+                for($i=0; $i<count($fSchool); $i++){
+                    $data = ['name' => $fSchool[$i], 'school_id' => $school_id];
+                    FacultySchool::create($data);
+                }
+            }
+        }else{
+
         }
+
         return redirect('admin/school/create?id=' . $school_id);
     }
 
-    public function schoolInfoUpdate(Request $request, User $user, SchoolInfo $schoolInfo){
+    public function schoolInfoUpdate(Request $request, User $user, SchoolInfo $schoolInfo, OtherText $otherText){
+
         $school_id = $request->input('school_id', 0);
         $school_info_id = $request->input('school_info_id', 0);
         $user = $user->where('id', $school_id)->where('role', 4)->first();
+        $school_other = $request->input('school_other', []);
+        $school_other_old = $request->input('school_other_old', []);
+
         if($user){
             $file = $request->brochure ? $request->brochure : null;
 
             $data = $request->except('_token', 'school_info_id', 'brochure');
             $schoolInfo = $schoolInfo->where('id', $school_info_id)->first();
+            // insert other text
+            if(count($school_other) > 0){
+                for($i=0; $i<count($school_other); $i++){
+                    $dataOther = [];
+                    $dataOther['school_id'] = $school_id;
+                    $dataOther['content'] = $school_other[$i];
+                    $dataOther['type'] = 'school';
+                    OtherText::create($dataOther);
+                }
+            }
+            if(count($school_other_old) > 0){
+                foreach($school_other_old as $k=>$otOld){
+                    $otherText->where('id', $k)->update(['content' => $otOld]);
+                }
+            }
+
             // process file
             if($file){
                 $filename  = 'user-brochure-' . time() . rand() . '.' . $file->getClientOriginalExtension();
@@ -560,11 +579,107 @@ class SchoolController extends Controller
                 $data['brochure'] = 'users/'. $school_id . '/' . $filename;
             }
             if($schoolInfo){
+                unset($data['school_other']);
+                unset($data['school_other_old']);
                 $rs = $schoolInfo->update($data);
             }else{
                 $rs = SchoolInfo::create($data);
             }
         }
         return redirect('admin/school/create?id=' . $school_id);
+    }
+
+    public function addMajor(Request $request, Major $major){
+        $school_id = $request->input('school_id',0);
+        $fs_id = $request->input('fs_id',[]);
+        $school_type = $request->input('school_type',[]);
+        $dataOld = $request->input('dataOld',[]);
+        $text = $request->input('text',[]);
+        $degree_level = $request->input('degree_level',[]);
+        $course_term = $request->input('course_term',[]);
+        $enrollment = $request->input('enrollment',[]);
+        $language = $request->input('language',[]);
+        $application_period = $request->input('application_period',[]);
+        $application_period_max = $request->input('application_period_max',[]);
+        if(count($dataOld) > 0){
+            foreach($dataOld as $k=>$do){
+                $major->where('id', $k)->update(array_merge($do, ['school_id' => $school_id, 'fs_id' => $fs_id]));
+            }
+        }
+        if(count($text) > 0){
+            for($i=0; $i<count($text); $i++){
+                $data = [];
+                $data['school_id'] = $school_id;
+                $data['fs_id'] = $fs_id;
+                $data['type'] = $school_type;
+                $data['text'] = $text[$i];
+                $data['degree_level'] = $degree_level[$i];
+                $data['course_term'] = $course_term[$i];
+                $data['enrollment'] = $enrollment[$i];
+                $data['language'] = $language[$i];
+                $data['application_period'] = $application_period[$i];
+                $data['application_period_max'] = $application_period_max[$i];
+                Major::create($data);
+            }
+        }
+        return redirect('admin/school/create?id=' . $school_id);
+    }
+
+    public function getMajorExist(Request $request, Major $major){
+        $degreelevel = getDegreelevel();
+        $courseTerm = getCourseTerm();
+        $enrollment = getEnrollment();
+        $majorLanguage = getMajorLanguage();
+        $sType = $request->input('sType', 'university');
+        if($sType != 'language'){
+            $fs_id = $request->input('fs_id', 0);
+            $majors = $major->where('fs_id', $fs_id)->get();
+        }else{
+            $school_id = $request->input('school_id', 0);
+            $majors = $major->where('school_id', $school_id)->get();
+        }
+        return view('admin.school.major', compact('majors', 'degreelevel', 'courseTerm', 'enrollment', 'majorLanguage'));
+    }
+
+    public function addOtherTextExist(Request $request, OtherText $otherText){
+        $school_id = $request->input('school_id',0);
+        $fs_id = $request->input('fs_id',[]);
+        $other_type = $request->input('other_type',[]);
+        $dataOld = $request->input('dataOld',[]);
+        $name = $request->input('name',[]);
+        $content = $request->input('content',[]);
+
+        if(count($dataOld) > 0){
+            foreach($dataOld as $k=>$do){
+                //$otherText->where('id', $k)->update(array_merge($do, ['school_id' => $school_id, 'fs_id' => $fs_id]));
+                $otherText->where('id', $k)->update($do);
+            }
+        }
+        if(count($name) > 0){
+            for($i=0; $i<count($name); $i++){
+                $data = [];
+                $data['school_id'] = $school_id;
+                $data['faculty_school_id'] = $fs_id;
+                $data['type'] = $other_type;
+                $data['name'] = $name[$i];
+                $data['content'] = $content[$i];
+                OtherText::create($data);
+            }
+        }
+        return redirect('admin/school/create?id=' . $school_id);
+    }
+
+    public function getOtherTextExist(Request $request, OtherText $otherText){
+        $fs_id = $request->input('fs_id', 0);
+        $type = $request->input('type', 0);
+        $sType = $request->input('sType', 'university');
+        if($sType != 'language'){
+            $otherText = $otherText->where('faculty_school_id', $fs_id)->where('type', 'LIKE', $type)->get();
+        }else{
+            $school_id = $request->input('school_id', 0);
+            $otherText = $otherText->where('school_id', $school_id)->where('type', 'LIKE', $type)->get();
+        }
+
+        return view('admin.school.other', compact('otherText'));
     }
 }

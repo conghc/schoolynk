@@ -28,6 +28,13 @@ $(document).ready(function(){
         html_faculty += '</div>';
         $('.list-faculty').append(html_faculty);
     });
+    $('.add-more-school').click(function(){
+        html = '<div class="form-group child-school">';
+        html += '<div class="col-sm-9">';
+        html += '<input type="text" value="" name="fSchool[]" class="form-control name_school">';
+        html += '</div></div>';
+        $('.list-fSchool').append(html);
+    });
 
     $('#add_fs_info').click(function(){
         fsId = $('#fs_id').val();
@@ -42,6 +49,7 @@ $(document).ready(function(){
             success: function (data) {
                 $('#fs_id option[value='+ fsId +']').attr('disabled','disabled');
                 $('#fs_id').trigger("chosen:updated");
+                location.reload();
                 $('#loading-fixed').hide();
             }
         });

@@ -12,3 +12,18 @@ function getLanguages() {
 function getNationalities() {
 	return ['Afghans','Albanians','Algerians','Americans','Andorrans','Angolans','Argentines','Armenians','Aromanians','Arubans','Australians','Austrians','Azerbaijanis','Bahamians','Bahrainis','Bangladeshis','Barbadians','Belarusians','Belgians','Belizeans','Bermudians','Boers','Bosniaks','Brazilians','Bretons','British','British Virgin Islanders','Bulgarians','Macedonian Bulgarians','Burkinabès','Burundians','Cambodians','Cameroonians','Canadians','Catalans','Cape Verdeans','Chadians','Chileans','Chinese','Colombians','Comorians','Congolese','Croatians','Cubans','Cypriots','Turkish Cypriots','Czechs','Danes','Dominicans (Republic)','Dominicans (Commonwealth)','Dutch','East Timorese','Ecuadorians','Egyptians','Emiratis','English','Eritreans','Estonians','Ethiopians','Faroese','Finns','Finnish Swedish','Fijians','Filipinos','French citizens','Georgians','Germans','Baltic Germans','Ghanaians','Gibraltar','Greeks','Greek Macedonians','Grenadians','Guatemalans','Guianese (French)','Guineans','Guinea-Bissau nationals','Guyanese','Haitians','Hondurans','Hong Kong','Hungarians','Icelanders','I-Kiribati','Indians','Indonesians','Iranians (Persians)','Iraqis','Irish','Israelis','Italians','Ivoirians','Jamaicans','Japanese','Jordanians','Kazakhs','Kenyans','Koreans','Kosovars','Kurds','Kuwaitis','Kyrgyzs','Lao','Latvians','Lebanese','Liberians','Libyans','Liechtensteiners','Lithuanians','Luxembourgers','Macedonians','Malagasy','Malaysians','Malawians','Maldivians','Malians','Maltese','Manx','Mauritians','Mexicans','Moldovans','Moroccans','Mongolians','Montenegrins','Namibians','Nepalese','New Zealanders','Nicaraguans','Nigeriens','Nigerians','Norwegians','Pakistanis','Palauans','Palestinians','Panamanians','Papua New Guineans','Paraguayans','Peruvians','Poles','Portuguese','Puerto Ricans','Quebecers','Réunionnais','Romanians','Russians','Baltic Russians','Rwandans','Salvadorans','São Tomé and Príncipe','Saudis','Scots','Senegalese','Serbs','Sierra Leoneans','Singaporeans','Sindhian','Slovaks','Slovenes','Somalis','South Africans','Spaniards','Sri Lankans','St Lucians','Sudanese','Surinamese','Swedes','Swiss','Syriacs','Syrians','Taiwanese','Tajik','Tanzanians','Thais','Tibetans','Tobagonians','Trinidadians','Tunisians','Turks','Tuvaluans','Ugandans','Ukrainians','Uruguayans','Uzbeks','Vanuatuans','Venezuelans','Vietnamese','Welsh','Yemenis','Zambians','Zimbabweans'];
 }
+
+function getDegreelevel(){
+	return ['bachelor', 'master', 'ph.d', 'non_degree_program'];
+}
+
+function getCourseTerm(){
+	return ['1_year', '2_years', '3_years', '4_years', '5_years', '6_years', '7_years', '8_years', '9_years', '10_years'];
+}
+
+function getEnrollment(){
+	return ['january','february','march','april','may','june','july','august','september','october','november','december'];
+}
+function getMajorLanguage(){
+	return ['Japanese', 'English', 'Japanese & English', 'Other language'];
+}

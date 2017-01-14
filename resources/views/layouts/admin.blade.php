@@ -72,20 +72,20 @@
                             SL
                         </div>
                     </li>
-                    <li class="{{ Route::is('admin.scholarship.index') || Route::is('admin.scholarship.create') ? 'active' : ''}}">
+                    <li class="{{ Route::is('admin.school.index') || Route::is('admin.school.create') ? 'active' : ''}}">
                         <a href="index.html"><i class="fa fa-university"></i> <span class="nav-label">{{ trans('label.school') }}</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="{{ Route::is('admin.scholarship.index') ? 'active' : '' }}">
+                            <li class="{{ Route::is('admin.school.index') ? 'active' : '' }}">
                                 <a href="{{ route('admin.school.index') }}">{{ trans('label.school_list') }}</a>
                             </li>
                             <li class="{{ Route::is('admin.schoolarship.create') ? 'active' : '' }}">
-                                <a href="{{ route('admin.school.create') }}">{{ trans('label.add_university') }}</a>
+                                <a href="{{ route('admin.school.create') }}?sType=university">{{ trans('label.add_university') }}</a>
                             </li>
                             <li class="{{ Route::is('admin.schoolarship.create') ? 'active' : '' }}">
-                                <a href="{{ route('admin.school.create') }}">{{ trans('label.add_vocational_school') }}</a>
+                                <a href="{{ route('admin.school.create') }}?sType=vocational">{{ trans('label.add_vocational_school') }}</a>
                             </li>
                             <li class="{{ Route::is('admin.scholarship.create') ? 'active' : '' }}">
-                                <a href="{{ route('admin.school.create') }}">{{ trans('label.add_language_school') }}</a>
+                                <a href="{{ route('admin.school.create') }}?sType=language">{{ trans('label.add_language_school') }}</a>
                             </li>
                         </ul>
                     </li>
@@ -219,13 +219,13 @@
                     <h2></h2>
                     <ol class="breadcrumb">
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="">Home</a>
                         </li>
                         <li>
                             <a>Tables</a>
                         </li>
                         <li class="active">
-                            <strong>Data Tables</strong>
+                            <strong></strong>
                         </li>
                     </ol>
                 </div>

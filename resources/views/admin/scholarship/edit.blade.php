@@ -232,7 +232,7 @@
                             <div class="col-md-3">
                                 <?php $applicable_year = $scholarship ? $scholarship->applicable_year : 0 ?>
                                 <select class="form-control m-b" name="applicable_year">
-                                    <?php for($i=2017; $i<2030; $i++): ?>
+                                    <?php for($i=2017; $i<2040; $i++): ?>
                                     <option value="{{ $i }}" {{ $applicable_year == $i ? 'selected' : '' }}>{{ $i }}</option>
                                     <?php endfor; ?>
                                 </select>
@@ -240,7 +240,7 @@
                             <div class="col-md-3">
                                 <?php $applicable_year_max = $scholarship ? $scholarship->applicable_year_max : 0 ?>
                                 <select class="form-control m-b" name="applicable_year_max">
-                                    <?php for($i=2017; $i<2030; $i++): ?>
+                                    <?php for($i=2017; $i<2040; $i++): ?>
                                     <option value="{{ $i }}" {{ $applicable_year_max == $i ? 'selected' : '' }}>{{ $i }}</option>
                                     <?php endfor; ?>
                                 </select>
@@ -428,11 +428,11 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.designated_school') }}</label>
                             <div class="col-sm-7">
-                                <?php $schools_arr = isset($scholarship->schools_arr) ? $scholarship->schools_arr : [];?>
+                                <?php $schools_arr = isset($scholarship->schools_arr) ? $scholarship->schools_arr : []; ?>
                                 <select name="designated_school[]" data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
-                                    @for($i=1; $i<6; $i++)
-                                        <option value="{{ $i }}" {{ in_array($i, $schools_arr) ? 'Selected' : '' }}>School 0{{ $i }}</option>
-                                    @endfor
+                                    @foreach($schools as $school)
+                                        <option value="{{ $school->id }}" {{ in_array($school->id, $schools_arr) ? 'Selected' : '' }}> {{ $school->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-sm-3">

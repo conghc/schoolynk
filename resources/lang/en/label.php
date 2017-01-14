@@ -123,7 +123,7 @@
 		'parent_of_student'  		       => '生徒の親',
 		'choice'  		   			       => '選択',
 		'street_address' 			       => 'Address',
-		'country' 			   		       => '国',
+		'country' 			   		       => 'Country',
 		'school_year'  		   		       => '学年',
 		'graduation_date'  		   	       => '卒業予定日',
 		'study_abroad_to_be_desired'       => '希望する留学',
@@ -441,5 +441,6 @@
 		'longitude' => 'Longitude',
 		'latitude' => 'Latitude',
 		'add'		=> 'Add',
+		'edit'		=> 'Edit',
 	];
 ?>

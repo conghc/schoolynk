@@ -58,6 +58,10 @@ Route::group([
 
         Route::post('school-structure', 'SchoolController@schoolStructure');
         Route::post('school-info-update', 'SchoolController@schoolInfoUpdate');
+        Route::post('school-add-major', 'SchoolController@addMajor');
+        Route::post('school-major-exist', 'SchoolController@getMajorExist');
+        Route::post('other-text-exist', 'SchoolController@getOtherTextExist');
+        Route::post('other-text-update', 'SchoolController@addOtherTextExist');
     });
     
 });

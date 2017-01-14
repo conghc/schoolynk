@@ -51,6 +51,7 @@
 				values['scholarship_id'] = $('#scholarship_id').val();
 				values['user_type'] = $('#user_type').val();
 				values['sponsor_id'] = $('#school_id').val();
+				values['school_type'] = $('#sType').val();
 				$.ajax({
 					headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 					url: '/admin/add-sponsor',
@@ -194,26 +195,59 @@
 		});
 	};
 
-	function schoolMajoir(elem) {
+	function schoolMajor(elem) {
+		$('#loading-fixed').show();
+		$('#list-major').html('');
 		fs_name = $(elem).parent().find('.fs_name').val();
 		$('#modalMajor .modal-title').text($(elem).parent().find('.fs_name').val());
 		$('#modalMajor h4.modal-title-body').text($(elem).text());
+		$('#modalMajor .fs_id').val($(elem).parent().find('.fs_name').attr('id'));
 
+		$.ajax({
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			url: '/admin/school-major-exist',
+			type: 'POST',
+			data: {
+                'fs_id': $(elem).parent().find('.fs_name').attr('id'),
+                'sType': $('#sType').val(),
+                'school_id': $('#school_id').val()
+            },
+			success: function (data) {
+				$('#list-major').append(data);
+				$('#loading-fixed').hide();
+			}
+		});
 		$("#modalMajor").modal('show');
 	}
-	function schoolAdmission(elem) {
+	function otherModal(elem) {
+		$('#loading-fixed').show();
+		$('#list-other').html('');
 		fs_name = $(elem).parent().find('.fs_name').val();
-		$('#schoolAdmission .modal-title').text($(elem).parent().find('.fs_name').val());
-		$('#schoolAdmission h4.modal-title-body').text($(elem).text());
+		$('#schoolOthers .modal-title').text($(elem).parent().find('.fs_name').val());
+		$('#schoolOthers h4.modal-title-body').text($(elem).text());
+		$('#schoolOthers .fs_id').val($(elem).parent().find('.fs_name').attr('id'));
 
-		$("#schoolAdmission").modal('show');
-	}
-	function schoolTuitionFee(elem) {
-		fs_name = $(elem).parent().find('.fs_name').val();
-		$('#schoolTuitionFee .modal-title').text($(elem).parent().find('.fs_name').val());
-		$('#schoolTuitionFee h4.modal-title-body').text($(elem).text());
-
-		$("#schoolTuitionFee").modal('show');
+		other_type = $(elem).attr('other_type');
+		$('#other_type').val(other_type);
+		$.ajax({
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			url: '/admin/other-text-exist',
+			type: 'POST',
+			data: {
+                'fs_id': $(elem).parent().find('.fs_name').attr('id'),
+                'type': other_type,
+                'sType': $('#sType').val(),
+                'school_id': $('#school_id').val()
+            },
+			success: function (data) {
+				$('#list-other').append(data);
+				$('.summernote-modal').summernote({
+					minHeight: 250
+				});
+				$('#loading-fixed').hide();
+			}
+		});
+		$("#schoolOthers").modal('show');
 	}
 	function schoolScholarships(elem) {
 		school_id = $('#school_id').val();
@@ -222,11 +256,110 @@
 
 		$("#schoolScholarships").modal('show');
 	}
-	function schoolOthers(elem) {
-		fs_name = $(elem).parent().find('.fs_name').val();
-		$('#schoolOthers .modal-title').text($(elem).parent().find('.fs_name').val());
-		$('#schoolOthers h4.modal-title-body').text($(elem).text());
+	$(document).ready(function(){
+		$('#add_more_major').on('click', function() {
+			html = '<div class="hr-line-dashed"></div>';
+			html += '<div class="child-major">';
+			html += '<div class="form-group">';
+			html += '<div class="col-sm-12">';
+			html += '<input type="text" value="" class="form-control" name="text[]">';
+			html += '</div>';
+			html += '</div>';
+			html += '<div class="form-group">';
+			html += '<div class="col-sm-3 contr-ol-label">' + "{{ trans('school.degree_level') }}" + '</div>';
+			html += '<div class="col-md-9">';
+			html += '<select class="form-control m-b" name="degree_level[]">';
+			@for($i=0; $i<count($degreelevel); $i++)
+				html += '<option value="{{ $degreelevel[$i] }}">'+ "{{ trans('school.'. $degreelevel[$i]) }}" +'</option>';
+			@endfor
+			html += '</select>';
+			html += '</div>';
+			html += '</div>';
+			html += '<div class="form-group">';
+			html += '<div class="col-sm-3 contr-ol-label">'+ "{{ trans('school.course_term') }}" +'</div>';
+			html += '<div class="col-md-9">';
+			html += '<select class="form-control m-b" name="course_term[]">';
+			@for($i=0; $i<count($courseTerm); $i++)
+					html += '<option value="{{ $courseTerm[$i] }}">'+ "{{ trans('school.'. $courseTerm[$i]) }}" +'</option>';
+			@endfor
+			html += '</select>';
+			html += '</div>';
+			html += '</div>';
+			html += '<div class="form-group">';
+			html += '<div class="col-sm-3 control-label">'+ "{{ trans('school.enrollment') }}" +'</div>';
+			html += '<div class="col-md-9">';
+			html += '<select class="form-control m-b" name="enrollment[]">';
+			@for($i=0; $i<count($enrollment); $i++)
+					html += '<option value="{{ $enrollment[$i] }}">'+ "{{ trans('school.'. $enrollment[$i]) }}" +'</option>';
+			@endfor
+			html += '</select>';
+			html += '</div>';
+			html += '</div>';
+			html += '<div class="form-group">';
+			html += '<div class="col-sm-3 control-label">'+ "{{ trans('school.language') }}" +'</div>';
+			html += '<div class="col-md-9">';
+			html += '<select class="form-control m-b" name="language[]">';
+			@for($i=0; $i<count($majorLanguage); $i++)
+					html += '<option value="{{ $majorLanguage[$i] }}">{{ $majorLanguage[$i] }}</option>';
+			@endfor
+			html += '</select>';
+			html += '</div>';
+			html += '</div>';
+			html += '<div class="form-group">';
+			html += '<div class="col-sm-3 control-label">'+ "{{ trans('school.application_period') }}" +'</div>';
+			html += '<div class="col-md-4">';
+			html += '<select class="form-control m-b" name="application_period[]">';
+			@for($i=0; $i<count($enrollment); $i++)
+					html += '<option value="{{ $enrollment[$i] }}">'+ "{{ trans('school.'. $enrollment[$i]) }}" +'</option>';
+			@endfor
+			html += '</select>';
+			html += '</div>';
+			html += '<div class="col-md-1"><img class="ic-about" src="/img/ic-about.png" /></div>';
+			html += '<div class="col-md-4">';
+			html += '<select class="form-control m-b" name="application_period_max[]">';
+			@for($i=0; $i<count($enrollment); $i++)
+					html += '<option value="{{ $enrollment[$i] }}">'+ "{{ trans('school.'. $enrollment[$i]) }}" +'</option>';
+			@endfor
+			html += '</select>';
+			html += '</div>';
+			html += '</div>';
+			html += '</div>';
+			$('#list-major').append(html);
+		});
 
-		$("#schoolOthers").modal('show');
-	}
+		$('#add_more_other').on('click', function() {
+			html = '<div class="child-other">';
+			html += '<div class="form-group">';
+			html += '<div class="col-sm-12">';
+			html += '<input type="text" value="" class="form-control" name="name[]">';
+			html += '</div>';
+			html += '</div>';
+			html += '<div class="form-group">';
+			html += '<div class="col-md-12">';
+			html += '<textarea class="summernote summernote-modal" id="" name="content[]" >';
+			html += '</textarea>';
+			html += '</div>';
+			html += '</div>';
+			html += '</div>';
+			$('#list-other').append(html);
+			$('.summernote-modal').summernote({
+				minHeight: 250
+			});
+		});
+
+		$('#add_school_other').on('click', function(){
+			html = '<div class="hr-line-dashed"></div>';
+            html += '<div class="form-group school_other_child">';
+            html += '<label class="col-sm-2 control-label">'+ "{{ trans('school.texts') }}" +'</label>';
+            html += '<div class="col-sm-10">';
+            html += '<textarea class="summernote" id="" name="school_other[]" rows="40">';
+            html += '</textarea>';
+            html += '</div>';
+            html += '</div>';
+            $('#school_other_list').append(html);
+            $('.summernote').summernote({
+                minHeight: 250
+            });
+		});
+	});
 </script>

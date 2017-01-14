@@ -35,12 +35,12 @@
                             $("#modalAdvanceSearch").modal('show');
                         }
                     },
-                    {
-                        text: '{{ trans("scholarship.scholarship_add") }}',
-                        action: function (){
-                            window.location.href = "http://schoolynk.dev/admin/scholarship/create";
-                        }
-                    }
+                    {{--{--}}
+                        {{--text: '{{ trans("scholarship.scholarship_add") }}',--}}
+                        {{--action: function (){--}}
+                            {{--window.location.href = "http://schoolynk.dev/admin/scholarship/create";--}}
+                        {{--}--}}
+                    {{--}--}}
                 ],
                 columnDefs: [ {
                     "targets": 'no-sort',
@@ -105,152 +105,10 @@
                                     <td class="center">{{ $scholarship->url or '' }}</td>
                                     <td class="center tb-action">
                                         <a href="{{ route('admin.scholarship.create') }}?id={{ $scholarship->id }}" class="btn btn-default btn-xs">{{ trans('label.edit') }}</a>
-                                        <button type="button" class="btn btn-default btn-xs">Delete</button>
+                                        {{--<button type="button" class="btn btn-default btn-xs">Delete</button>--}}
                                     </td>
                                 </tr>
                             @endforeach
-
-                            <tr class="gradeX">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.5
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5.5</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 6
-                                </td>
-                                <td>Win 98+</td>
-                                <td class="center">6</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -273,25 +131,25 @@
                         <div class="form-group"><div class="col-sm-4 control-label">{{ trans('label.type_of_scholarship') }}</div>
                             <div class="col-sm-8">
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox1" type="checkbox">
-                                    <label for="inlineCheckbox1">Tuition fee</label>
+                                    <input type="checkbox" id="" value="1" name="type_of_award[]">
+                                    <label for="type_of_scholarship">Scholarship</label>
                                 </div>
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox2" type="checkbox">
-                                    <label for="inlineCheckbox2">Living cost</label>
+                                    <input type="checkbox" id="" value="2" name="type_of_award[]">
+                                    <label for="type_of_scholarship">No interest loan</label>
                                 </div>
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox3" type="checkbox">
-                                    <label for="inlineCheckbox3">Others</label>
+                                    <input type="checkbox" id="" value="3" name="type_of_award[]">
+                                    <label for="type_of_scholarship">Loan</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">{{ trans('label.amount_of_award') }}</div>
                             <div class="col-md-3">
                                 <select class="form-control m-b" name="account">
-                                    <option value="">Above</option>
-                                    <option value="">Below</option>
-                                    <option value="">Equal</option>
+                                    <option value=">">Above</option>
+                                    <option value="<">Below</option>
+                                    <option value="=">Equal</option>
                                 </select>
                             </div>
                             <div class="col-sm-5"><input type="email" class="form-control"></div>
@@ -299,58 +157,62 @@
                         <div class="form-group"><div class="col-sm-4 control-label">{{ trans('label.type_of_cost_covered') }}</div>
                             <div class="col-sm-8">
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox1" type="checkbox">
-                                    <label for="inlineCheckbox1">Tuition fee</label>
+                                    <input type="checkbox" id="" value="1" name="type_of_cost_covered[]">
+                                    <label for="type_of_cost_covered">Tuition fee</label>
                                 </div>
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox2" type="checkbox">
-                                    <label for="inlineCheckbox2">Living cost</label>
+                                    <input type="checkbox" id="" value="2" name="type_of_cost_covered[]">
+                                    <label for="type_of_cost_covered">Living cost</label>
                                 </div>
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox3" type="checkbox">
-                                    <label for="inlineCheckbox3">Others</label>
+                                    <input type="checkbox" id="" value="3" name="type_of_cost_covered[]">
+                                    <label for="type_of_cost_covered">Others</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">Number of  awards granted</div>
                             <div class="col-md-3">
                                 <select class="form-control m-b" name="account">
-                                    <option value="">Above</option>
-                                    <option value="">Below</option>
-                                    <option value="">Equal</option>
+                                    <option value=">">Above</option>
+                                    <option value="<">Below</option>
+                                    <option value="=">Equal</option>
                                 </select>
                             </div>
                             <div class="col-sm-5"><input type="email" class="form-control"></div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">Applicable scholarship year</div>
                             <div class="col-md-3">
-                                <select class="form-control m-b" name="account">
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
+                                <select class="form-control m-b" name="applicable_year">
+                                    <?php for($i=2017; $i<2040; $i++): ?>
+                                    <option value="{{ $i }}" >{{ $i }}</option>
+                                    <?php endfor; ?>
                                 </select>
                             </div>
+                            <div class="col-md-1">
+                                <img class="ic-about" src="/img/ic-about.png" />
+                            </div>
                             <div class="col-md-3">
-                                <select class="form-control m-b" name="account">
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
+                                <select class="form-control m-b" name="applicable_year_max">
+                                    <?php for($i=2017; $i<2040; $i++): ?>
+                                    <option value="{{ $i }}" >{{ $i }}</option>
+                                    <?php endfor; ?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">Application deadline</div>
-                            <div class="col-sm-4" id="deadline">
+                            <div class="col-sm-3" id="deadline">
                                 <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" value="" name="deadline">
                                 </div>
+                            </div>
+                            <div class="col-md-1">
+                                <img class="ic-about" src="/img/ic-about.png" />
                             </div>
                             <div class="col-sm-4" id="deadline-max">
                                 <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" name="deadline_max" value="">
                                 </div>
                             </div>
                         </div>
@@ -358,70 +220,67 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><div class="col-sm-4 control-label">Age requirement</div>
                             <div class="col-md-3">
-                                <select class="form-control m-b" name="account">
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
+                                <select class="form-control m-b" name="age">
+                                    @for($i=1; $i<=80; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
                                 </select>
                             </div>
+                            <div class="col-md-1">
+                                <img class="ic-about" src="/img/ic-about.png" />
+                            </div>
                             <div class="col-md-3">
-                                <select class="form-control m-b" name="account">
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
+                                <select class="form-control m-b" name="age_max">
+                                    @for($i=1; $i<=80; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">Gender requirement</div>
                             <div class="col-sm-8">
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox1" type="checkbox">
-                                    <label for="inlineCheckbox1">Tuition fee</label>
+                                    <input type="checkbox" value="male" name="gender[]">
+                                    <label for="gender">Male</label>
                                 </div>
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox2" type="checkbox">
-                                    <label for="inlineCheckbox2">Living cost</label>
+                                    <input type="checkbox" value="female" name="gender[]">
+                                    <label for="gender">Female</label>
                                 </div>
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox3" type="checkbox">
-                                    <label for="inlineCheckbox3">Others</label>
+                                    <input type="checkbox" value="both" name="gender[]">
+                                    <label for="gender">Both</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">Nationality requirement</div>
                             <div class="col-sm-8">
-                                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
+                                <select data-placeholder="" name="nationality[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                                    @foreach($nationalities as $nationality)
+                                        <option value='{{ $nationality }}' >
+                                            {{ $nationality }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">Current academic level</div>
                             <div class="col-sm-8">
-                                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
+                                <select data-placeholder="" name="applicants_current_academic_level[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                                    @foreach($academics as $academic)
+                                        <option value="{{ $academic->id }}">
+                                            {{ $academic->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">Current place of residence</div>
                             <div class="col-sm-8">
-                                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
+                                <select data-placeholder="" name="current_place_of_residence[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                                    @foreach ( $countries as $k => $country)
+                                        <option value="{{ $k }}">
+                                            {{ $country }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -429,56 +288,52 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><div class="col-sm-4 control-label">Award can be used for</div>
                             <div class="col-sm-8">
-                                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
+                                <select data-placeholder="" name="award_can_be_used_for[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                                    @foreach($awardUsedFor as $p)
+                                        <option value="{{ $p->id }}">
+                                            {{ $p->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">Award can be used at</div>
                             <div class="col-sm-8">
-                                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
+                                <select data-placeholder="" name="award_can_be_used_at[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                                    <option value="university" >University</option>
+                                    <option value="vocational_school" >Vocational school</option>
+                                    <option value="language_school" >Language school</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><div class="col-sm-4 control-label">Qualified majors</div>
                             <div class="col-sm-8">
-                                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
+                                <select data-placeholder="" name="qualified_majors[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                                    @foreach($dataMajors as $k=>$majors)
+                                        <optgroup label="{{ $k }}">
+                                            @foreach($majors as $k=>$major)
+                                                <option value="{{ $k }}" >{{ $major }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group"><div class="col-sm-4 control-label">Designated area</div>
+                        <div class="form-group"><div class="col-sm-4 control-label">{{ trans('label.designated_area') }}</div>
                             <div class="col-sm-8">
-                                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
+                                <select data-placeholder="" name="designated_state[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                                    @foreach ( $states as $k => $state)
+                                        <option value="{{ $k }}" >
+                                            {{ $state }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group"><div class="col-sm-4 control-label">Designated school</div>
+                        <div class="form-group"><div class="col-sm-4 control-label">{{ trans('label.designated_school') }}</div>
                             <div class="col-sm-8">
-                                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
+                                <select data-placeholder="" name="designated_school[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                                    @foreach($schools as $school)
+                                        <option value="{{ $school->id }}" > {{ $school->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -487,29 +342,27 @@
                         <div class="form-group"><div class="col-sm-4 control-label">Selection method</div>
                             <div class="col-sm-8">
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox1" type="checkbox">
-                                    <label for="inlineCheckbox1">Tuition fee</label>
+                                    <input type="checkbox" value="1" name="application_method[]" >
+                                    <label for="inlineRadio1">Document screening</label>
                                 </div>
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox2" type="checkbox">
-                                    <label for="inlineCheckbox2">Living cost</label>
+                                    <input type="checkbox" value="2" name="application_method[]">
+                                    <label for="inlineRadio2">Interview</label>
                                 </div>
                                 <div class="checkbox checkbox-inline">
-                                    <input id="checkbox3" type="checkbox">
-                                    <label for="inlineCheckbox3">Others</label>
+                                    <input type="checkbox" value="3" name="application_method[]">
+                                    <label for="inlineRadio2">Examination</label>
                                 </div>
                             </div>
                         </div>
                         <h4>{{ trans('label.sponsors_information') }}</h4>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group"><div class="col-sm-4 control-label">Sponsor’s type</div>
+                        <div class="form-group"><div class="col-sm-4 control-label">{{ trans('label.sponsor_type') }}</div>
                             <div class="col-sm-8">
-                                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018" selected>2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
+                                <select data-placeholder="" name="type[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                                    @foreach($sponsorTypes as $type)
+                                        <option value="{{ $type->id }}" >{{ $type->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

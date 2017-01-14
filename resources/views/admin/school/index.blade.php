@@ -28,19 +28,13 @@
             $('.dataTables-list').DataTable({
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    {
-                        text: 'Advanced Search',
-                        action: function ( e, dt, node, config ) {
-                            $('.chosen-container-multi').width('100%');
-                            $("#modalAdvanceSearch").modal('show');
-                        }
-                    },
-                    {
-                        text: '{{ trans("scholarship.scholarship_add") }}',
-                        action: function (){
-                            window.location.href = "http://schoolynk.dev/admin/scholarship/create";
-                        }
-                    }
+//                    {
+//                        text: 'Advanced Search',
+//                        action: function ( e, dt, node, config ) {
+//                            $('.chosen-container-multi').width('100%');
+//                            $("#modalAdvanceSearch").modal('show');
+//                        }
+//                    }
                 ],
                 columnDefs: [ {
                     "targets": 'no-sort',
@@ -82,159 +76,32 @@
                             <thead>
                             <tr>
                                 <th>{{ trans('label.profile_photo') }}</th>
-                                <th>{{ trans('scholarship.name_of_scholarship') }}</th>
-                                <th>{{ trans('scholarship.name_of_sponsor') }}</th>
-                                <th>{{ trans('scholarship.type_of_award') }}</th>
-                                <th>{{ trans('scholarship.amount_of_award') }}</th>
-                                <th>{{ trans('scholarship.application_deadline') }}</th>
-                                <th>{{ trans('scholarship.no_of_followers') }}</th>
+                                <th>{{ trans('school.school_name') }}</th>
+                                <th>{{ trans('school.type_of_school') }}</th>
+                                <th>{{ trans('school.country_prefecture') }}</th>
+                                <th>{{ trans('school.ranking') }}</th>
+                                <th>{{ trans('school.no_of_followers') }}</th>
                                 <th>url</th>
                                 <th class="no-sort">{{ trans('label.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
-
-                            <tr class="gradeX">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.5
-                                </td>
-                                <td>Win 95+</td>
-                                <td class="center">5.5</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 6
-                                </td>
-                                <td>Win 98+</td>
-                                <td class="center">6</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                                <td class="center">A</td>
-                            </tr>
+                            @foreach($schools as $school)
+                                <?php $img_profile = $school->img_profile != '' ? $school->img_profile : 'img/no-image.png' ?>
+                                <tr class="gradeX">
+                                    <td><img class="sponsor-logo-list" src="/{{ $img_profile }}" /></td>
+                                    <td>{{ $school->name }}</td>
+                                    <td style="text-transform:capitalize">{{ $school->school_type }}</td>
+                                    <td class="center">{{ $school->schoolInfo->country_code or '' }}</td>
+                                    <td class="center">0</td>
+                                    <td class="center">0</td>
+                                    <td class="center">{{ $school->schoolInfo->website or '' }}</td>
+                                    <td class="center">
+                                        <a href="{{ route('admin.school.create') }}?id={{ $school->id }}" class="btn btn-default btn-xs">{{ trans('label.edit') }}</a>
+                                        {{--<button type="button" class="btn btn-default btn-xs">Delete</button>--}}
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -68,6 +68,7 @@
             <div class="ibox float-e-margins">
                 <input type="hidden" name="school_id" id="school_id" value="{{ $school->id or 0 }}">
                 <input type="hidden" name="user_type" id="user_type" value="school">
+                <input type="hidden" name="sType" id="sType" value="{{ $sType }}">
                 <form method="POST" role="form" class="form-horizontal" id="account_information">
                     <input type="hidden" name="sponsor_id" id="sponsor_id" value="{{ $school->id or 0 }}">
                     <div class="ibox-title">
@@ -135,7 +136,7 @@
                                 <?php $type_of_school = isset($school->schoolInfo) ? $school->schoolInfo->type_of_school : 'public'?>
                                 <select class="form-control m-b" name="type_of_school">
                                     <option value="public" {{ $type_of_school == 'public' ? 'selected' : ''}}>Public</option>
-                                    <option value="private" {{ $type_of_school == 'private' ? 'selected' : ''}}>private</option>
+                                    <option value="private" {{ $type_of_school == 'private' ? 'selected' : ''}}>Private</option>
                                 </select>
                             </div>
                         </div>
@@ -249,162 +250,225 @@
                     <input name="list1SortOrder" type="hidden" />
                 </div>
             </div>
-            <div class="ibox float-e-margins">
-                <form method="post" role="form"  action="/admin/school-structure" class="form-horizontal" id="school_structure" enctype="multipart/form-data">
-                    <input type="hidden" name="school_id" value="{{ $school->id or 0 }}">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="school_structure_id" id="school_structure_id" value="{{ $school->structure->id or 0 }}">
-                    <div class="ibox-title">
-                        <h5>{{ trans('school.academics_board') }} <small>{{ trans('school.school_structure') }}</small></h5>
+            @if($sType != 'language')
+                <div class="ibox float-e-margins">
+                    <form method="post" role="form"  action="/admin/school-structure" class="form-horizontal" id="school_structure" enctype="multipart/form-data">
+                        <input type="hidden" name="school_id" value="{{ $school->id or 0 }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <div class="ibox-tools col-hidden">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <button onclick="$('#school_structure').submit();" class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
-                                <input type="hidden" name="fs_id_remove" id="fs_id_remove" value="0" />
-                                <input type="hidden" name="f_id_remove" id="f_id_remove" value="0" />
-                            </a>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content ibc-hidden">
-                        <div class="form-group">
-                            <div class="col-sm-9">
-                                <button type="button" class="btn btn-primary btn-xs add-more-faculty">{{ trans('school.add_more_faculty') }}</button>
+                        <input type="hidden" name="sType" value="{{$sType}}">
+                        <input type="hidden" name="school_structure_id" id="school_structure_id" value="{{ $school->structure->id or 0 }}">
+                        <div class="ibox-title">
+                            <h5>{{ trans('school.academics_board') }} <small>{{ trans('school.school_structure') }}</small></h5>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <div class="ibox-tools col-hidden">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <button onclick="$('#school_structure').submit();" class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
+                                    <input type="hidden" name="fs_id_remove" id="fs_id_remove" value="0" />
+                                    <input type="hidden" name="f_id_remove" id="f_id_remove" value="0" />
+                                </a>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
                             </div>
                         </div>
-                        <div class="list-faculty">
-                            @if(isset($school->faculty))
-                                @if($school->faculty->count() > 0)
-                                    @foreach($school->faculty as $k=>$faculty)
-                                        <div class="form-group child-faculty">
-                                            <div class="col-sm-1"><a f_id="{{ $faculty->id }}" class="btn btn-white" onclick="removeElem(this);"><i class="fa fa-minus"></i></a></div>
-                                            <div class="col-sm-8">
-                                                <input type="text" value="{{ $faculty->name }}" name="structure[{{ $k+1 }}][name_faculty]" class="form-control name_faculty">
-                                                <input type="hidden" name="structure[{{ $k+1 }}][faculty_id]" value="{{ $faculty->id }}" />
-                                                <div class="list-school" stt="{{ $k+1 }}">
-                                                    @foreach($faculty->facultySchool as $x=>$fs)
-                                                        <div class="child-school">
-                                                            <input type="hidden" name="structure[{{ $k+1 }}][school][{{ $x+1 }}][fs_id]" value="{{ $fs->id }}" />
-                                                            <div class="col-sm-1">
-                                                                <a class="btn btn-white" fs_id="{{ $fs->id }}" onclick="removeElem(this);"><i class="fa fa-minus"></i></a>
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" value="{{ $fs->name }}" name="structure[{{ $k+1 }}][school][{{ $x+1 }}][name_school]" class="form-control name_school">
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <select class="form-control m-b s_child" name="structure[{{ $k+1 }}][school][{{ $x+1 }}][child]">
-                                                                    <option value="undergraduate" {{ $fs->academic_level == 'undergraduate' ? 'selected' : '' }}>Undergraduate</option>
-                                                                    <option value="graduate" {{ $fs->academic_level == 'graduate' ? 'selected' : '' }}>Graduate</option>
-                                                                </select>
+                        <div class="ibox-content ibc-hidden">
+                            @if($sType == 'university')
+                                <div class="form-group">
+                                    <div class="col-sm-9">
+                                        <button type="button" class="btn btn-primary btn-xs add-more-faculty">{{ trans('school.add_more_faculty') }}</button>
+                                    </div>
+                                </div>
+                                <div class="list-faculty">
+                                    @if(isset($school->faculty))
+                                        @if($school->faculty->count() > 0)
+                                            @foreach($school->faculty as $k=>$faculty)
+                                                <div class="form-group child-faculty">
+                                                    <div class="col-sm-1"><a f_id="{{ $faculty->id }}" class="btn btn-white" onclick="removeElem(this);"><i class="fa fa-minus"></i></a></div>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" value="{{ $faculty->name }}" name="structure[{{ $k+1 }}][name_faculty]" class="form-control name_faculty">
+                                                        <input type="hidden" name="structure[{{ $k+1 }}][faculty_id]" value="{{ $faculty->id }}" />
+                                                        <div class="list-school" stt="{{ $k+1 }}">
+                                                            @foreach($faculty->facultySchool as $x=>$fs)
+                                                                <div class="child-school">
+                                                                    <input type="hidden" name="structure[{{ $k+1 }}][school][{{ $x+1 }}][fs_id]" value="{{ $fs->id }}" />
+                                                                    <div class="col-sm-1">
+                                                                        <a class="btn btn-white" fs_id="{{ $fs->id }}" onclick="removeElem(this);"><i class="fa fa-minus"></i></a>
+                                                                    </div>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="text" value="{{ $fs->name }}" name="structure[{{ $k+1 }}][school][{{ $x+1 }}][name_school]" class="form-control name_school">
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <select class="form-control m-b s_child" name="structure[{{ $k+1 }}][school][{{ $x+1 }}][child]">
+                                                                            <option value="undergraduate" {{ $fs->academic_level == 'undergraduate' ? 'selected' : '' }}>Undergraduate</option>
+                                                                            <option value="graduate" {{ $fs->academic_level == 'graduate' ? 'selected' : '' }}>Graduate</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <div>
+                                                            <div class="col-sm-1"></div>
+                                                            <div class="col-sm-11">
+                                                                <button onclick="addMoreSchool(this);" type="button" class="btn btn-primary btn-xs">{{ trans('school.add_more_school') }}</button>
                                                             </div>
                                                         </div>
-                                                    @endforeach
-                                                </div>
-                                                <div>
-                                                    <div class="col-sm-1"></div>
-                                                    <div class="col-sm-11">
-                                                        <button onclick="addMoreSchool(this);" type="button" class="btn btn-primary btn-xs">{{ trans('school.add_more_school') }}</button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                @endif
-                            @else
-                                <div class="form-group child-faculty">
-                                    <div class="col-sm-1"></div>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="structure[1][name_faculty]" class="form-control name_faculty">
-                                        <div class="list-school" stt="1">
-                                            <div class="child-school">
-                                                <div class="col-sm-1"></div>
-                                                <div class="col-sm-7">
-                                                    <input type="text" name="structure[1][school][1][name_school]" class="form-control name_school">
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <select class="form-control m-b s_child" name="structure[1][school][1][child]">
-                                                        <option value="undergraduate">Undergraduate</option>
-                                                        <option value="graduate">Graduate</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="col-sm-1"></div>
-                                            <div class="col-sm-11">
-                                                <button onclick="addMoreSchool(this);" type="button" class="btn btn-primary btn-xs">{{ trans('school.add_more_school') }}</button>
-                                            </div>
-                                        </div>
+                                            @endforeach
+                                        @endif
+                                    @endif
+                                </div>
+                            @elseif($sType == 'vocational')
+                                <div class="form-group">
+                                    <div class="col-sm-9">
+                                        <button type="button" class="btn btn-primary btn-xs add-more-school">{{ trans('school.add_more_school') }}</button>
                                     </div>
+                                </div>
+                                <div class="list-fSchool">
+                                    @if(isset($school->facultySchool))
+                                        @if($school->facultySchool->count() > 0)
+                                            @foreach($school->facultySchool as $k=>$fs)
+                                                <div class="form-group child-school">
+                                                    <div class="col-sm-9">
+                                                        <input type="text" value="{{ $fs->name }}" name="fSchoolOld[{{ $fs->id }}]" class="form-control name_school">
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    @endif
                                 </div>
                             @endif
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="ibox float-e-margins">
-                <form method="get" class="form-horizontal">
-                    <div class="ibox-title">
-                        <h5>{{ trans('school.academics_board') }} <small>{{ trans('school.school_information') }}</small></h5>
-                        <div class="ibox-tools structure-hidden">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                {{--<button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>--}}
-                            </a>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
-                    </div>
-                    @if(isset($school->faculty))
-                        @if($school->faculty->count() > 0)
-                        <div class="ibox-content structure-hidden">
-                            <div class="form-group">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-5">
-                                    <select class="chosen-select" style="width:400px"  name="faculty_school_id" id="fs_id">
-                                        <option value="0" >{{ trans('school.pls_choose_school') }}</option>
-                                        @foreach($school->faculty as $faculty)
-                                            @foreach($faculty->facultySchool as $fs)
-                                                <option value="{{ $fs['id'] }}" >{{ $fs['name'] }}</option>
-                                            @endforeach
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <button class="btn btn-primary" type="button" id="add_fs_info">{{ trans('label.add') }}</button>
-                                </div>
+                    </form>
+                </div>
+                <div class="ibox float-e-margins">
+                    <form method="get" class="form-horizontal">
+                        <div class="ibox-title">
+                            <h5>{{ trans('school.academics_board') }} <small>{{ trans('school.school_information') }}</small></h5>
+                            <div class="ibox-tools structure-hidden">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    {{--<button class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>--}}
+                                </a>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
                             </div>
-                            <div class="hr-line-dashed"></div>
-                            <div id="listFsInfo">
-                                @if(isset($school->faculty))
-                                    @if($school->faculty->count() > 0)
-                                        @foreach($school->faculty as $faculty)
-                                            @foreach($faculty->facultySchool as $fs)
-                                                @if($fs->added_info == 1)
+                        </div>
+                        @if(isset($school->faculty))
+                            @if(($school->faculty->count() > 0 && $sType == 'university') || ($school->facultySchool->count() > 0 && $sType == 'vocational'))
+                            <div class="ibox-content structure-hidden">
+                                <div class="form-group">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-5">
+                                        <select class="chosen-select" style="width:400px"  name="faculty_school_id" id="fs_id">
+                                            <option value="0" >{{ trans('school.pls_choose_school') }}</option>
+                                            @if($sType == 'university')
+                                                @foreach($school->faculty as $faculty)
+                                                    @foreach($faculty->facultySchool as $fs)
+                                                        <option value="{{ $fs['id'] }}" {{ $fs['added_info'] == 1 ? 'disabled' : '' }}>{{ $fs['name'] }}</option>
+                                                    @endforeach
+                                                @endforeach
+                                            @elseif($sType == 'vocational')
+                                                @foreach($school->facultySchool as $fs)
+                                                    <option value="{{ $fs['id'] }}" {{ $fs['added_info'] == 1 ? 'disabled' : '' }}>{{ $fs['name'] }}</option>
+                                                @endforeach
+                                            @endif
+
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary" type="button" id="add_fs_info">{{ trans('label.add') }}</button>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div id="listFsInfo">
+                                    @if($sType == 'university')
+                                        @if(isset($school->faculty))
+                                            @if($school->faculty->count() > 0)
+                                                @foreach($school->faculty as $faculty)
+                                                    @foreach($faculty->facultySchool as $fs)
+                                                        @if($fs->added_info == 1)
+                                                            <div class="form-group">
+                                                                <div class="col-sm-1"></div>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" disabled="" id="{{ $fs->id or 0 }}" value="{{ $fs->name or '' }}" class="form-control fs_name">
+                                                                    <button type="button" onclick="schoolMajor(this);" class="btn btn-w-m btn-link">Major</button><br />
+                                                                    <button type="button" other_type="admission" onclick="otherModal(this);" class="btn btn-w-m btn-link">Admission</button><br />
+                                                                    <button type="button" other_type="tuitionFee" onclick="otherModal(this);" class="btn btn-w-m btn-link">Tuition fee</button><br />
+                                                                    <button type="button" onclick="schoolScholarships(this);" class="btn btn-w-m btn-link">Scholarships</button><br />
+                                                                    <button type="button" other_type="others" onclick="otherModal(this);" class="btn btn-w-m btn-link">Others</button>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    @elseif($sType == 'vocational')
+                                        @foreach($school->facultySchool as $fs)
+                                            @if($fs->added_info == 1)
                                                 <div class="form-group">
                                                     <div class="col-sm-1"></div>
                                                     <div class="col-sm-7">
                                                         <input type="text" disabled="" id="{{ $fs->id or 0 }}" value="{{ $fs->name or '' }}" class="form-control fs_name">
-                                                        <button type="button" onclick="schoolMajoir(this);" class="btn btn-w-m btn-link">Major</button><br />
-                                                        <button type="button" onclick="schoolAdmission(this);" class="btn btn-w-m btn-link">Admission</button><br />
-                                                        <button type="button" onclick="schoolTuitionFee(this);" class="btn btn-w-m btn-link">Tuition fee</button><br />
+                                                        <button type="button" onclick="schoolMajor(this);" class="btn btn-w-m btn-link">Major</button><br />
+                                                        <button type="button" other_type="admission" onclick="otherModal(this);" class="btn btn-w-m btn-link">Admission</button><br />
+                                                        <button type="button" other_type="tuitionFee" onclick="otherModal(this);" class="btn btn-w-m btn-link">Tuition fee</button><br />
                                                         <button type="button" onclick="schoolScholarships(this);" class="btn btn-w-m btn-link">Scholarships</button><br />
-                                                        <button type="button" onclick="schoolOthers(this);" class="btn btn-w-m btn-link">Others</button>
+                                                        <button type="button" other_type="others" onclick="otherModal(this);" class="btn btn-w-m btn-link">Others</button>
                                                     </div>
                                                 </div>
-                                                @endif
-                                            @endforeach
+                                            @endif
                                         @endforeach
                                     @endif
-                                @endif
+                                </div>
+                            </div>
+                            @endif
+                        @endif
+                    </form>
+                </div>
+            @else
+                <div class="ibox float-e-margins">
+                    <form method="post" role="form"  action="/admin/school-info-update" class="form-horizontal" id="language_course_board" enctype="multipart/form-data">
+                        <input type="hidden" name="school_id" value="{{ $school->id or 0 }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="school_info_id" value="{{ $school->schoolInfo->id or 0 }}">
+                        <div class="ibox-title">
+                            <h5>{{ trans('school.language_course_board') }}</h5>
+                            <div class="ibox-tools structure-hidden">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <button onclick="$('#language_course_board').submit();" class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
+                                </a>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
                             </div>
                         </div>
-                        @endif
-                    @endif
-                </form>
-            </div>
+                        <div class="ibox-content structure-hidden">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{ trans('school.course_structure_tuition_fee') }}</label>
+                                <div class="col-sm-10">
+                                <textarea class="summernote" id="" name="course_structure_tuition_fee" rows="40">
+                                    {{ $school->schoolInfo->course_structure_tuition_fee or '' }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{ trans('school.school_information') }}</label>
+                                <div class="col-sm-7">
+                                    <input type="hidden" disabled="" id="{{ $fs->id or 0 }}" value="{{ $fs->name or '' }}" class="form-control fs_name">
+                                    <button style="text-align:left" type="button" onclick="schoolMajor(this);" class="btn btn-w-m btn-link">Major</button><br />
+                                    <button style="text-align:left" type="button" other_type="admission" onclick="otherModal(this);" class="btn btn-w-m btn-link">Admission</button><br />
+                                    <button style="text-align:left" type="button" other_type="tuitionFee" onclick="otherModal(this);" class="btn btn-w-m btn-link">Tuition fee</button><br />
+                                    <button style="text-align:left" type="button" onclick="schoolScholarships(this);" class="btn btn-w-m btn-link">Scholarships</button><br />
+                                    <button style="text-align:left" type="button" other_type="others" onclick="otherModal(this);" class="btn btn-w-m btn-link">Others</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            @endif
             <div class="ibox float-e-margins">
                 <form method="post" role="form"  action="/admin/school-info-update" class="form-horizontal" id="basic_information" enctype="multipart/form-data">
                     <input type="hidden" name="school_id" value="{{ $school->id or 0 }}">
@@ -445,6 +509,26 @@
                                 </textarea>
                             </div>
                         </div>
+                        <div id="school_other_list">
+                            @if(isset($school->otherText))
+                            @foreach($school->otherText as $otherText)
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group school_other_child">
+                                    <label class="col-sm-2 control-label">{{ trans('school.texts') }}</label>
+                                    <div class="col-sm-10">
+                                <textarea class="summernote" id="" name="school_other_old[{{$otherText->id}}]" rows="40">
+                                    {{ $otherText->content or '' }}
+                                </textarea>
+                                    </div>
+                                </div>
+                            @endforeach
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-primary btn-xs" id="add_school_other">{{ trans('school.add_sub_category') }}</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -467,15 +551,15 @@
                     <div class="ibox-content ibc-hidden">
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.country') }}</label>
                             <div class="col-sm-3">
-                                <select name="country_code" data-placeholder="{{ trans('label.choice') }}" class="chosen-select" style="width:100%" tabindex="2">
+                                <select name="country_code" data-placeholder="{{ trans('label.choice') }}" class="form-control"  tabindex="2">
                                     <option value="JP" selected>Japan</option>
                                 </select>
                             </div>
                             <div class="col-sm-7">
-                                <?php $state = isset($school->schoolInfo) ? $school->schoolInfo->state : 23?>
+                                <?php $state = isset($school->schoolInfo) ? $school->schoolInfo->state : 23 ?>
                                 <select name="state" data-placeholder="..." class="form-control m-b s_child">
-                                    @foreach ( $states as $k => $state)
-                                        <option value="{{ $k }}" {{ $state == $k ? 'Selected' : '' }}> {{ $state }}</option>
+                                    @foreach ( $states as $k => $st)
+                                        <option value="{{ $k }}" {{ $state == $k ? 'Selected' : '' }}> {{ $st }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -484,6 +568,7 @@
                             <div class="col-sm-4">
                                 <input type="text" name="longitude" placeholder="{{ trans('label.longitude') }}" class="form-control" value="{{ $school->schoolInfo->longitude or '' }}" />
                             </div>
+                            <div class="col-md-1"><img class="ic-about" src="/img/ic-about.png" /></div>
                             <div class="col-sm-4">
                                 <input type="text" name="latitude" placeholder="{{ trans('label.latitude') }}" class="form-control" value="{{ $school->schoolInfo->latitude or '' }}" />
                             </div>

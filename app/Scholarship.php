@@ -65,7 +65,8 @@ class Scholarship extends Model
     }
 
     public function schools(){
-        return $this->hasMany('App\ScholarshipSchool', 'scholarship_id', 'id');
+        //return $this->hasMany('App\ScholarshipSchool', 'scholarship_id', 'id');
+        return $this->belongsToMany('App\User', 'scholarship_schools', 'scholarship_id', 'school_id');
     }
 
     public function designatedArea(){

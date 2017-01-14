@@ -9,4 +9,5 @@ class SchoolInfo extends Model
     protected $table = 'school_informations';
 
     protected $guarded = [];
+
 }

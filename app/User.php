@@ -65,5 +65,18 @@ class User extends Authenticatable
     public function faculty(){
         return $this->hasMany('App\Faculty', 'school_id', 'id');
     }
+
+    public function otherText(){
+        return $this->hasMany('App\OtherText', 'school_id', 'id')->where('type', 'school');
+    }
+
+    public function scholarships(){
+        //return $this->hasManyThrough('App\Scholarship', 'App\ScholarshipSchool', 'school_id', 'id');
+        return $this->belongsToMany('App\Scholarship', 'scholarship_schools', 'school_id', 'scholarship_id');
+    }
+
+    public function facultySchool(){
+        return $this->hasMany('App\FacultySchool', 'school_id', 'id');
+    }
     
 }

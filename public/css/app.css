@@ -99,3 +99,12 @@
 .summernote-modal{
     min-height:200px
 }
+.chosen-container-single .chosen-single div{
+    top:4px
+}
+.ic-about{
+    margin-top:9px
+}
+.schoolModal .form-control{
+    margin-bottom:0px
+}

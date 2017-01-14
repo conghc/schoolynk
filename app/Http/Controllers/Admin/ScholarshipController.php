@@ -84,8 +84,20 @@ class ScholarshipController extends Controller
 //
 //        // Init categories
 //        $categories = Category::lists('title', 'id');
+        $academics = Academic::all();
+        $awardUsedFor = AwardUsedFor::all();
+        $sponsorTypes = SponsorType::all();
+        $countries = \CountryState::getCountries();
+        $states = \CountryState::getStates('JP');
+        $nationalities = getNationalities();
+        $majors = Major::all();
+        foreach($majors as $k=>$major){
+            $dataMajors[$major->type][$k] = $major->text;
+        }
 
-        return view('admin.scholarship.index', compact('scholarships'));
+        $schools = User::where('role',4)->get();
+
+        return view('admin.scholarship.index', compact('sponsorTypes','schools','states','dataMajors','awardUsedFor','countries','academics', 'nationalities', 'scholarships'));
     }
 
     /**
@@ -435,13 +447,13 @@ class ScholarshipController extends Controller
         if($id != 0) $addNew = false;
 
         $scholarship = $scholarship->where('id', $id)->first();
+
         if($scholarship){
             $scholarship->deadline = date('m/d/Y', strtotime($scholarship->deadline));
         }
         if($scholarship){
             $scholarship = $this->getRelationArray($scholarship);
         }
-        //dd($scholarship->toArray());
         $sponsor_id = isset($scholarship->sponsor_id) ? $scholarship->sponsor_id : 0;
         $sponsor_info = User::with('sponsorInfo')->where('id',$sponsor_id)->first();
 
@@ -459,7 +471,9 @@ class ScholarshipController extends Controller
         }
         $editors = User::where('role', 2)->get();
 
-        return view('admin.scholarship.edit', compact('sponsor_id' ,'sponsor_info' ,'scholarship','id', 'addNew','sponsors' ,'scholarship_id' ,'sponsorTypes' ,'dataMajors' ,'awardUsedFor' ,'academics' ,'editors', 'countries', 'nationalities', 'states', 'currencies') );
+        $schools = User::where('role',4)->get();
+
+        return view('admin.scholarship.edit', compact('schools', 'sponsor_id' ,'sponsor_info' ,'scholarship','id', 'addNew','sponsors' ,'scholarship_id' ,'sponsorTypes' ,'dataMajors' ,'awardUsedFor' ,'academics' ,'editors', 'countries', 'nationalities', 'states', 'currencies') );
     }
 
     public function getRelationArray($schs){
@@ -510,7 +524,7 @@ class ScholarshipController extends Controller
         ////////////////////
         if(isset($schs->schools)){
             foreach($schs->schools as $rc){
-                $schools_arr[] = $rc->school_id;
+                $schools_arr[] = $rc->id;
             }
             $schs->schools_arr = $schools_arr;
         }
@@ -562,66 +576,7 @@ class ScholarshipController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $scholarship = Scholarship::find($id);
-        if(!$scholarship){
-            Flash::warning('Can\'t find Scholarship '.$id);
-            return redirect()->route('admin.scholarship.index');
-        }
-        $months = [['Jan','1'],['Feb','2'],['Mar','3'],['Apr','4'],['May','5'],['Jun','6'],['Jul','7'],['Aug','8'],['Sep','9'],['Oct','10'],['Nov','11'],['Dec','12']];
-        $typeOrans = OranizationType::all();
-        $majors = Major::all();
-        $degrees = Degree::all();
-        $academics = Academic::all();
-        $typeOfStudies = TypeOfStudy::all();
-        $currencies = Currency::all();
-        $countries = \CountryState::getCountries();
-        $states = \CountryState::getStates('US');
-        $langs = ["Afar","Abkhazian","Avestan","Afrikaans","Akan","Amharic","Aragonese","Arabic","Assamese","Avaric","Aymara","Azerbaijani","Bashkir","Belarusian","Bulgarian","Bihari languages","Bislama","Bambara","Bengali","Tibetan","Breton","Bosnian","Catalan; Valencian","Chechen","Chamorro","Corsican","Cree","Czech","Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic","Chuvash","Welsh","Danish","German","Divehi; Dhivehi; Maldivian","Dzongkha","Ewe","Greek, Modern (1453-)","English","Esperanto","Spanish; Castilian","Estonian","Basque","Persian","Fulah","Finnish","Fijian","Faroese","French","Western Frisian","Irish","Gaelic; Scottish Gaelic","Galician","Guarani","Gujarati","Manx","Hausa","Hebrew","Hindi","Hiri Motu","Croatian","Haitian; Haitian Creole","Hungarian","Armenian","Herero","Interlingua (International Auxiliary Language Association)","Indonesian","Interlingue; Occidental","Igbo","Sichuan Yi; Nuosu","Inupiaq","Ido","Icelandic","Italian","Inuktitut","Japanese","Javanese","Georgian","Kongo","Kikuyu; Gikuyu","Kuanyama; Kwanyama","Kazakh","Kalaallisut; Greenlandic","Central Khmer","Kannada","Korean","Kanuri","Kashmiri","Kurdish","Komi","Cornish","Kirghiz; Kyrgyz","Latin","Luxembourgish; Letzeburgesch","Ganda","Limburgan; Limburger; Limburgish","Lingala","Lao","Lithuanian","Luba-Katanga","Latvian","Malagasy","Marshallese","Maori","Macedonian","Malayalam","Mongolian","Marathi","Malay","Maltese","Burmese","Nauru","Bokmål, Norwegian; Norwegian Bokmål","Ndebele, North; North Ndebele","Nepali","Ndonga","Dutch; Flemish","Norwegian Nynorsk; Nynorsk, Norwegian","Norwegian","Ndebele, South; South Ndebele","Navajo; Navaho","Chichewa; Chewa; Nyanja","Occitan (post 1500); Provençal","Ojibwa","Oromo","Oriya","Ossetian; Ossetic","Panjabi; Punjabi","Pali","Polish","Pushto; Pashto","Portuguese","Quechua","Romansh","Rundi","Romanian; Moldavian; Moldovan","Russian","Kinyarwanda","Sanskrit","Sardinian","Sindhi","Northern Sami","Sango","Sinhala; Sinhalese","Slovak","Slovenian","Samoan","Shona","Somali","Albanian","Serbian","Swati","Sotho, Southern","Sundanese","Swedish","Swahili","Tamil","Telugu","Tajik","Thai","Tigrinya","Turkmen","Tagalog","Tswana","Tonga (Tonga Islands)","Turkish","Tsonga","Tatar","Twi","Tahitian","Uighur; Uyghur","Ukrainian","Urdu","Uzbek","Venda","Vietnamese","Volapük","Walloon","Wolof","Xhosa","Yiddish","Yoruba","Zhuang; Chuang","Chinese","Zulu"];
-        $editors = User::where('role', 2)->get();
 
-        // Get lists categories
-        $categories = Category::lists('title', 'id');
-
-        return view('admin.scholarship.edit', compact('scholarship', 'editors', 'typeOrans', 'majors', 'degrees', 'academics', 'typeOfStudies', 'currencies', 'months', 'countries', 'states', 'langs', 'categories') );
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // $user = Auth::user();
-        $scholarship = Scholarship::find($id);
-        $requests = $request->all();
-        // dd($requests);
-        $data = $request->only(
-            'user_id', 'type', 'name', 'oranization', 'type_of_oran', 'origin_of_oran', 'covering_cost', 'amount_paid', 'currency', 
-            'amount_currency', 'amount_currency_max', 'benefit_period_month', 'benefit_period_year', 'benefit_period_month_max', 
-            'benefit_period_year_max', 'process','url', 'current_education', 'education', 'academic', 'major','min_age','max_age',
-            'gender', 'nationality', 'state', 'city', 'destination_country', 'destination_state', 'competition', 'language', 'limit',
-            'orther', 'category', 'organization_email', 'organization_phone', 'other_message', 'purpose_of_scholarship_establishment',
-            'organization_address');
-        // $data['user_id'] = $user->id;
-        $data['covering_cost'] = isset($requests['covering_cost']) ? $requests['covering_cost'] : [];
-        $data['amount_currency'] = str_replace(',','',$requests['amount_currency']);
-        $data['date_app_start'] = $requests['year_start'].'-'.$requests['month_start'].'-'.$requests['day_start'];
-        $data['date_app_end'] = $requests['year_end'].'-'.$requests['month_end'].'-'.$requests['day_end'];
-        // dd($data);
-        $scholarship->update($data);
-        return redirect()->route('admin.scholarship.index');
-    }
 
     /**
      * Remove the specified resource from storage.
