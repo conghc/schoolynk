@@ -77,6 +77,8 @@ class HomeController extends Controller
      */
     public function index($localization = null)
     {
+        echo('Coming Soon !!!');
+        die();
         // Get user logined
         $user = Auth::user();
 
