@@ -73,10 +73,24 @@ return [
     'december'                              =>  'December',
 
     'school_name'                           =>  'School name',
-    'type_of_school'                        =>  'Type of school',
     'country_prefecture'                    =>  'Country/ Prefecture',
     'ranking'                               =>  'Ranking',
     'no_of_followers'                       =>  'No. of followers',
-    'school_add'                            =>  'School Add'
+    'school_add'                            =>  'School Add',
+    'admission'                             =>  'Admission',
+    'scholarships'                          =>  'Scholarships',
+    'student'                               =>  'Student',
+    'support'                               =>  'Support',
+    'others'                                =>  'Others',
+    'major'                                 =>  'Major',
+    'lesson_format'                         =>  'Lesson format',
+    'no_of_students_per_class'              =>  'No. of students per class',
+    'total_no_of_teachers'                  =>  'Total No. of teachers',
+    'student_dorm'                          =>  'Student dorm',
+
+    /** Lesson format**/
+    'group_lesson'                          =>  'Group lesson',
+    'private_lesson'                        =>  'Private lesson',
+    'group_private'                         =>  'Group & Private',
 
 ];

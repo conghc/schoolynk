@@ -442,5 +442,7 @@
 		'latitude' => 'Latitude',
 		'add'		=> 'Add',
 		'edit'		=> 'Edit',
+		'yes'		=>	'Yes',
+		'no'		=>	'No',
 	];
 ?>

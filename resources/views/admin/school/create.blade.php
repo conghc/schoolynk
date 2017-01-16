@@ -128,9 +128,11 @@
                         </div>
                     </div>
                     <div class="ibox-content ibc-hidden">
+                        @if($sType != 'language')
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.university_ranking') }}</label>
                             <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->ranking or '' }}" name="ranking" class="form-control"></div>
                         </div>
+                        @endif
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.type_of_school') }}</label>
                             <div class="col-sm-10">
                                 <?php $type_of_school = isset($school->schoolInfo) ? $school->schoolInfo->type_of_school : 'public'?>
@@ -149,6 +151,19 @@
                                 </select>
                             </div>
                         </div>
+                        @if($sType == 'language')
+                            <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.lesson_format') }}</label>
+                                <div class="col-sm-10">
+                                    <?php $lesson_format = isset($school->schoolInfo) ? $school->schoolInfo->lesson_format : 'group_lesson'?>
+                                    <select class="form-control m-b" name="lesson_format">
+                                        <option value="group_lesson" {{ $lesson_format == 'group_lesson' ? 'selected' : ''}}>{{ trans('school.group_lesson') }}</option>
+                                        <option value="private_lesson" {{ $lesson_format == 'private_lesson' ? 'selected' : ''}}>{{ trans('school.private_lesson') }}</option>
+                                        <option value="group_private" {{ $lesson_format == 'group_private' ? 'selected' : ''}}>{{ trans('school.group_private') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+                        @if($sType != 'language')
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.english_course') }}</label>
                             <div class="col-sm-10">
                                 <?php $english_course = isset($school->schoolInfo) ? $school->schoolInfo->english_course : 1?>
@@ -158,6 +173,7 @@
                                 </select>
                             </div>
                         </div>
+                        @endif
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.web_application') }}</label>
                             <div class="col-sm-10">
                                 <?php $web_application = isset($school->schoolInfo) ? $school->schoolInfo->web_application : 1?>
@@ -174,9 +190,19 @@
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.total_no_of_students') }}</label>
                             <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_students or '' }}" name="total_no_of_students" class="form-control"></div>
                         </div>
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.total_no_of_international_students') }}</label>
-                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_international_students or '' }}" name="total_no_of_international_students" class="form-control"></div>
+                        @if($sType != 'language')
+                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.no_of_students_per_class') }}</label>
+                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->no_of_students_per_class or '' }}" name="no_of_students_per_class" class="form-control"></div>
                         </div>
+                        @endif
+                        @if($sType == 'language')
+                            <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.no_of_students_per_class') }}</label>
+                                <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->no_of_students_per_class or '' }}" name="no_of_students_per_class" class="form-control"></div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.total_no_of_teachers') }}</label>
+                                <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_teachers or '' }}" name="total_no_of_teachers" class="form-control"></div>
+                            </div>
+                        @endif
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.tuition_fee') }}</label>
                             <div class="col-md-2"><input name="tuition_fee" value="{{ $school->schoolInfo->tuition_fee or '' }}" type="number" placeholder="Number" class="form-control"></div>
                             <div class="col-md-2"><input name="tuition_fee_max" value="{{ $school->schoolInfo->tuition_fee_max or '' }}" type="number" placeholder="Number" class="form-control"></div>
@@ -205,6 +231,17 @@
                                 </select>
                             </div>
                         </div>
+                        @if($sType == 'language')
+                            <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.student_dorm') }}</label>
+                                <div class="col-sm-10">
+                                    <?php $student_dorm = isset($school->schoolInfo) ? $school->schoolInfo->student_dorm : 1?>
+                                    <select class="form-control m-b" name="student_dorm">
+                                        <option value="1" {{ $student_dorm == 1 ? 'selected' : ''}}>{{ trans('label.yes') }}</option>
+                                        <option value="0" {{ $student_dorm == 0 ? 'selected' : ''}}>{{ trans('label.no') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.download_brochure') }}</label>
                             <div class="col-sm-10">
@@ -392,11 +429,11 @@
                                                                 <div class="col-sm-1"></div>
                                                                 <div class="col-sm-7">
                                                                     <input type="text" disabled="" id="{{ $fs->id or 0 }}" value="{{ $fs->name or '' }}" class="form-control fs_name">
-                                                                    <button type="button" onclick="schoolMajor(this);" class="btn btn-w-m btn-link">Major</button><br />
-                                                                    <button type="button" other_type="admission" onclick="otherModal(this);" class="btn btn-w-m btn-link">Admission</button><br />
-                                                                    <button type="button" other_type="tuitionFee" onclick="otherModal(this);" class="btn btn-w-m btn-link">Tuition fee</button><br />
-                                                                    <button type="button" onclick="schoolScholarships(this);" class="btn btn-w-m btn-link">Scholarships</button><br />
-                                                                    <button type="button" other_type="others" onclick="otherModal(this);" class="btn btn-w-m btn-link">Others</button>
+                                                                    <button type="button" onclick="schoolMajor(this);" class="btn btn-w-m btn-link">{{ trans('school.major') }}</button><br />
+                                                                    <button type="button" other_type="admission" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.admission') }}</button><br />
+                                                                    <button type="button" other_type="tuitionFee" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.tuition_fee') }}</button><br />
+                                                                    <button type="button" onclick="schoolScholarships(this);" class="btn btn-w-m btn-link">{{ trans('school.scholarships') }}</button><br />
+                                                                    <button type="button" other_type="others" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.others') }}</button>
                                                                 </div>
                                                             </div>
                                                         @endif
@@ -411,11 +448,11 @@
                                                     <div class="col-sm-1"></div>
                                                     <div class="col-sm-7">
                                                         <input type="text" disabled="" id="{{ $fs->id or 0 }}" value="{{ $fs->name or '' }}" class="form-control fs_name">
-                                                        <button type="button" onclick="schoolMajor(this);" class="btn btn-w-m btn-link">Major</button><br />
-                                                        <button type="button" other_type="admission" onclick="otherModal(this);" class="btn btn-w-m btn-link">Admission</button><br />
-                                                        <button type="button" other_type="tuitionFee" onclick="otherModal(this);" class="btn btn-w-m btn-link">Tuition fee</button><br />
-                                                        <button type="button" onclick="schoolScholarships(this);" class="btn btn-w-m btn-link">Scholarships</button><br />
-                                                        <button type="button" other_type="others" onclick="otherModal(this);" class="btn btn-w-m btn-link">Others</button>
+                                                        <button type="button" onclick="schoolMajor(this);" class="btn btn-w-m btn-link">{{ trans('school.major') }}</button><br />
+                                                        <button type="button" other_type="admission" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.admission') }}</button><br />
+                                                        <button type="button" other_type="tuitionFee" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.tuition_fee') }}</button><br />
+                                                        <button type="button" onclick="schoolScholarships(this);" class="btn btn-w-m btn-link">{{ trans('school.scholarships') }}</button><br />
+                                                        <button type="button" other_type="others" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.others') }}</button>
                                                     </div>
                                                 </div>
                                             @endif
@@ -458,11 +495,11 @@
                                 <label class="col-sm-2 control-label">{{ trans('school.school_information') }}</label>
                                 <div class="col-sm-7">
                                     <input type="hidden" disabled="" id="{{ $fs->id or 0 }}" value="{{ $fs->name or '' }}" class="form-control fs_name">
-                                    <button style="text-align:left" type="button" onclick="schoolMajor(this);" class="btn btn-w-m btn-link">Major</button><br />
-                                    <button style="text-align:left" type="button" other_type="admission" onclick="otherModal(this);" class="btn btn-w-m btn-link">Admission</button><br />
-                                    <button style="text-align:left" type="button" other_type="tuitionFee" onclick="otherModal(this);" class="btn btn-w-m btn-link">Tuition fee</button><br />
-                                    <button style="text-align:left" type="button" onclick="schoolScholarships(this);" class="btn btn-w-m btn-link">Scholarships</button><br />
-                                    <button style="text-align:left" type="button" other_type="others" onclick="otherModal(this);" class="btn btn-w-m btn-link">Others</button>
+                                    <button style="text-align:left" type="button" other_type="admission" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.admission') }}</button><br />
+                                    <button style="text-align:left" type="button" onclick="schoolScholarships(this);" class="btn btn-w-m btn-link">{{ trans('school.scholarships') }}</button><br />
+                                    <button style="text-align:left" type="button" other_type="student" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.student') }}</button><br />
+                                    <button style="text-align:left" type="button" other_type="support" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.support') }}</button><br />
+                                    <button style="text-align:left" type="button" other_type="others" onclick="otherModal(this);" class="btn btn-w-m btn-link">{{ trans('school.others') }}</button>
                                 </div>
                             </div>
                         </div>
