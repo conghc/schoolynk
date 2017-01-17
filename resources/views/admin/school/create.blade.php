@@ -191,8 +191,8 @@
                             <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_students or '' }}" name="total_no_of_students" class="form-control"></div>
                         </div>
                         @if($sType != 'language')
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.no_of_students_per_class') }}</label>
-                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->no_of_students_per_class or '' }}" name="no_of_students_per_class" class="form-control"></div>
+                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.total_no_of_international_students') }}</label>
+                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_international_students or '' }}" name="total_no_of_international_students" class="form-control"></div>
                         </div>
                         @endif
                         @if($sType == 'language')
