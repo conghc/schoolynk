@@ -140,95 +140,23 @@
         </div>
     </div>
     <div class="row school-list">
-        <div class="col-sm-4">
-            <div class="school-child school-child-applied">
-                <a href="" class="avatar"><img src="/frontend/img/avatar3.jpg"></a>
-                <a href="" class="title">
-                    <h5>University of Viet Nam</h5>
-                    <span>The old schools, Trinity Ln</span>
-                </a>
-                <div class="clear"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
-                <div class="col-sm-6"></div>
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
+        @foreach($schools as $k=>$school)
+            <div class="col-sm-4">
+                <div class="school-child {{ $k < 2 ? 'school-child-applied' : '' }}">
+                    <a href="" class="avatar"><img src="/{{ $school->img_profile != null ? $school->img_profile : 'img/no-image.png' }}"></a>
+                    <a href="" class="title">
+                        <h5>{{ $school->name }}</h5>
+                        <span>The old schools, Trinity Ln</span>
+                    </a>
+                    <div class="clear"></div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
+                    <div class="col-sm-6"></div>
+                    <div class="col-sm-8"></div>
+                    <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="school-child school-child-following">
-                <a href="" class="avatar"><img src="/frontend/img/avatar8.jpg"></a>
-                <a href="" class="title">
-                    <h5>University of Viet Nam</h5>
-                    <span>The old schools, Trinity Ln</span>
-                </a>
-                <div class="clear"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
-                <div class="col-sm-6"></div>
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="school-child">
-                <a href="" class="avatar"><img src="/frontend/img/avatar6.jpg"></a>
-                <a href="" class="title">
-                    <h5>University of Viet Nam</h5>
-                    <span>The old schools, Trinity Ln</span>
-                </a>
-                <div class="clear"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
-                <div class="col-sm-6"></div>
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="school-child">
-                <a href="" class="avatar"><img src="/frontend/img/avatar1.jpg"></a>
-                <a href="" class="title">
-                    <h5>University of Viet Nam</h5>
-                    <span>The old schools, Trinity Ln</span>
-                </a>
-                <div class="clear"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
-                <div class="col-sm-6"></div>
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
-            </div>
-        </div><div class="col-sm-4">
-            <div class="school-child">
-                <a href="" class="avatar"><img src="/frontend/img/avatar2.jpg"></a>
-                <a href="" class="title">
-                    <h5>University of Viet Nam</h5>
-                    <span>The old schools, Trinity Ln</span>
-                </a>
-                <div class="clear"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
-                <div class="col-sm-6"></div>
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="school-child">
-                <a href="" class="avatar"><img src="/frontend/img/avatar9.jpg"></a>
-                <a href="" class="title">
-                    <h5>University of Viet Nam</h5>
-                    <span>The old schools, Trinity Ln</span>
-                </a>
-                <div class="clear"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
-                <div class="col-sm-6"></div>
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
-            </div>
-        </div>
+        @endforeach
     </div>
     <div class="col-sm-12" id="home-load-more">
         <button type = "button" class = "btn btn-default btn-modify btn-modify-active btn-load-more" onclick="loadMore()">Load more</button>
