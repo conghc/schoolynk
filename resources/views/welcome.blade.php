@@ -1,454 +1,289 @@
 <!DOCTYPE html>
-<!--[if IE 7]>
-<html class="no-js ie7" prefix="og: http://ogp.me/ns#">
-<![endif]-->
-<!--[if IE 8]>
-<html class="no-js ie8 lt-ie8" prefix="og: http://ogp.me/ns#">
-<![endif]-->
-<!--[if IE 9]>
-<html class="no-js ie9 lt-ie9" prefix="og: http://ogp.me/ns#">
-<![endif]-->
-<!--[if gt IE 9]><!-->
-<html lang="ja">
-<!--<![endif]-->
+<html lang="en">
 <head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes">
-    <title>SchooLynk{{ trans('label.title_welcome') }}</title>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta property="og:image" content="/images/schoolynk_logo.png" />
-    <meta property="og:title" content="SchooLynk" />
-    <meta property="og:description" content="Description" />
-    <meta itemprop="name" content="SchooLynk">
-    <meta itemprop="description" content="Description">
-    <meta itemprop="image" content="/images/schoolynk_logo.png">
-    <link rel="shortcut icon" href="">
-    <link rel="stylesheet" href="/css/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-drawer.min.css">
-    <link rel="stylesheet" href="/css/style-index.css">
-    <link rel="stylesheet" href="/css/base-index.css">
-    <link rel="stylesheet" href="/css/style-home.css">
-    <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/juicyslider.css">
-    <link rel="stylesheet" href="/css/module.css">
-    <link rel="stylesheet" href="/css/vendor/font-awesome.min.css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700">
-    <link rel="stylesheet" href="/css/login-popup.css">
-    <script src="/js/vendor/jquery.min.js"></script>
-    <script src="/js/vendor/jquery-ui.min.js"></script>
-    <script src="/js/vendor/bootstrap.min.js"></script>
-    <script src="/js/drawer.min.js"></script>
-    <script src="/js/browser-huck.js"></script>
-    <style type="text/css">
-        * {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-        }
-        
-        .mdGHD03Selected {
-            position: relative;
-            cursor: pointer;
-            width: 210px;
-            height: 28px;
-            line-height: 28px;
-            padding-right: 46px;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            text-align: right;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .mdGHD03Selected:after {
-            content: "";
-            width: 11px;
-            height: 6px;
-            background-position: -687px 0;
-            position: absolute;
-            top: 11px;
-            right: 30px;
-            cursor: pointer;
-            background-image: url('http://static.line.naver.jp/line_at_lp_pc/img/sprite/common_160404.png');
-        }
-
-        .dropdown-menu {
-            left: inherit;
-            margin: inherit; 
-        }
-
-        .dropdown-menu li:hover {
-            background: #920a27;
-        }
-
-        .dropdown-menu li:hover a {
-            color: #fff;
-        }
-
-        .active-language {
-            background: #920a27;
-            color: #fff!important;
-        }
-    </style>
+    <meta name="author" content="">
+    <!-- Add Your favicon here -->
+    <!--<link rel="icon" href="img/favicon.ico">-->
+    <title></title>
+    <!-- Bootstrap core CSS -->
+    <link href="/frontend/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/frontend/fonts/roboto-fonts/roboto-fonts.css" rel="stylesheet">
+    <link href="/frontend/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="/frontend/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/frontend/css/style.css" rel="stylesheet">
+    <link href="/frontend/css/icon-loading.css" rel="stylesheet">
 </head>
-<body id="home" class="has-drawer">
-    <div id="wrapper">
-        <header class="site-header">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="inner inner-md-1 clf" style="height: 62px;">
-                <h1 class="site-title" style="margin-top: 15px;">
-                    <a href=""><img src="/images/logo.png" alt="SchooLynk"></a>
-                </h1>
-                <div id="drawerNav" class="drawer dw-xs-10 dw-sm-6 dw-md-4 fold drawer-right drawer-inverse" aria-labelledby="drawerNav">
-                    <nav class="drawer-nav">
-                        <div class="container">
-                            <div class="close-modal">
-                                <a href="#drawerNav" data-toggle="drawer" aria-foldedopen="true" aria-controls="drawerNav" class="close">{{ trans('label.close') }} <i class="fa fa-times" aria-hidden="true"></i></a>
-                            </div>
-                            <div class="clearfix"></div>
-                            <ul>
-                                <li><a href="#" class="js-sign-up-menu click_tracking" data-toggle="modal" data-target="#login-modal">{{ trans('label.login') }}</a></li>
-                                <li><a href="{{ route('student.register') }}" class="js-sign-in-menu click_tracking" data-label="menu" data-action="sign-in" tabindex="1">{{ trans('label.register') }}</a></li>
-                            </ul>
-                            <ul>
-                                <li><a href="#" class="click_tracking" data-label="menu" data-action="pricing" tabindex="1">{{ trans('label.for_sponsers') }}</a></li>
-                            </ul>
-                            <ul>
-                                <li><a href="#section-home-about" class="click_tracking" data-label="menu" data-action="expanded_plus" tabindex="1">{{ trans('label.about') }}</a></li>
-                                <li><a href="#" class="click_tracking" data-label="menu" data-action="expanded_premium" tabindex="1">{{ trans('label.contact_us') }}</a></li>
-                            </ul>
-                        </div>
-                    </nav>
+<body id="page-top">
+<div class="sk-spinner sk-spinner-wave">
+    <div class="sk-rect1"></div> <div class="sk-rect2"></div> <div class="sk-rect3"></div> <div class="sk-rect4"></div> <div class="sk-rect5"></div>
+</div>
+<div class="navbar-wrapper">
+    <nav class="navbar navbar-default navbar-top">
+        <div class="container">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand logo" href="#">Schoo<span>Lynk</span></a>
                 </div>
-                <div id="header-login" class="bg-red">
-                    <ul class="header-menu">
-                        {{-- <li class="hm-menuitem menu-login language-dropdown">
-                            <a href="#" class="wl-btn-login title-language" data-toggle="dropdown"><img class="current-language" src="/images/flags/{{language()}}.png"> {{listLanguages()[language()]}}</a>
-                            <a href="#" class="btn-menu folded" data-toggle="dropdown"><span class="mdGHD03Selected" ></span><br></a>
-                            <ul class="dropdown-menu" style="height: auto;">
-                                <li>
-                                    <a class="{{(language() == 'jp' ? 'language-choose active-language' : 'language-choose')}}" href="javascript:void(0)" data-language="jp" data-flag="jp">
-                                        <img src="/images/flags/jp.png"> Japanese
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="{{(language() == 'en' ? 'language-choose active-language' : 'language-choose')}}" href="javascript:void(0)" data-language="en" data-flag="en">
-                                        <img src="/images/flags/en.png"> English
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="{{(language() == 'vi' ? 'language-choose active-language' : 'language-choose')}}" href="javascript:void(0)" data-language="vi" data-flag="vi">
-                                        <img src="/images/flags/vi.png"> Vietnamese
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="{{(language() == 'cn' ? 'language-choose active-language' : 'language-choose')}}" href="javascript:void(0)" data-language="cns" data-flag="cns">
-                                        <img src="/images/flags/cns.png"> Chinese(Simplified)
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="{{(language() == 'cnt' ? 'language-choose active-language' : 'language-choose')}}" href="javascript:void(0)" data-language="cnt" data-flag="cnt">
-                                        <img src="/images/flags/cnt.png"> Chinese(Traditional)
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="{{(language() == 'th' ? 'language-choose active-language' : 'language-choose')}}" href="javascript:void(0)" data-language="th" data-flag="th">
-                                        <img src="/images/flags/th.png"> Thai
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="{{(language() == 'kr' ? 'language-choose active-language' : 'language-choose')}}" href="javascript:void(0)" data-language="kr" data-flag="kr">
-                                        <img src="/images/flags/kr.png"> Korean
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="{{(language() == 'sp' ? 'language-choose active-language' : 'language-choose')}}" href="javascript:void(0)" data-language="sp" data-flag="sp">
-                                        <img src="/images/flags/sp.png"> Spanish
-                                    </a>
-                                </li>
-                            </ul>  
-                        </li> --}}
-                        <li class="hm-menuitem menu-login">
-                            @if (Auth::guest())
-                            <a href="#" class="wl-btn-login login-btn" data-toggle="modal" data-target="#login-modal">{{ trans('label.login') }}</a>
-                            @else
-                            <div class="fl-r mg-t-xlg color-fff">
-                                <span class="mg-r-md">{{ Auth::user()->name }}</span>
-                                <span><a class="color-fff" href="{{ url('/logout') }}">{{ trans('label.logout') }}</a></span>
-                            </div>
-                            @endif
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navBar-top-right" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="icon-social icon-twitter">
+                            <a href="#" title="Share Twitter" onclick="alert('^^!')"><img src="/frontend/img/icons/icon-twitter.png" /></a>
                         </li>
-                        <li class="hm-menuitem menu-main">
-                            <a href="#drawerNav" data-toggle="drawer" aria-expanded="false" aria-controls="drawerNav" class="btn-menu folded">
-                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span><br></a>
+                        <li class="icon-social icon-facebook">
+                            <a href="#" title="Share Facebook" onclick="alert('^^!')"><img src="/frontend/img/icons/icon-facebook.png" /></a>
                         </li>
+                        <li class="icon-social icon-google">
+                            <a href="#" title="Share Google" onclick="alert('^^!')"><img src="/frontend/img/icons/icon-google.png" /></a>
+                        </li>
+                        <li class="dropdown change-language">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img class="flag" src="/frontend/img/flags/32/United-Kingdom.png" />Eng
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu choose-language">
+                                <li><img class="flag" src="/frontend/img/flags/32/United-Kingdom.png" /><a href="#">Viet Nam</a></li>
+                                <li><img class="flag" src="/frontend/img/flags/32/United-Kingdom.png" /><a href="#">Japan</a></li>
+                                <li><img class="flag" src="/frontend/img/flags/32/United-Kingdom.png" /><a href="#">Singapore</a></li>
+                            </ul>
+                        </li>
+                        <li class="sign-up"><button type = "button" class = "btn btn-default btn-modify">Sign up</button></li>
+                        <li class="login"><button type = "button" class = "btn btn-default btn-modify">Login</button></li>
                     </ul>
-                </div>
-            </div>
-        </header>
-        <div class="message ta-c">
-            @include('flash::message')
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
         </div>
-        <main class="site-main">
-            <div class="section-home-hero inside-blank">
-                <div class="inner">
-                    <div class="catch">
-                        <div class="inner inner-md-1 clf">
-                            <div class="layer">
-                                <h1 class="fc-red">{{ trans('label.scholarship_match_their_own_term') }}
-                                    <span>{{ trans('label.search_easy_free') }}</span>
-                                </h1>
-                                <p>{{ trans('label.enter_the_basic_infomation') }}</p>
-                                <ul class="first-select-items clf">
-                                    <li class="item">
-                                        <select class="dropdown">
-                                            <option class="label" value="">ご希望の留学先は？</option>
-                                            <option value="アメリカ">アメリカ</option>
-                                            <option value="イギリス">イギリス</option>
-                                            <option value="カナダ">カナダ</option>
-                                            <option value="オーストラリア">オーストラリア</option>
-                                            <option value="ドイツ">ドイツ</option>
-                                            <option value="その他">その他</option>
-                                        </select>
-                                    </li>
-                                    <li class="item">
-                                        <select class="dropdown">
-                                            <option class="label" value="">ご希望の留学時期は？</option>
-                                            <option value="2016年から開始">2016年から開始</option>
-                                            <option value="2017年から開始">2017年から開始</option>
-                                            <option value="2018年から開始">2018年から開始</option>
-                                        </select>
-                                    </li>
-                                    <li class="item">
-                                        <select class="dropdown">
-                                            <option class="label" value="">あなたの現在の学年・所属は？</option>
-                                            <option value="高校生">高校生</option>
-                                            <option value="大学学部">大学学部</option>
-                                            <option value="大学修士">大学修士</option>
-                                            <option value="大学博士">大学博士</option>
-                                            <option value="社会人">社会人</option>
-                                        </select>
-                                    </li>
-                                </ul>
-                                <a href="{{ route('student.register') }}" class="btn"><span>{{ trans('label.search_now_btn') }}<i class="icon icon-search"></i></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fade-slider">
-                        <div id="myslider" class="juicyslider">
-                            <ul>
-                                <li><a href=""><img src="/images/mv01.jpg" alt=""></a></li>
-                                <li><a href=""><img src="/images/mv02.jpg" alt=""></a></li>
-                                <li><a href=""><img src="/images/mv03.jpg" alt=""></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+    </nav>
+    <nav class="nav_main center">
+        <ul>
+            <li class="school current"><a href="{{ route('index') }}">School</a></li>
+            <li class="coach"><a href="#">Coach</a></li>
+            <li class="scholarship"><a href="{{ route('scholarship.index') }}">Scholarship</a></li>
+            <li class="message-box"><a href="#">Message box</a></li>
+            <li class="my-profile"><a href="#">My profile</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="advanced-search">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 s-keyword">
+                <input type="text" class="form-control input-text-modify" placeholder="School name" />
             </div>
-            <section>
-                <div class="section-home-feature bg-white">
-                    <div class="inner inner-md-1">
-                        <h2 class="section-title fc-red ">{{ trans('label.characteristics_scholarship') }}</h2>
-                        <div class="feature-items clf">
-                            <div class="item trigger">
-                                <a href="/list-schoolarship/1">
-                                    <h3>{{ trans('label.category_1') }}</h3>
-                                    <figure><img src="/images/feature01.jpg" alt=""></figure>
-                                    <span class="arrow"><i class="fa fa-angle-right fa-2x"></i></span>
-                                </a>
-                            </div>
-                            <div class="item trigger">
-                                <a href="/list-schoolarship/2">
-                                    <h3>{{ trans('label.category_2') }}</h3>
-                                    <figure><img src="/images/feature02.jpg" alt=""></figure>
-                                    <span class="arrow"><i class="fa fa-angle-right fa-2x"></i></span>
-                                </a>
-                            </div>
-                            <div class="item trigger">
-                                <a href="/list-schoolarship/3">
-                                    <h3>{{ trans('label.category_3') }}</h3>
-                                    <figure><img src="/images/feature03.jpg" alt=""></figure>
-                                    <span class="arrow"><i class="fa fa-angle-right fa-2x"></i></span>
-                                </a>
-                            </div>
-                            <div class="item trigger">
-                                <a href="/list-schoolarship/4">
-                                    <h3>{{ trans('label.category_4') }}</h3>
-                                    <figure><img src="/images/feature04.jpg" alt=""></figure>
-                                    <span class="arrow"><i class="fa fa-angle-right fa-2x"></i></span>
-                                </a>
-                            </div>
-                            <div class="item trigger">
-                                <a href="/list-schoolarship/5">
-                                    <h3>{{ trans('label.category_5') }}</h3>
-                                    <figure><img src="/images/feature05.jpg" alt=""></figure>
-                                    <span class="arrow"><i class="fa fa-angle-right fa-2x"></i></span>
-                                </a>
-                            </div>
-                            <div class="item trigger">
-                                <a href="/list-schoolarship/6">
-                                    <h3>{{ trans('label.category_6') }}</h3>
-                                    <figure><img src="/images/feature06.jpg" alt=""></figure>
-                                    <span class="arrow"><i class="fa fa-angle-right fa-2x"></i></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-sm-8 s-more">
+                <div class="col-sm-3 s-more-label">Type of school</div>
+                <div class="col-sm-9 s-more-div">
+                    <button type = "button" class = "btn btn-default btn-modify btn-modify-active" >All</button>
+                    <button type = "button" class = "btn btn-default btn-modify" >University</button>
+                    <button type = "button" class = "btn btn-default btn-modify" >Vocational School</button>
+                    <button type = "button" class = "btn btn-default btn-modify" >Language School</button>
                 </div>
-            </section>
-            <section>
-                <div class="section-home-about bg-white" id="section-home-about">
-                    <div class="inner inner-md-1">
-                        <div class="col-block clf">
-                            <div class="text-area" id="about-fadein1">
-                                <h2 class="section-title fc-red montserrat">{{ trans('label.about_schoolynk') }}</h2>
-                                <p>{{ trans('label.around_the_word_are_out') }}</p>
-                                <p>{{ trans('label.you_do_not_need_to_research') }}</p>
-                                <p>{{ trans('label.application_status_each_school') }}</p>
-                            </div>
-                            <figure class="image-mac" id="about-fadein2">
-                                <img src="/images/mac.png" alt="">
-                            </figure>
-                        </div>
-                    </div>
+                <div class="col-sm-3 s-more-label">Area</div>
+                <div class="col-sm-9 s-more-div">
+                    <button type = "button" class = "btn btn-default btn-modify btn-modify-active" >All</button>
+                    <button type = "button" class = "btn btn-default btn-modify" >Tokyo</button>
+                    <button type = "button" class = "btn btn-default btn-modify" >Osaka</button>
+                    <button type = "button" class = "btn btn-default btn-modify" >Kyoto</button>
+                    <button type = "button" class = "btn btn-default btn-modify" >Fukuoka</button>
+                    <button type = "button" class = "btn btn-default btn-modify" >Others</button>
                 </div>
-            </section>
-            <section>
-                <div class="section-home-step bg-red">
-                    <div class="inner inner-md-1">
-                        <h2 class="section-title montserrat">{{ trans('label.in_three_step') }}<br>{{ trans('label.manage_schoolarship_information') }}</h2>
-                        <div class="step-items">
-                            <div class="item trigger" id="step01">
-                                <figure>
-                                    <img src="/images/step01.png" alt="step01">
-                                </figure>
-                                <h3>{{ trans('label.create_my_account') }}</h3>
-                                <p>{{ trans('label.setup_email_and_password') }}<br>{{ trans('label.create_my_account') }}</p>
-                            </div>
-                            <div class="item trigger" id="step02">
-                                <figure>
-                                    <img src="/images/step02.png" alt="step02">
-                                </figure>
-                                <h3>{{ trans('label.desired_conditions') }}</h3>
-                                <p>{{ trans('label.region_of_study_abroad') }}<br>{{ trans('label.conditions_such_as_major') }}</p>
-                            </div>
-                            <div class="item trigger" id="step03">
-                                <figure>
-                                    <img src="/images/step03.png" alt="step03">
-                                </figure>
-                                <h3>{{ trans('label.get_a_schoolarship_list') }}</h3>
-                                <p>{{ trans('label.get_list_matches_own_wish') }}<br>{{ trans('label.application_silution_managerment') }}</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-sm-3 s-more-label">Major</div>
+                <div class="col-sm-9 s-more-div">
+                    <select class="form-control input-select">
+                        <option>All</option>
+                        <option>123</option>
+                        <option>234</option>
+                        <option>345</option>
+                        <option>456</option>
+                    </select>
                 </div>
-            </section>
-            <section>
-                <div class="section-home-start">
-                    <div class="inner inner-md-1">
-                        <h2 class="section-title fc-red montserrat">{{ trans('label.now_in_schoolynk') }}<br>{{ trans('label.collect_schoolarship_information') }}</h2>
-                        <p>{{ trans('label.first_step_take_to_dream') }}<br>{{ trans('label.let_start_frome_schoolynk') }}</p>
-                        <a href="{{ route('student.register') }}" class="btn"><span>{{ trans('label.try_to_search_right_now') }}<i class="icon icon-search"></i></span></a>
-                    </div>
+                <div class="col-sm-3 s-more-label">Ranking</div>
+                <div class="col-sm-6 s-more-div">
+                    <input type="text" id="ranking-range" name="example_name" value="" />
                 </div>
-            </section>
-        </main>
-        <div class="pagetop-wrapper">
-            <div class="inner inner-md-1">
-                <a href="#wrapper" id="pagetop"><i class="fa fa-angle-up fa-2x"></i></a>
-                <a href="#wrapper" id="sp-pagetop"><i class="fa fa-angle-up fa-2x"></i></a>
-            </div>
-        </div>
-        <footer class="site-footer bg-gray">
-            <div class="inner inner-md-1 clf">
-                <ul class="footer-links">
-                    <li><a href="./about/"><i class="fa fa-angle-right"></i>{{ trans('label.about_schoolynk') }}</a></li>
-                    <li><a href="./privacy/"><i class="fa fa-angle-right"></i>{{ trans('label.privacy_policy') }}</a></li>
-                    <li><a href="./sitemap/"><i class="fa fa-angle-right"></i>{{ trans('label.site_map') }}</a></li>
-                    <li><a href="./contact/"><i class="fa fa-angle-right"></i>{{ trans('label.contact') }}</a></li>
-                </ul>
-                <small class="copy">&copy; 2016 KITE Inc.</small>
-            </div>
-        </footer>
-        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="loginmodal-container">
-                    <h1>{{ trans('label.login') }}</h1>
-                    <br>
-                    <form role="form" method="POST" action="{{ route('app.login') }}" class="form-horizontal">
-                        {!! csrf_field() !!}
-                        <div class="form-group">
-                            <input type="email" name="email" placeholder="{{ trans('label.email') }}" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password" placeholder="{{ trans('label.password') }}" class="form-control">
-                        </div>
-                        <div class="form-group lg-social-wrapper">
-                            <a href="redirect/facebook" class="lg-social lg-fb"><img src="/schoolynk/detailpage/images/icon-fb.png"></a>
-                            <a href="redirect/twitter" class="lg-social lg-tw"><img src="/schoolynk/detailpage/images/icon-tw.png"></a>
-                            <a href="redirect/google" class="lg-social lg-gg"><img src="/schoolynk/detailpage/images/icon-g.png"></a>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox"><span class="remember">{{ trans('label.remember_30day') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" name="login" class="login loginmodal-submit" value="{{ trans('label.login') }}">
-                        </div>
-                        <div class="form-group lg-forgot">
-                            <a href="{{ url('/password/reset') }}">{{ trans('label.forgoten_password') }}</a>
-                        </div>
-                    </form>
-                </div>
+                <div class="col-sm-3"></div>
             </div>
         </div>
     </div>
-    <!-- <script src="/js/modernizr-custom.js"></script> -->
-    <script src="/js/plugin.js"></script>
-    <script src="/js/index.js"></script>
-    <script src="/js/common-index.js"></script>
-    <script>
+</div>
+<div class="container-fluid">
+    <div class="row count-and-sort">
+        <div class="col-sm-6">
+            <span>84 search results</span>
+        </div>
+        <div class="col-sm-6">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"><span>Sort by</span></div>
+            <div class="col-sm-4">
+                <select class="form-control input-select">
+                    <option>All</option>
+                    <option>123</option>
+                    <option>234</option>
+                    <option>345</option>
+                    <option>456</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row school-list">
+        <div class="col-sm-4">
+            <div class="school-child school-child-applied">
+                <a href="" class="avatar"><img src="/frontend/img/avatar3.jpg"></a>
+                <a href="" class="title">
+                    <h5>University of Viet Nam</h5>
+                    <span>The old schools, Trinity Ln</span>
+                </a>
+                <div class="clear"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="school-child school-child-following">
+                <a href="" class="avatar"><img src="/frontend/img/avatar8.jpg"></a>
+                <a href="" class="title">
+                    <h5>University of Viet Nam</h5>
+                    <span>The old schools, Trinity Ln</span>
+                </a>
+                <div class="clear"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="school-child">
+                <a href="" class="avatar"><img src="/frontend/img/avatar6.jpg"></a>
+                <a href="" class="title">
+                    <h5>University of Viet Nam</h5>
+                    <span>The old schools, Trinity Ln</span>
+                </a>
+                <div class="clear"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="school-child">
+                <a href="" class="avatar"><img src="/frontend/img/avatar1.jpg"></a>
+                <a href="" class="title">
+                    <h5>University of Viet Nam</h5>
+                    <span>The old schools, Trinity Ln</span>
+                </a>
+                <div class="clear"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
+            </div>
+        </div><div class="col-sm-4">
+            <div class="school-child">
+                <a href="" class="avatar"><img src="/frontend/img/avatar2.jpg"></a>
+                <a href="" class="title">
+                    <h5>University of Viet Nam</h5>
+                    <span>The old schools, Trinity Ln</span>
+                </a>
+                <div class="clear"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="school-child">
+                <a href="" class="avatar"><img src="/frontend/img/avatar9.jpg"></a>
+                <a href="" class="title">
+                    <h5>University of Viet Nam</h5>
+                    <span>The old schools, Trinity Ln</span>
+                </a>
+                <div class="clear"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>12</a></div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12" id="home-load-more">
+        <button type = "button" class = "btn btn-default btn-modify btn-modify-active btn-load-more" onclick="loadMore()">Load more</button>
+    </div>
+</div>
+<br /><br /><br />
 
-        /**
-         * Validate login 
-         */
-        $(function(){
-            $( "#frm-login" ).submit(function( event ) {
-              var password = ( $('input[name="password"]').val() ).trim();
-              if(!password){
-                alert('Passwords empty');
-                event.preventDefault();
-              }
-            });
-        });
 
-        /**
-         * Change language
-         */
-        $('.language-choose').on('click', function () {
-            $('.language-choose').removeClass('active-language');
-            $(this).addClass('active-language');
-            $('.title-language').html(
-                                '<img class="current-language" src="/images/flags/' + 
-                                $(this).data('flag') + '.png">' + 
-                                $(this).text()
-                            );
+<script src="/frontend/js/jquery-3.1.1.min.js"></script>
+<script src="/frontend/js/bootstrap.min.js"></script>
 
-            var dataInput = {};
-            dataInput.language = $(this).data('language');
+<!-- IonRangeSlider -->
+<script src="/frontend/js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
+<script>
 
-            $.ajax({
-                headers: {'X-CSRF-Token': $('input[name="_token"]').val()},
-                type: "POST",
-                url: 'locale',
-                data: dataInput,
-                success: function(data, status) {
-                    location.reload();
-                }
-            });
-        })
-    </script>
+    var range = $("#ranking-range");
+    $(range).ionRangeSlider({
+        type: "double",
+        min: 1,
+        max: 300,
+        from: 1,
+        to: 300,
+        step: 1,
+        /*onStart: function (data) {
+         console.log(data);
+         },
+         onChange: function (data) {
+         console.log(data);
+         },
+         onFinish: function (data) {
+         console.log(data);
+         },
+         onUpdate: function (data) {
+         console.log(data);
+         }*/
+    });
+    $(range).on("change", function () {
+        var $this = $(this),
+                value = $this.prop("value").split(";");
+
+        //console.log(value[0] + " - " + value[1]);
+    });
+
+    function loadMore(){
+        $('.uil-facebook-css').show();
+        html = '<div class="col-sm-4">';
+        html += '<div class="school-child"></div>';
+        html += '</div>';
+        $('.school-list').append(html + html + html);
+
+        slider = $("#ranking-range").data("ionRangeSlider");
+        slider.reset();
+
+        //$('.uil-facebook-css').hide();
+    }
+</script>
 </body>
 </html>

@@ -68,6 +68,7 @@ Route::group([
 
 // Route Home Page
 Route::get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
+Route::get('scholarship', ['as' => 'scholarship.index', 'uses' => 'ScholarshipController@index']);
 
 /**
  * Route Student Group

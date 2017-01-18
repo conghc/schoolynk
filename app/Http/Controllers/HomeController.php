@@ -77,9 +77,6 @@ class HomeController extends Controller
      */
     public function index($localization = null)
     {
-        echo('Coming Soon !!!');
-        die();
-        // Get user logined
         $user = Auth::user();
 
         // If user logined
@@ -95,8 +92,8 @@ class HomeController extends Controller
                 return redirect()->route('university.index');
             }
         }
-
         return view('welcome');
+        //return view('welcome');
     }
 
     public function home()
