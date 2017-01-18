@@ -8,7 +8,8 @@ use Auth;
 use Flash;
 use App\Degree;
 use App\Major;
-use App\Schoolarship;
+use App\Scholarship;
+use App\User;
 use DB;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -79,6 +80,8 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
+        $schools = User::with('schoolInfo')->where('role',4)->get();
+        
         // If user logined
         if($user){
 
@@ -92,7 +95,7 @@ class HomeController extends Controller
                 return redirect()->route('university.index');
             }
         }
-        return view('welcome');
+        return view('welcome', compact('schools'));
         //return view('welcome');
     }
 
