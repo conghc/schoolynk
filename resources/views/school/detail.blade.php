@@ -349,15 +349,15 @@
 				<div id="all-photos">
 					<div id="slideshow" class="fullscreen">
 						<!-- Below are the images in the gallery -->
-						<div id="img-1" data-img-id="1" class="img-wrapper active" style="background-image: url('../../img/img1.jpg')"></div>
-						<div id="img-2" data-img-id="2" class="img-wrapper" style="background-image: url('../../img/img2.jpg')"></div>
-						<div id="img-3" data-img-id="3" class="img-wrapper" style="background-image: url('../../img/img3.jpg')"></div>
-						<div id="img-4" data-img-id="4" class="img-wrapper" style="background-image: url('../../img/img2.jpg')"></div>
-						<div id="img-1" data-img-id="5" class="img-wrapper" style="background-image: url('../../img/img1.jpg')"></div>
-						<div id="img-2" data-img-id="6" class="img-wrapper" style="background-image: url('../../img/img2.jpg')"></div>
-						<div id="img-3" data-img-id="7" class="img-wrapper" style="background-image: url('../../img/img3.jpg')"></div>
-						<div id="img-4" data-img-id="8" class="img-wrapper" style="background-image: url('../../img/img2.jpg')"></div>
-						<div id="img-1" data-img-id="9" class="img-wrapper" style="background-image: url('../../img/img1.jpg')"></div>
+						<div id="img-1" data-img-id="1" class="img-wrapper active" style="background-image: url('../../frontend/img/img1.jpg')"></div>
+						<div id="img-2" data-img-id="2" class="img-wrapper" style="background-image: url('../../frontend/img/img2.jpg')"></div>
+						<div id="img-3" data-img-id="3" class="img-wrapper" style="background-image: url('../../frontend/img/img3.jpg')"></div>
+						<div id="img-4" data-img-id="4" class="img-wrapper" style="background-image: url('../../frontend/img/img2.jpg')"></div>
+						<div id="img-1" data-img-id="5" class="img-wrapper" style="background-image: url('../../frontend/img/img1.jpg')"></div>
+						<div id="img-2" data-img-id="6" class="img-wrapper" style="background-image: url('../../frontend/img/img2.jpg')"></div>
+						<div id="img-3" data-img-id="7" class="img-wrapper" style="background-image: url('../../frontend/img/img3.jpg')"></div>
+						<div id="img-4" data-img-id="8" class="img-wrapper" style="background-image: url('../../frontend/img/img2.jpg')"></div>
+						<div id="img-1" data-img-id="9" class="img-wrapper" style="background-image: url('../../frontend/img/img1.jpg')"></div>
 
 						<!-- Below are the thumbnails of above images -->
 						<div class="thumbs-container bottom">
@@ -366,15 +366,15 @@
 							</div>
 
 							<ul class="thumbs">
-								<li data-thumb-id="1" class="thumb active" style="background-image: url('../../img/img1-thumb.jpg')"></li>
-								<li data-thumb-id="2" class="thumb" style="background-image: url('../../img/img2-thumb.jpg')"></li>
-								<li data-thumb-id="3" class="thumb" style="background-image: url('../../img/img3-thumb.jpg')"></li>
-								<li data-thumb-id="4" class="thumb" style="background-image: url('../../img/img2-thumb.jpg')"></li>
-								<li data-thumb-id="5" class="thumb" style="background-image: url('../../img/img1-thumb.jpg')"></li>
-								<li data-thumb-id="6" class="thumb" style="background-image: url('../../img/img2-thumb.jpg')"></li>
-								<li data-thumb-id="7" class="thumb" style="background-image: url('../../img/img3-thumb.jpg')"></li>
-								<li data-thumb-id="8" class="thumb" style="background-image: url('../../img/img2-thumb.jpg')"></li>
-								<li data-thumb-id="9" class="thumb" style="background-image: url('../../img/img1-thumb.jpg')"></li>
+								<li data-thumb-id="1" class="thumb active" style="background-image: url('../../frontend/img/img1-thumb.jpg')"></li>
+								<li data-thumb-id="2" class="thumb" style="background-image: url('../../frontend/img/img2-thumb.jpg')"></li>
+								<li data-thumb-id="3" class="thumb" style="background-image: url('../../frontend/img/img3-thumb.jpg')"></li>
+								<li data-thumb-id="4" class="thumb" style="background-image: url('../../frontend/img/img2-thumb.jpg')"></li>
+								<li data-thumb-id="5" class="thumb" style="background-image: url('../../frontend/img/img1-thumb.jpg')"></li>
+								<li data-thumb-id="6" class="thumb" style="background-image: url('../../frontend/img/img2-thumb.jpg')"></li>
+								<li data-thumb-id="7" class="thumb" style="background-image: url('../../frontend/img/img3-thumb.jpg')"></li>
+								<li data-thumb-id="8" class="thumb" style="background-image: url('../../frontend/img/img2-thumb.jpg')"></li>
+								<li data-thumb-id="9" class="thumb" style="background-image: url('../../frontend/img/img1-thumb.jpg')"></li>
 							</ul>
 
 							<div id="next-btn" class="next">
