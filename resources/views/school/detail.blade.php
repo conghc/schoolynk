@@ -97,7 +97,7 @@
 					</div>
 					<div class="col-sm-9">
 						<a class="title" href="">
-							<h4>University of Compatible</h4>
+							<h4>{{ $school->name }}</h4>
 							The Old schools, Trinity Ln
 						</a>
 						<a href="" class="ranking"><span>R</span>12</a>
