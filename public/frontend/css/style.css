@@ -80,7 +80,7 @@ h1 {
 /*Btn, input modify*/
 .btn-modify{
 	border-color:#cfd9de;
-	background:transparent
+	background:transparent;
 }
 .btn-modify{
 	-webkit-border-radius: 40px;
@@ -301,9 +301,9 @@ ul.choose-language li{
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	padding:20px;
-	-webkit-box-shadow: 0 4px 3px -3px black;
-     -moz-box-shadow: 0 4px 3px -3px black;
-          box-shadow: 0 4px 3px -3px black;
+	-webkit-box-shadow: 0 3px 3px -3px black;
+     -moz-box-shadow: 0 3px 3px -3px black;
+          box-shadow: 0 3px 3px -3px black;
 }
 
 #home-load-more{
@@ -482,9 +482,9 @@ ul.choose-language li{
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     padding: 30px 40px;
-    -webkit-box-shadow: 0 4px 3px -3px black;
-    -moz-box-shadow: 0 4px 3px -3px black;
-    box-shadow: 0 4px 3px -3px black;
+    -webkit-box-shadow: 0 3px 3px -3px black;
+    -moz-box-shadow: 0 3px 3px -3px black;
+    box-shadow: 0 3px 3px -3px black;
 	width: 100%;
     min-height: 400px;
     background: #fff;
@@ -553,9 +553,345 @@ ul.choose-language li{
 .inner-scholarship-details .value{
 	color:#23252e
 }
-/*Footer*/
 
+/** SChool details**/
+.school-details{
+	margin-top:15px;
+	margin-bottom:15px;
+}
+.detail-left{
+	width:100%;
+	min-height:200px;
+	padding:23px;
+	background:#fff;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-box-shadow: 0 3px 3px -3px black;
+    -moz-box-shadow: 0 3px 3px -3px black;
+    box-shadow: 0 3px 3px -3px black;
+	position:relative;
+}
+.following{
+	position:absolute;
+	top:0px;right:10px;
+}
+.detail-left .col-sm-3{
+	padding-left:0px;
+}
+.detail-left .avatar{
+	display: inline-block;
+}
+.detail-left .avatar img{
+	width: 74px;
+    height: 74px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 1px solid #e8eff2;
+}
+.detail-left .block{
+	padding-bottom:28px;
+	border-bottom:1px solid #f4f6f7
+}
+.detail-left .block-between, .detail-left .block-bottom{
+	padding-top:28px;
+	border-top:1px solid #e6eaed
+}
+.block-top .title h4{
+	color:#21232c;
+}
+.block-top .title{
+	display:block;
+	color:#7b8b92;
+	min-height:75px;
+}
+.block-top .ranking span{
+	display: inline-block;
+    width: 23px;
+    height: 23px;
+    background: #7a7f94;
+    color: #fff;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+	padding-top:1px;
+	margin-right: 10px;
+}
+.block-top .ranking{
+	display:block;
+	margin:15px 0px;
+}
+.block-bottom .btn-modify{
+	width:100%;
+	line-height:31px;
+	margin-bottom:13px;
+}
+.block-bottom .col-sm-12{
+	margin-top:7px;
+}
+.block-bottom .btn-modify:hover, .block-bottom .btn-modify:focus, .block-bottom .btn-modify.focus{
+	background:#fff;
+	color:#000;
+	border-color:#cfd9de;
+	outline:none;
+	
+}
+.block-bottom .btn-modify-active:hover, .block-bottom .btn-modify-active:focus, .block-bottom .btn-modify-active.focus{
+	background:#3795fd;
+	border-color:#3795fd;
+	color:#fff
+}
+.detail-left .block-bottom{
+	border-bottom:none;
+	padding-bottom:0px;
+}
+.inner-detail-left{
+	color:#21232c;
+	line-height:28px
+}
+.inner-detail-left .website{
+	
+}
+.inner-detail-left .label-left{
+	color:#7b8b92
+}
+.detail-right{
+	width:100%;
+	min-height:200px;
+	background:#fff;
+	border-radius:10px;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-box-shadow: 0 3px 3px -3px black;
+    -moz-box-shadow: 0 3px 3px -3px black;
+    box-shadow: 0 3px 3px -3px black;
+	position:relative;
+	margin-bottom:25px;
+}
+.numberFolllow{
+	padding:15px 25px;
+}
+.numberF{
+	line-height:33px;
+}
+.btnF{
+	float:right;
+	padding-left:30px;
+	padding-right:30px;
+}
+
+.schoolDetailFilter{
+	padding-top:15px;
+	padding-right:30px;
+	background:#f8f9fa;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom:1px solid #e5eaed;
+	margin-bottom:5px;
+	padding-bottom:15px;
+	background:#f8f9fa url(../img/icons/academic-level.png) no-repeat 10px 20px;
+}
+.schoolDetailFilter .s-more-label{
+	padding-left:38px
+}
+.schoolDetailFilterResults .nav-tabs{padding-left:10px}
+.schoolDetailFilterResults .nav-tabs li a{
+	color:#4d626b
+}
+.schoolDetailFilterResults .nav-tabs li a:hover{
+	background:none;
+	border-color:#fff;
+	color:#000;
+	border-bottom:2px solid #057afd
+}
+.schoolDetailFilterResults .nav-tabs li.active a{
+	border-color:#fff;
+	color:#000;
+	border-bottom:2px solid #057afd
+}
+.schoolDetailFilterResults .tab-content{
+	padding:20px;
+}
+.schoolDetailFilterResults .tab-pane{
+	min-height:100px;
+}
+#tab-major .list-major{
+	display:block;
+	border-bottom:1px solid #e7ebee;
+	padding-bottom:25px;
+	margin-bottom:25px;
+}
+#tab-major .col-sm-11{
+	width:95.666%;
+	padding-right:0px;
+}
+#tab-major .major-level{
+	width:4.3333%
+}
+#tab-major .major-level span{
+	width:24px;height:24px;
+	display:inline-block;
+	background:#5cc768;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	text-align:center;
+	line-height:24px;
+	color:#fff
+}
+#tab-major{
+	color:#000
+}
+#tab-major .major-label{
+	color:#7b8b92
+}
+#tab-major .major-option{
+	line-height:30px;
+}
+#tab-major .interested button{
+	background:url(../img/icons/icon-heart.png) no-repeat 14px 8px;
+	padding-left:40px;
+	padding-right:25px;
+}
+#tab-major .btn-modify:hover, #tab-major .btn-modify:focus, #tab-major .btn-modify.focus{
+	color:#000;
+	border-color:#cfd9de;
+	outline:none;
+}
+#tab-major .interested{
+	text-align:right
+}
+.basicInfo{}
+.basicInfo h4{
+	border-bottom:1px solid #d4dde2;
+	padding:0px;
+	margin:0px;
+	line-height:52px;
+	color:#000;
+	font-size:16px;
+	padding-left:30px;
+}
+.basicInfo .listInfo{
+	padding:30px;
+	padding-bottom:5px;
+}
+.titleInfo{
+	margin-bottom:15px;
+	background:url(../img/icons/icon-02.png) no-repeat center left;
+	padding-left:20px;
+	display:block
+}
+.basicInfo .contentInfo{
+	color:#000
+}
+.list-scholarships{
+	border-bottom: 1px solid #e7ebee;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+	color:#000;
+}
+.list-scholarships .sc-label{
+	color:#7b8b92
+}
+.list-scholarships .wrap-deadline{
+	text-align:right
+}
+.list-scholarships .col-sm-6, .list-scholarships .col-sm-12{
+	line-height:30px
+}
+.list-course{
+	background:#f5f7f9;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	margin-bottom:15px;
+}
+.titleCourse{
+	color:#000;
+	background:#e5ebf2;	
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	margin:0px;
+	line-height:40px;
+	font-size:20px;
+	padding-left:18px;
+	position:relative;	
+	cursor:pointer
+}
+.list-course-active .titleCourse{
+	-webkit-border-bottom-left-radius: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	-moz-border-radius-bottomright: 0px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+.innerCourse{
+	padding:18px;
+	color:#000;
+	display:none;
+}
+.list-course-active .innerCourse{
+	display:block;
+}
+.icon-course{
+	width:20px;
+	height:20px;
+	background:url('../img/icons/icon-03.png') no-repeat center;
+	display:inline-block;
+	position:absolute;
+	top:10px;right:10px;
+}
+.list-course-active .icon-course{
+	background:url('../img/icons/icon-02.png') no-repeat center;
+}
+.innerCourse{}
+.innerCourse h3{
+	font-size:15px;
+	color:#7c8c93
+}
+.innerCourse>p{
+	padding-bottom:20px;
+	border-bottom:1px solid #e7ebee;
+}
+.innerCourse table, .innerCourse table tr td{	border:none;}
+.innerCourse table tr td{border:4px solid #f5f7f9}
+.innerCourse table tr td{
+	background:#e6ebf2
+}
+.innerCourse table tr:nth-child(odd) td{
+	background:#eef1f4
+}
+.innerCourse table tr:first-child td, .innerCourse table tr:nth-child(2) td{
+	background:transparent
+}
+.innerCourse table tbody>tr td p{
+	border-bottom:2px solid #f0764b;
+	font-size:12px;
+	color:#7c8c93;
+	padding-bottom:4px;
+	margin-bottom:0px;
+}
+.innerCourse table tr>td{
+	min-width:105px;
+}
+/*Footer*/
+#map{
+	height: 400px;
+	width:100%;
+	margin-bottom:20px;
+}
 #footer{
 	height:10px;
 	margin-top:20px;
+}
+/*signIn signUp*/
+.signIn{
+	background:#fff
 }

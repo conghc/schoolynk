@@ -111,6 +111,10 @@ Route::group(['prefix' => 'scholarship'], function () {
     Route::get('/detail/{id}', ['as' => 'scholarship.detail', 'uses' => 'ScholarshipController@detail']);
 });
 
+Route::group(['prefix' => 'school'], function () {
+    Route::get('/detail/{id}', ['as' => 'school.detail', 'uses' => 'HomeController@detail']);
+});
+
 // Route schoolarship detail
 Route::get('/schoolynk-detailpage/{id}', 'SchoolarshipController@detail');
 

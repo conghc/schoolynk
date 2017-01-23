@@ -143,8 +143,8 @@
         @foreach($schools as $k=>$school)
             <div class="col-sm-4">
                 <div class="school-child {{ $k < 2 ? 'school-child-applied' : '' }}">
-                    <a href="" class="avatar"><img src="/{{ $school->img_profile != null ? $school->img_profile : 'img/no-image.png' }}"></a>
-                    <a href="" class="title">
+                    <a href="/school/detail/{{ $school->id }}" class="avatar"><img src="/{{ $school->img_profile != null ? $school->img_profile : 'img/no-image.png' }}"></a>
+                    <a href="/school/detail/{{ $school->id }}" class="title">
                         <h5>{{ $school->name }}</h5>
                         <span>The old schools, Trinity Ln</span>
                     </a>

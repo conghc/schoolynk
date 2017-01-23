@@ -99,6 +99,14 @@ class HomeController extends Controller
         //return view('welcome');
     }
 
+    public function detail($id){
+        // Find schoolarship with id
+        $school = User::find($id);
+
+
+        return view('school.detail', compact('school'));
+    }
+
     public function home()
     {
         return redirect('/');

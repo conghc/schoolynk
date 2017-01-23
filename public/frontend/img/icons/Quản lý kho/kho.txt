@@ -1,0 +1,76 @@
+khách hàng
+	Mã kh
+	Loại : cá nhân, doanh nghiệp
+	Tên
+	Địa chỉ
+	Số đt
+	EMail
+	Birthday
+	Mô tả
+	
+Nhà cung cấp
+	Mã nhà cc
+	Tên
+	Điện thoại
+	EMail
+	Địa chỉ
+	Mô tả
+	
+Loại hàng hóa
+	Tên loại
+	mô tả
+	
+Hàng hóa
+	Thông tin chung
+		Mã
+		Tên
+		Đơn vị kg, túi, chiếc .v.v.v.
+		Loại hàng hóa
+		Nhà cung cấp
+		Mã vạch
+	Thông tin giá
+		Giá nhập
+		Giá bán
+		Tồn kho
+		Ảnh đại diện
+		Mô tả
+
+Kho
+	Mã kho
+	Tên kho
+	Là điểm bán || không là
+	Địa chỉ
+	Mô tả
+
+Hóa đơn
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

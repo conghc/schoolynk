@@ -1,0 +1,113 @@
+#viewAllPhotos{}
+#viewAllPhotos .modal-content{	
+	overflow:hidden
+}
+#viewAllPhotos .modal-body{
+	padding:0px;
+}
+/*********************************
+* Slideshow Styling
+*********************************/
+#slideshow {
+	width: 100%;
+	min-height: 480px;
+	max-height: 480px;
+    position:relative;
+	margin-bottom:100px;
+}
+.img-wrapper {
+	min-width: 100%;
+	min-height: 100%;
+
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	margin: auto;
+	overflow: hidden;
+
+	z-index:8;
+
+	background-size: cover;
+	background-position: center center;
+}
+#slideshow .img-wrapper.active {
+	z-index:10;
+}
+
+#slideshow .img-wrapper.last-active {
+	z-index:9;
+}
+
+	/*********************************
+	* Thumbnail Styling
+	*********************************/
+	.thumbs-container {
+		width: 100%;
+		height: 100px;
+		position: absolute;
+		left: 0;
+
+		z-index: 11;
+
+		background: #222222;
+		opacity: .9;
+	}
+		.thumbs-container.top {
+			top: 0;
+		}
+		.thumbs-container.bottom {
+			bottom: -100px;
+		}
+		.prev, .next {
+			width: 3%;
+			min-width: 40px;
+			height: 48px;
+			padding: 46px 1%;
+
+			color: #999999;
+			cursor: pointer;
+		}
+		.prev { float: left; 	
+			background:url(../../../img/icons/prev.png) no-repeat center;left:4px;		
+		}
+		.next { float: right; 
+			background:url(../../../img/icons/next.png) no-repeat center;			
+		}
+			.prev:hover, .next:hover {
+				color: #555555;
+			}
+		ul.thumbs {
+			position: absolute;
+			top: 0;
+			left: 5%;
+			right: 5%;
+			height: 100px;
+			padding: 0;
+			margin: 0 5%;
+			overflow: hidden;
+			white-space: nowrap;
+			text-align: center;
+		}
+			.thumb {
+				display: inline-block;				
+				width: 110px;
+				height: 77px;
+				margin: 10px;
+
+				overflow: hidden;
+				background-size: cover;
+	    		background-position: center center;
+
+	    		cursor: pointer;
+			}
+				.thumb:first-of-type {
+					margin-left: 0px;
+				}
+			.thumb.active {
+				width: 110px;
+				height: 77px;
+				border: 2px solid #FFF;
+			}
