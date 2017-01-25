@@ -69,6 +69,9 @@ class User extends Authenticatable
     public function otherText(){
         return $this->hasMany('App\OtherText', 'school_id', 'id')->where('type', 'school');
     }
+    public function texts(){
+        return $this->hasMany('App\OtherText', 'school_id', 'id')->where('type', '!=', 'school');
+    }
 
     public function scholarships(){
         //return $this->hasManyThrough('App\Scholarship', 'App\ScholarshipSchool', 'school_id', 'id');
@@ -77,6 +80,10 @@ class User extends Authenticatable
 
     public function facultySchool(){
         return $this->hasMany('App\FacultySchool', 'school_id', 'id');
+    }
+
+    public function major(){
+        return $this->hasMany('App\Major', 'school_id', 'id');
     }
     
 }

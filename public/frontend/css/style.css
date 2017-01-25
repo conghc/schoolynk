@@ -650,11 +650,16 @@ ul.choose-language li{
 	color:#21232c;
 	line-height:28px
 }
+
+.inner-detail-left .detail-row{
+	text-transform: capitalize;
+}
 .inner-detail-left .website{
-	
+
 }
 .inner-detail-left .label-left{
-	color:#7b8b92
+	color:#7b8b92;
+	text-transform: none;
 }
 .detail-right{
 	width:100%;
@@ -880,6 +885,14 @@ ul.choose-language li{
 }
 .innerCourse table tr>td{
 	min-width:105px;
+}
+.listNav{
+	color:#7b8b92
+}
+.listNav.first{
+	background:url(../img/icons/icon-04.png) no-repeat center right;
+	padding-right:20px;
+	color:#b2c1c9
 }
 /*Footer*/
 #map{

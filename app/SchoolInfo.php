@@ -10,4 +10,13 @@ class SchoolInfo extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'location'
+    ];
+
+    public function getLocationAttribute(){
+        $states = \CountryState::getStates('JP');
+        $state = $this->state ? $states[$this->state] : '--';
+        return 'Japan' . ', '. $state;
+    }
 }

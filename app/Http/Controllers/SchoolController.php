@@ -13,100 +13,142 @@ use App\Message;
 use Flash;
 use DateTime;
 use Auth;
+use App\User;
+use DB;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class SchoolController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth.university', [ 'except' => ['studentSearch'] ]);
-    }
-
-    public function index(){
-    	$nationalities = getNationalities();
-    	$countries = \CountryState::getCountries();
-    	$degrees = Degree::all();
-    	$typeOfStudies = TypeOfStudy::all();
-    	$majors = Major::all();
-    	return view('university.index', compact('nationalities', 'countries', 'degrees', 'typeOfStudies', 'majors'));
-    }
-
-    public function mail(){
-        $university = Auth::user()->university;
-        $messages = Message::with('student.user')
-                    ->where('university_id', $university->id)
-                    ->where('mode', 1)
-                    ->orderBy('created_at', 'desc')->get();
-        return view('university.mail', compact('messages') );
-    }
-
-    public function studentSearch(Request $request){
-        $requests = $request->all();
-
-        // TODO; QA - Study abroad start year
-        $studentQuery = Student::with('user', 'user.educations', 'degree', 'typeOfStudy');
-        if ( isset($requests['nationality']) && $requests['nationality'] )
-            $studentQuery->whereIn('nationality', $requests['nationality'] );
-        if ( isset($requests['gender']) && $requests['gender'] )
-            $studentQuery->where('gender', $requests['gender'] );
-        if ( isset($requests['degree']) && $requests['degree'] )
-            $studentQuery->whereIn('degree', $requests['degree'] );
-        if ( isset($requests['type_of_study']) && $requests['type_of_study'] )
-            $studentQuery->whereIn('type_of_study', $requests['type_of_study']);
-
-        $students = $studentQuery->get();
-
-        // Check if isset condition to filter
-
-        $students = $students->filter(function ($student) use($requests){
-            $checkMinAge = true;
-            $checkMaxAge = true;
-            $checkCountry = true;
-            $checkMajor = true;
-            $isStudent = true;
-            if(isset($requests['country_interested']) && $student->user){
-                $checkCountry = false;
-                foreach ($student->user->educations as $education) {
-                    if ( in_array($education->country_interested, $requests['country_interested']) ) $checkCountry = true;
-                }
-            }
-            if($requests['min_age'])
-                $checkMinAge = $student->age > $requests['min_age'];
-
-            if($requests['max_age'])
-                $checkMaxAge = $student->age < $requests['max_age'];
-
-            if(isset($requests['major'])){
-                $checkMajor = false;
-                if($student->major){
-                    foreach ($student->major as $major) {
-                        if ( in_array($major, $requests['major']) ) $checkMajor = true;
-                    }
-                }
-            }
-
-            if($student->user && $student->user->role!=0) $isStudent = false;
-            
-            return $checkMinAge && $checkMaxAge && $checkCountry && $checkMajor && $isStudent;
-        });
-
-        return response()->json($students->toArray());
-    }
-
-    public function sendMessage(Request $request){
-        $data = $request->only('student_id', 'university_id', 'title', 'message');
-        if ($request->file('file') && $request->file('file')->isValid()) {
-            $file = $request->file('file');
-            $timestamp = (new DateTime())->getTimestamp();
-            $newName = $timestamp.'__'.$file->getClientOriginalName();
-            $request->file('file')->move('files', $newName);
-            $data['file'] = '/files/'. $newName;
+        //$this->middleware('auth.university', [ 'except' => ['studentSearch'] ]);
+        // Set language session
+        if (\Session::has('locale')) {
+            \App::setLocale(\Session::get('locale'));
+        } else {
+            \App::setLocale(\Session::get('en'));
         }
-        $data['mode'] = 0; // mode == 0: university send to student.
-        $rs = Message::create($data);
+    }
 
-        if($rs) Flash::success('Your message has been sent');
-        else Flash::erro('Some thing error, please try again');
+    public function index(Request $request, Major $major){
+        $states = \CountryState::getStates('JP');
+        $user = Auth::user();
+        $majors = Major::has('school')->get();
+        //$schools = User::has('schoolInfo');
 
-        return redirect()->route('university.mail');        
+        $from = $request->input('from',1);
+        $to = $request->input('to',300);
+        $typeSchool = $request->input('typeSchool','all');
+        $keyword = $request->input('keyword','');
+        $state = $request->input('state',0);
+        $major_id = $request->input('major',0);
+
+        $schools = User::whereHas('schoolInfo', function($query) use($from,$to, $state){
+            $query->where('school_informations.ranking', '>=', $from);
+            $query->where('school_informations.ranking', '<=', $to);
+            if($state > 0){
+                $query->where('school_informations.state','=', $state);
+            }
+        });
+        if($major_id > 0){
+            $schools = $schools->whereHas('major', function($query) use($major_id){
+                $query->where('majors.id',$major_id);
+            });
+        }
+        if($keyword != ''){
+            $schools = $schools->where('name', 'LIKE', '%'. $keyword .'%');
+        }
+        if(in_array($typeSchool, ['university','vocational','language'])){
+            $schools = $schools->where('school_type', 'LIKE', $typeSchool);
+        }
+        // If user logined
+        if($user){
+            // If user is student
+            if( $user->role == 0){
+                return redirect()->route('student.index');
+            }
+            // If user is university
+            if($user->role == 3){
+                return redirect()->route('university.index');
+            }
+        }
+        $schools = $schools->paginate(3);
+
+        if($request->ajax()){
+            return view('school.ajax-list', compact('schools'))->render();
+        }else{
+            return view('school.index', compact('schools','states', 'majors'));
+        }
+    }
+    
+    public function listSchool(Request $request){
+        $from = $request->input('from',1);
+        $to = $request->input('to',300);
+        $typeSchool = $request->input('typeSchool','all');
+        $keyword = $request->input('keyword','');
+        $state = $request->input('state',0);
+        $major_id = $request->input('major',0);
+
+        $schools = User::whereHas('schoolInfo', function($query) use($from,$to, $state){
+            $query->where('school_informations.ranking', '>=', $from);
+            $query->where('school_informations.ranking', '<=', $to);
+            if($state > 0){
+                $query->where('school_informations.state','=', $state);
+            }
+        });
+        if($major_id > 0){
+            $schools = $schools->whereHas('major', function($query) use($major_id){
+                $query->where('majors.id',$major_id);
+            });
+        }
+        if($keyword != ''){
+            $schools = $schools->where('name', 'LIKE', '%'. $keyword .'%');
+        }
+        if(in_array($typeSchool, ['university','vocational','language'])){
+            $schools = $schools->where('school_type', 'LIKE', $typeSchool);
+        }
+        $schools = $schools->where('role',4)->orderBy('id', 'DESC');
+
+        $schools = $schools->paginate(3);
+
+        return view('school.ajax-list', compact('schools'))->render();
+    }
+
+    public function listMajors(Request $request, Major $major){
+        $typeSchool = $request->input('typeSchool','all');
+        $state = $request->input('filterState',0);
+
+        if($typeSchool != 'all'){
+            $majors = $major->whereHas('school', function($query) use($typeSchool){
+                $query->where('users.school_type', 'like', $typeSchool);
+            });
+        }else{
+            $majors = $major->has('school');
+        }
+
+        if($state > 0){
+            $majors = $majors->whereHas('school.schoolInfo', function($query){
+                $query->where('school_informations.state',$state);
+            });
+        }
+
+        $html = '<option value="0" selected>All</option>';
+        $majors = $majors->get();
+        foreach($majors as $major){
+            $html .= '<option value="'. $major->id.'">'. $major->text .'</option>';
+        }
+        return $html;
+    }
+
+    public function detail($id){
+        // Find schoolarship with id
+        $school = User::with('schoolInfo');
+        $school = $school->with('images');
+        $school = $school->with('scholarships');
+        $school = $school->with('texts');
+        $school = $school->find($id);
+
+//dd($school->toArray());
+        return view('school.detail', compact('school'));
     }
 }

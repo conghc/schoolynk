@@ -67,9 +67,11 @@ Route::group([
 });
 
 // Route Home Page
-Route::get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
+Route::get('/', ['as' => 'index', 'uses' => 'SchoolController@index']);
 Route::get('scholarship', ['as' => 'scholarship.index', 'uses' => 'ScholarshipController@index']);
-
+Route::post('/list-school', ['as' => 'school.listSchool', 'uses' => 'SchoolController@listSchool']);
+Route::post('/list-majors', ['as' => 'school.listMajors', 'uses' => 'SchoolController@listMajors']);
+Route::get('/school/detail/{id}', ['as' => 'school.detail', 'uses' => 'SchoolController@detail']);
 /**
  * Route Student Group
  */
@@ -111,9 +113,6 @@ Route::group(['prefix' => 'scholarship'], function () {
     Route::get('/detail/{id}', ['as' => 'scholarship.detail', 'uses' => 'ScholarshipController@detail']);
 });
 
-Route::group(['prefix' => 'school'], function () {
-    Route::get('/detail/{id}', ['as' => 'school.detail', 'uses' => 'HomeController@detail']);
-});
 
 // Route schoolarship detail
 Route::get('/schoolynk-detailpage/{id}', 'SchoolarshipController@detail');
@@ -194,11 +193,6 @@ Route::get('/list-country', function () {
     return response()->json($countries);
 });
 
-// APi get list major
-Route::get('/list-major', function () {
-    $major = App\Major::all();
-    return response()->json($major);
-});
 Route::auth();
 Route::get('/home', 'HomeController@home');
 

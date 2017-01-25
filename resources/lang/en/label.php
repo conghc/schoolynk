@@ -259,7 +259,7 @@
 		'scholarship_information_list'	   => 'Scholarship list',
 		'view_the_detail'				   => 'Details',
 		'member_registration'			   => '会員登録',
-		'my_page'						   => 'マイページ',
+		'my_page'						   => 'Schoolynk',
 		'scholarship'					   => 'Scholarship',
 		'list'					   		   => 'List',
 		'scout'					   		   => 'スカウト',

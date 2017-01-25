@@ -28,6 +28,8 @@ class Scholarship extends Model
 //		'major' => 'array',
 	];
 
+    protected $appends = ['deadline_format'];
+
     protected $with = ['nationality', 'academicLevel', 'placeOfResidence',
         'awardUsedFor', 'awardUsedAt', 'majors', 'schools', 'designatedArea', 'sponsor'];
 	
@@ -75,5 +77,15 @@ class Scholarship extends Model
 
     public function sponsor(){
         return $this->hasOne('App\User', 'id', 'sponsor_id');
+    }
+
+
+    public function getDeadlineFormatAttribute(){
+        if($this->deadline != ''){
+            $newDate = date("F d, Y", strtotime($this->deadline));
+        }else{
+            $newDate= '--';
+        }
+        return $newDate;
     }
 }

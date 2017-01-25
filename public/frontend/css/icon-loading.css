@@ -7,6 +7,7 @@
   position:fixed;
   top:1px;right:0;
   z-index:9999;
+  display:none;
 }
 .sk-spinner-wave div {
   background-color: #1ab394;
