@@ -258,13 +258,13 @@
 					<div class="listInfo">
 						<span class="titleInfo">Overview</span>
 						<div class="contentInfo">
-							{{ $school->schoolInfo->overview or '' }}
+							{!! $school->schoolInfo->overview or '' !!}}
 						</div>
 					</div>
 					<div class="listInfo">
 						<span class="titleInfo">Colleges Features</span>
 						<div class="contentInfo">
-							{{ $school->schoolInfo->college_feature or '' }}
+							{!! $school->schoolInfo->college_feature or '' !!}}
 						</div>
 					</div>
 					<div class="listInfo">
