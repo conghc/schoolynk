@@ -406,7 +406,7 @@
 	<script>
 		function initMap(){
 			var map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 15,
+				zoom: 12,
 				center: {lat: {{ $school->schoolInfo->longitude or '1' }}, lng: {{ $school->schoolInfo->latitude or '1' }}}
 			});
 
