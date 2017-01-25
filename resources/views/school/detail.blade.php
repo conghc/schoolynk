@@ -83,7 +83,7 @@
 					</div>
 					<div class="block block-bottom">
 						<div class="col-sm-12">
-							<a target="_blank" class="btn btn-default btn-modify" href="/{{ $school->schoolInfo->brochure }}">Download brochure</a>
+							<a target="_blank" class="btn btn-default btn-modify" href="/{{ $school->schoolInfo->brochure or '' }}">Download brochure</a>
 							<button type="button" class="btn btn-default btn-modify btn-modify-active">Contact admission</button>
 						</div>
 						<div class="clear"></div>
@@ -113,31 +113,26 @@
 				</div>
 				<div class="detail-right">
 					@if($school->school_type != 'language')
-					<div class="col-sm-12 schoolDetailFilter">
-						<div class="col-sm-3 s-more-label">Faculty</div>
-						<div class="col-sm-9 s-more-div">
-							<select class="form-control input-select">
-								<option>All</option>
-								<option>123</option>
-								<option>234</option>
-								<option>345</option>
-								<option>456</option>
+					<div class="col-sm-12 schoolDetailFilter {{ $school->school_type != 'vocational' ? '' : 'schoolDetailFilterV' }}">
+						<div class="col-sm-4 s-more-label">Faculty/Area of study</div>
+						<div class="col-sm-8 s-more-div">
+							<select class="form-control input-select" id="faculty">
+								@foreach($faculty as $k=>$fa)
+									<option value="{{ $fa->id }}" {{ $k==0 ? 'selected' : '' }}>{{ $fa->name }}</option>
+								@endforeach
 							</select>
 						</div>
-						<div class="col-sm-3 s-more-label">Academic level</div>
-						<div class="col-sm-9 s-more-div">
-							<button type = "button" class = "btn btn-default btn-modify btn-modify-active" >Undergraduate</button>
-							<button type = "button" class = "btn btn-default btn-modify" >Graduate</button>
+						@if($school->school_type != 'vocational')
+						<div class="col-sm-4 s-more-label">Academic level</div>
+						<div class="col-sm-8 s-more-div">
+							<button type = "button" class = "btn btn-default btn-modify academic_level btn-modify-active" d="undergraduate">Undergraduate</button>
+							<button type = "button" class = "btn btn-default btn-modify academic_level" d="graduate">Graduate</button>
+							<input type="hidden" id="academic_level" value="undergraduate" />
 						</div>
-						<div class="col-sm-3 s-more-label">School/Department</div>
-						<div class="col-sm-9 s-more-div">
-							<select class="form-control input-select">
-								<option>All</option>
-								<option>123</option>
-								<option>234</option>
-								<option>345</option>
-								<option>456</option>
-							</select>
+						@endif
+						<div class="col-sm-4 s-more-label">School/Department</div>
+						<div class="col-sm-8 s-more-div">
+							<select class="form-control input-select" id="fa_school"></select>
 						</div>
 					</div>
 					@endif
@@ -163,73 +158,47 @@
 						</ul>
 						<div class="tab-content">
 							@if($school->school_type != 'language')
-								<div id="tab-major" class="tab-pane fade in active">
-								<div class="list-major">
-									<div class="col-sm-1 major-level"><span>B</span></div>
-									<div class="col-sm-11">
-										<div class="col-sm-6"><span class="major-title">A in Political Science</span></div>
-										<div class="col-sm-6 interested"><button type="button" class="btn btn-default btn-modify">Interested</button></div>
-										<div class="col-sm-6 major-option"><span class="major-label">Course term:</span> 4 years</div>
-										<div class="col-sm-6 major-option"><span class="major-label">Language:</span> English</div>
-										<div class="col-sm-6 major-option"><span class="major-label">Enrollment:</span> September</div>
-										<div class="col-sm-6 major-option"><span class="major-label">Application preiod:</span> October - November</div>
-									</div>
-									<div class="clear"></div>
-								</div>
-								<div class="list-major">
-									<div class="col-sm-1 major-level"><span>B</span></div>
-									<div class="col-sm-11">
-										<div class="col-sm-6"><span class="major-title">A in Political Science</span></div>
-										<div class="col-sm-6 interested"><button type="button" class="btn btn-default btn-modify">Interested</button></div>
-										<div class="col-sm-6 major-option"><span class="major-label">Course term:</span> 4 years</div>
-										<div class="col-sm-6 major-option"><span class="major-label">Language:</span> English</div>
-										<div class="col-sm-6 major-option"><span class="major-label">Enrollment:</span> September</div>
-										<div class="col-sm-6 major-option"><span class="major-label">Application preiod:</span> October - November</div>
-									</div>
-									<div class="clear"></div>
-								</div>
-								<div class="list-major">
-									<div class="col-sm-1 major-level"><span>B</span></div>
-									<div class="col-sm-11">
-										<div class="col-sm-6"><span class="major-title">A in Political Science</span></div>
-										<div class="col-sm-6 interested"><button type="button" class="btn btn-default btn-modify">Interested</button></div>
-										<div class="col-sm-6 major-option"><span class="major-label">Course term:</span> 4 years</div>
-										<div class="col-sm-6 major-option"><span class="major-label">Language:</span> English</div>
-										<div class="col-sm-6 major-option"><span class="major-label">Enrollment:</span> September</div>
-										<div class="col-sm-6 major-option"><span class="major-label">Application preiod:</span> October - November</div>
-									</div>
-									<div class="clear"></div>
-								</div>
+							<div id="tab-major" class="tab-pane fade in active">
+
 								<div class="clear"></div>
 							</div>
 							@endif
 							@if($school->school_type == 'language')
 								<div id="tab-courseTuition" class="tab-pane fade in active">
-										<div class="listInfo">
-											<span class="titleInfo">others</span>
-											<div class="contentInfo">
-												It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
-											</div>
+									<div class="list-course list-course-active">
+										<h3 class="titleCourse">Course A <span class="icon-course"></span></h3>
+										<div class="innerCourse">
+											{!! $school->schoolInfo->course_structure_tuition_fee or '' !!}
 										</div>
 									</div>
+									<div class="list-course">
+										<h3 class="titleCourse">Course B <span class="icon-course"></span></h3>
+										<div class="innerCourse">
+											{!! $school->schoolInfo->course_structure_tuition_fee_b or '' !!}
+										</div>
+									</div>
+									<div class="list-course">
+										<h3 class="titleCourse">Course C <span class="icon-course"></span></h3>
+										<div class="innerCourse">
+											{!! $school->schoolInfo->course_structure_tuition_fee_c or '' !!}
+										</div>
+									</div>
+								</div>
 							@endif
 								<div id="tab-admission" class="tab-pane fade">
+									@if($school->school_type == 'language')
+									@foreach($admission as $ad)
 									<div class="listInfo">
-										<span class="titleInfo">admission</span>
+										<span class="titleInfo">{{ $ad->name or '' }}</span>
 										<div class="contentInfo">
-											It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+											{!! $ad->content or '' !!}
 										</div>
 									</div>
+									@endforeach
+									@endif
 								</div>
 							@if($school->school_type != 'language')
-								<div id="tab-tuitionFee" class="tab-pane fade">
-									<div class="listInfo">
-										<span class="titleInfo">tuitionFee</span>
-										<div class="contentInfo">
-											It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
-										</div>
-									</div>
-								</div>
+								<div id="tab-tuitionFee" class="tab-pane fade"></div>
 							@endif
 								<div id="tab-scholarships" class="tab-pane fade">
 									@foreach($school->scholarships as $scholarship)
@@ -248,42 +217,38 @@
 								</div>
 							@if($school->school_type == 'language')
 								<div id="tab-student" class="tab-pane fade">
-									<div class="listInfo">
-										<span class="titleInfo">others</span>
-										<div class="contentInfo">
-											It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+									@foreach($student as $ad)
+										<div class="listInfo">
+											<span class="titleInfo">{{ $ad->name or '' }}</span>
+											<div class="contentInfo">
+												{!! $ad->content or '' !!}
+											</div>
 										</div>
-									</div>
+									@endforeach
 								</div>
 								<div id="tab-support" class="tab-pane fade">
-									<div class="list-course list-course-active">
-										<h3 class="titleCourse">Course A <span class="icon-course"></span></h3>
-										<div class="innerCourse">
-											<h3>Lesson feature</h3><p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p><h3>Tuition&nbsp;</h3><table class="table table-bordered"><tbody><tr><td><br></td><td><h5 style="text-align: center; ">1 year program</h5><p style="text-align: center;">850 hours</p></td><td><h5 style="text-align: center;">2 year program</h5><p style="text-align: center;">850 hours<br></p></td><td><h5 style="text-align: center;">3 year program</h5><p style="text-align: center;">850 hours<br></p></td><td><h5 style="text-align: center;">4 year program</h5><p style="text-align: center;">850 hours<br></p></td><td><h5 style="text-align: center;">5 year program</h5><p style="text-align: center;">850 hours<br></p></td></tr><tr><td><h4>Total fee</h4></td><td style="text-align: center;"><h4>$7,000</h4></td><td style="text-align: center;"><h4>$8,000</h4></td><td style="text-align: center;"><h4>$9,000</h4></td><td style="text-align: center;"><h4>$10,000</h4></td><td style="text-align: center;"><h4>$11,000</h4></td></tr><tr><td><h6>Enrollment fee</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td></tr><tr><td><h6>Application fee</h6></td><td style="text-align: center;"><h6>$5,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td></tr><tr><td><h6>Facilities fee</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td></tr><tr><td><h6>Tuition fee</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td></tr></tbody></table>
+									@foreach($support as $ad)
+										<div class="listInfo">
+											<span class="titleInfo">{{ $ad->name or '' }}</span>
+											<div class="contentInfo">
+												{!! $ad->content or '' !!}
+											</div>
 										</div>
-									</div>
-									<div class="list-course">
-										<h3 class="titleCourse">Course B <span class="icon-course"></span></h3>
-										<div class="innerCourse">
-											<h3>Lesson feature</h3><p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p><h3>Tuition&nbsp;</h3><table class="table table-bordered"><tbody><tr><td><br></td><td><h5 style="text-align: center; ">1 year program</h5><p style="text-align: center;">850 hours</p></td><td><h5 style="text-align: center;">2 year program</h5><p style="text-align: center;">850 hours<br></p></td><td><h5 style="text-align: center;">3 year program</h5><p style="text-align: center;">850 hours<br></p></td><td><h5 style="text-align: center;">4 year program</h5><p style="text-align: center;">850 hours<br></p></td><td><h5 style="text-align: center;">5 year program</h5><p style="text-align: center;">850 hours<br></p></td></tr><tr><td><h4>Total fee</h4></td><td style="text-align: center;"><h4>$7,000</h4></td><td style="text-align: center;"><h4>$8,000</h4></td><td style="text-align: center;"><h4>$9,000</h4></td><td style="text-align: center;"><h4>$10,000</h4></td><td style="text-align: center;"><h4>$11,000</h4></td></tr><tr><td><h6>Enrollment fee</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td></tr><tr><td><h6>Application fee</h6></td><td style="text-align: center;"><h6>$5,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td></tr><tr><td><h6>Facilities fee</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td></tr><tr><td><h6>Tuition fee</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td></tr></tbody></table>
-										</div>
-									</div>
-									<div class="list-course">
-										<h3 class="titleCourse">Course C <span class="icon-course"></span></h3>
-										<div class="innerCourse">
-											<h3>Lesson feature</h3><p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p><h3>Tuition&nbsp;</h3><table class="table table-bordered"><tbody><tr><td><br></td><td><h5 style="text-align: center; ">1 year program</h5><p style="text-align: center;">850 hours</p></td><td><h5 style="text-align: center;">2 year program</h5><p style="text-align: center;">850 hours<br></p></td><td><h5 style="text-align: center;">3 year program</h5><p style="text-align: center;">850 hours<br></p></td><td><h5 style="text-align: center;">4 year program</h5><p style="text-align: center;">850 hours<br></p></td><td><h5 style="text-align: center;">5 year program</h5><p style="text-align: center;">850 hours<br></p></td></tr><tr><td><h4>Total fee</h4></td><td style="text-align: center;"><h4>$7,000</h4></td><td style="text-align: center;"><h4>$8,000</h4></td><td style="text-align: center;"><h4>$9,000</h4></td><td style="text-align: center;"><h4>$10,000</h4></td><td style="text-align: center;"><h4>$11,000</h4></td></tr><tr><td><h6>Enrollment fee</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td></tr><tr><td><h6>Application fee</h6></td><td style="text-align: center;"><h6>$5,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td></tr><tr><td><h6>Facilities fee</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td></tr><tr><td><h6>Tuition fee</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$1,000</h6></td><td style="text-align: center;"><h6>$4,000</h6></td><td style="text-align: center;"><h6>$6,000</h6></td></tr></tbody></table>
-										</div>
-									</div>
+									@endforeach
 								</div>
 							@endif
-								<div id="tab-others" class="tab-pane fade">
+							<div id="tab-others" class="tab-pane fade">
+								@if($school->school_type == 'language')
+								@foreach($others as $ad)
 									<div class="listInfo">
-										<span class="titleInfo">others</span>
+										<span class="titleInfo">{{ $ad->name or '' }}</span>
 										<div class="contentInfo">
-											It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+											{!! $ad->content or '' !!}
 										</div>
 									</div>
-								</div>
+								@endforeach
+								@endif
+							</div>
 						</div>
 					</div>
 				</div>
@@ -293,13 +258,13 @@
 					<div class="listInfo">
 						<span class="titleInfo">Overview</span>
 						<div class="contentInfo">
-							{{ $school->schoolInfo->overview }}
+							{{ $school->schoolInfo->overview or '' }}
 						</div>
 					</div>
 					<div class="listInfo">
 						<span class="titleInfo">Colleges Features</span>
 						<div class="contentInfo">
-							{{ $school->schoolInfo->college_feature }}
+							{{ $school->schoolInfo->college_feature or '' }}
 						</div>
 					</div>
 					<div class="listInfo">
@@ -442,7 +407,7 @@
 		function initMap(){
 			var map = new google.maps.Map(document.getElementById('map'), {
 				zoom: 15,
-				center: {lat: 20.9828981, lng: 105.8118248}
+				center: {lat: {{ $school->schoolInfo->longitude or '1' }}, lng: {{ $school->schoolInfo->latitude or '1' }}}
 			});
 
 			// Create an array of alphabetical characters used to label the markers.
@@ -464,12 +429,92 @@
 					{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 		}
 		var locations = [
-			{lat: 20.9828981, lng: 105.8118248},
-			{lat: 20.9868349, lng: 105.8104729},
-			{lat: 20.9781198, lng: 105.8069968},
-			{lat: 21.1042776, lng: 105.6993719}
-		]
+			@foreach($location as $lo)
+			{lat: {{ $lo['longitude'] or '1' }}, lng: {{ $lo['latitude'] or '1' }}},
+			@endforeach
+		];
+
+		@if($school->school_type != 'language')
+			$(function() {
+				faSchool();
+			});
+
+		function faSchool(){
+			var values = {};
+			values['faculty'] = $('#faculty').val();
+			values['academic_level'] = $('#academic_level').val();
+			$.ajax({
+				headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+				url: '/school/faculty-school',
+				type: 'POST',
+				data: values,
+				success: function (data) {
+					$('#fa_school').html(data);
+					listMajor();
+					listText('admission');
+					listText('tuitionFee');
+					listText('others');
+				}
+			});
+		}
+
+		$('#faculty').on('change', function(){
+			faSchool();
+		});
+		$('.academic_level').on('click', function(e){
+			$('.academic_level').removeClass('btn-modify-active');
+			$(this).addClass('btn-modify-active');
+			$('#academic_level').val($(this).attr('d'));
+			faSchool();
+			listMajor();
+			listText('admission');
+			listText('tuitionFee');
+			listText('others');
+		});
+		$('#fa_school').on('change', function(){
+			listMajor();
+			listText('admission');
+			listText('tuitionFee');
+			listText('others');
+		});
+
+		function listMajor(){
+			var values = {};
+			values['fa_school'] = $('#fa_school').val();
+			$.ajax({
+				headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+				url: '/school/major-filter',
+				type: 'POST',
+				data: values,
+				success: function (data) {
+					$('#tab-major').html(data);
+				}
+			});
+		}
+
+		function listText(typeText) {
+			var values = {};
+			values['fa_school'] = $('#fa_school').val();
+			values['type'] = typeText;
+			$.ajax({
+				headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+				url: '/school/list-text',
+				type: 'POST',
+				data: values,
+				success: function (data) {
+					if(typeText == 'admission'){
+						$('#tab-admission').html(data);
+					}else if(typeText == 'tuitionFee'){
+						$('#tab-tuitionFee').html(data);
+					}else if(typeText == 'others'){
+						$('#tab-others').html(data);
+					}
+				}
+			});
+		}
+		@endif
 	</script>
+
 	<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVXF0yIJoMyVJ0F1zEc_ODEG_Ojn2B3ko&callback=initMap"></script>
 @endsection

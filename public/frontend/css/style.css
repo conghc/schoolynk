@@ -701,6 +701,9 @@ ul.choose-language li{
 	padding-bottom:15px;
 	background:#f8f9fa url(../img/icons/academic-level.png) no-repeat 10px 20px;
 }
+.schoolDetailFilterV{
+	background:#f8f9fa url(../img/icons/academic-level-v.png) no-repeat 10px 20px;
+}
 .schoolDetailFilter .s-more-label{
 	padding-left:38px
 }

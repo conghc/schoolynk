@@ -72,6 +72,9 @@ Route::get('scholarship', ['as' => 'scholarship.index', 'uses' => 'ScholarshipCo
 Route::post('/list-school', ['as' => 'school.listSchool', 'uses' => 'SchoolController@listSchool']);
 Route::post('/list-majors', ['as' => 'school.listMajors', 'uses' => 'SchoolController@listMajors']);
 Route::get('/school/detail/{id}', ['as' => 'school.detail', 'uses' => 'SchoolController@detail']);
+Route::post('/school/faculty-school', ['as' => 'school.facultySchool', 'uses' => 'SchoolController@facultySchool']);
+Route::post('/school/major-filter', ['as' => 'school.majorFilter', 'uses' => 'SchoolController@majorFilter']);
+Route::post('/school/list-text', ['as' => 'school.listText', 'uses' => 'SchoolController@listText']);
 /**
  * Route Student Group
  */

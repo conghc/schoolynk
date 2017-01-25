@@ -9,7 +9,9 @@ use App\Degree;
 use App\TypeOfStudy;
 use App\Major;
 use App\Student;
-use App\Message;
+use App\Faculty;
+use App\FacultySchool;
+use App\OtherText;
 use Flash;
 use DateTime;
 use Auth;
@@ -148,7 +150,67 @@ class SchoolController extends Controller
         $school = $school->with('texts');
         $school = $school->find($id);
 
+        $admission = $student = $support = $others = [];
+        if($school->texts){
+            foreach($school->texts as $text){
+                if($text->type == 'admission'){
+                    $admission[] = $text;
+                }elseif($text->type == 'student'){
+                    $student[] = $text;
+                }elseif($text->type == 'support'){
+                    $support[] = $text;
+                }elseif($text->type == 'others'){
+                    $others[] = $text;
+                }
+            }
+        }
+        //$admission = $school->texts
+        //dd($school->toArray());
 //dd($school->toArray());
-        return view('school.detail', compact('school'));
+        // get all school for google map
+        $schools = User::has('schoolInfo')->get();
+        $location = [];
+        foreach($schools as $k=>$sc){
+            if($sc->schoolInfo->longitude != '' && $sc->schoolInfo->latitude != ''){
+                $location[$k]['school_id'] = $sc->schoolInfo->school_id;
+                $location[$k]['longitude'] = $sc->schoolInfo->longitude;
+                $location[$k]['latitude'] = $sc->schoolInfo->latitude;
+            }
+        }
+
+        $faculty = Faculty::where('school_id',$id)->get();
+
+        return view('school.detail', compact('faculty', 'location', 'school', 'admission', 'student', 'support', 'others'));
+    }
+
+    public function facultySchool(Request $request, FacultySchool $faSchool){
+        $faculty = $request->input('faculty', -1);
+        $aLevel = $request->input('academic_level', '');
+        $faculty = $faculty == '' ? -1 : $faculty;
+        $faSchool = $faSchool->where('faculty_id', $faculty);
+        if(in_array($aLevel, ['undergraduate', 'graduate'])){
+            $faSchool = $faSchool->where('academic_level', 'LIKE', $aLevel);
+        }
+        $faSchool = $faSchool->get();
+        $html ='';
+        foreach($faSchool as $k=>$faS){
+            $selected = $k==0 ? 'selected' : '';
+            $html .= '<option value="'. $faS->id .'" '. $selected .'>'. $faS->name .'</option>';
+        }
+        return $html;
+    }
+    
+    public function majorFilter(Request $request){
+        $fa_school = $request->input('fa_school', 0);
+        $major = Major::where('fs_id', $fa_school)->get();
+
+        return view('school.major-filter', compact('major'))->render();
+    }
+
+    public function listText(Request $request){
+        $fa_school = $request->input('fa_school', 0);
+        $type = $request->input('type', 'admission');
+        $text = OtherText::where('faculty_school_id', $fa_school)->where('type', 'LIKE', $type)->get();
+        return view('school.list-text', compact('text'))->render();
     }
 }

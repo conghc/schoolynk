@@ -41,7 +41,9 @@ return [
     'application_period'                    =>  'Application period',
     'pls_choose_school'                     =>  'Please choose school',
     'language_course_board'                 =>  'Language Course board',
-    'course_structure_tuition_fee'          =>  'Course structure/tuition fee',
+    'course_structure_tuition_fee'          =>  'Course structure/tuition fee (Course A)',
+    'course_structure_tuition_fee_b'          =>  'Course structure/tuition fee (Course B)',
+    'course_structure_tuition_fee_c'          =>  'Course structure/tuition fee (Course C)',
     /**major Degree level**/
     'bachelor'                              =>  'Bachelor',
     'master'                                =>  'Master',
