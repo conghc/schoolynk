@@ -202,7 +202,7 @@ class SchoolController extends Controller
     
     public function majorFilter(Request $request){
         $fa_school = $request->input('fa_school', 0);
-        $fa_school = $fa_school == '' ? 0 : $fa_school;
+        $fa_school = $fa_school == '' ? -1 : $fa_school;
         $major = Major::where('fs_id', $fa_school)->get();
 
         return view('school.major-filter', compact('major'))->render();
