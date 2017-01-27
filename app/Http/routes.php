@@ -41,7 +41,7 @@ Route::group([
         Route::resource('scholarship', 'ScholarshipController');
         Route::resource('school', 'SchoolController');
         Route::resource('schoolynk', 'SchoolynkController');
-        //Route::resource('student', 'StudentController');
+        Route::resource('student', 'StudentController');
         Route::resource('language', 'LanguageController');
         Route::resource('ajax', 'AjaxController');
 
