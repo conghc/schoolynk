@@ -41,7 +41,7 @@ Route::group([
         Route::resource('scholarship', 'ScholarshipController');
         Route::resource('school', 'SchoolController');
         Route::resource('schoolynk', 'SchoolynkController');
-        Route::resource('student', 'StudentController');
+        //Route::resource('student', 'StudentController');
         Route::resource('language', 'LanguageController');
         Route::resource('ajax', 'AjaxController');
 
@@ -69,6 +69,9 @@ Route::group([
 // Route Home Page
 Route::get('/', ['as' => 'index', 'uses' => 'SchoolController@index']);
 Route::get('scholarship', ['as' => 'scholarship.index', 'uses' => 'ScholarshipController@index']);
+Route::get('scholarship/detail/{id}', ['as' => 'scholarship.detail', 'uses' => 'ScholarshipController@detail']);
+Route::post('scholarship/list-ajax', ['as' => 'scholarship.listAjax', 'uses' => 'ScholarshipController@listAjax']);
+
 Route::post('/list-school', ['as' => 'school.listSchool', 'uses' => 'SchoolController@listSchool']);
 Route::post('/list-majors', ['as' => 'school.listMajors', 'uses' => 'SchoolController@listMajors']);
 Route::get('/school/detail/{id}', ['as' => 'school.detail', 'uses' => 'SchoolController@detail']);
@@ -105,23 +108,12 @@ Route::group(['prefix' => 'student'], function () {
     // Change email
     Route::get('/changeEmail', ['as' => 'student.changeEmail', 'uses' => 'StudentController@changeEmail']);
     // Change password
-    Route::get('/changePassword', ['as' => 'student.changePassword', 'uses' => 'StudentController@changePassword']);    
+    Route::get('/changePassword', ['as' => 'student.changePassword', 'uses' => 'StudentController@changePassword']);
     // Update email
     Route::post('/updateEmail', ['as' => 'student.updateEmail', 'uses' => 'StudentController@updateEmail']);
     // Update password
     Route::post('/updatePassword', ['as' => 'student.updatePassword', 'uses' => 'StudentController@updatePassword']);
 });
-
-Route::group(['prefix' => 'scholarship'], function () {
-    Route::get('/detail/{id}', ['as' => 'scholarship.detail', 'uses' => 'ScholarshipController@detail']);
-});
-
-
-// Route schoolarship detail
-Route::get('/schoolynk-detailpage/{id}', 'SchoolarshipController@detail');
-
-// Route list schoolarship favorite
-Route::get('/list-scholarship/{id}', 'ScholarshipController@listPage');
 
 // Resource rest full student 
 Route::resource('student', 'StudentController');
@@ -146,7 +138,7 @@ Route::group(['prefix' => 'university'], function () {
  * Route Login, Logout
  */
 Route::get('/logout', 'HomeController@logout');
-Route::post('/doLogin', [
+Route::any('/doLogin', [
     'as' => 'app.login', 'uses' => 'HomeController@login'
 ]);
 

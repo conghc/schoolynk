@@ -444,5 +444,7 @@
 		'edit'		=> 'Edit',
 		'yes'		=>	'Yes',
 		'no'		=>	'No',
+
+		'stay_signed_in' => 'Stay signed in'
 	];
 ?>

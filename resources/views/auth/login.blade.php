@@ -1,66 +1,83 @@
-@extends('layouts.main')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="_token" content="{!! csrf_token() !!}"/>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Add Your favicon here -->
+    <link rel="icon" href="/frontend/img/favicon.ico">
+    <title>{{ trans('label.my_page') }} | SchooLynk</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/frontend/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/frontend/fonts/roboto-fonts/roboto-fonts.css" rel="stylesheet">
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">{{ trans('label.login') }}</div>
+    <!-- Custom styles for this template -->
+    <link href="/frontend/css/style.css" rel="stylesheet">
+    @yield('style')
+</head>
+<body class="signIn">
+    <div class="">
+        <div class="row"><br /><br /><br /><br />
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="panel-heading">Schoo<span class="inner">Lynk</span>
+                    <span class="under">SIGN IN TO CONTINUE</span>
+                </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/doLogin') }}">
                         {{ csrf_field() }}
-
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">{{ trans('label.email') }}</label>
-
-                            <div class="col-md-6">
+                            <div class="col-md-10">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
                                 @if ($errors->has('email'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">{{ trans('label.password') }}</label>
-
-                            <div class="col-md-6">
+                            <div class="col-md-10">
                                 <input id="password" type="password" class="form-control" name="password">
-
                                 @if ($errors->has('password'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-md-6">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember"> {{ trans('label.remember_30day') }}
+                                        <input type="checkbox" name="remember"> {{ trans('label.stay_signed_in') }}
                                     </label>
                                 </div>
                             </div>
+                            <div class="col-md-6 forgoten_password">
+                                <a class="btn btn-link" href="{{ url('/password/reset') }}">{{ trans('label.forgoten_password') }}</a>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i> {{ trans('label.login') }}
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">{{ trans('label.forgoten_password') }}</a>
+                        <div class="form-group buttonSignIn">
+                            <div class="col-md-10">
+                                <button type="submit" class="btn btn-primary btn-modify btnLogin">Sign in</button>
+                                <span>Not a member yet? <a href="/student/register">Create new account</a></span>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+            <div class="col-md-4"></div>
         </div>
     </div>
-</div>
-@endsection
+<script src="/frontend/js/jquery-3.1.1.min.js"></script>
+<script src="/frontend/js/bootstrap.min.js"></script>
+@yield('js')
+</body>
+</html>

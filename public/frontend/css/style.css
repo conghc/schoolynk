@@ -911,3 +911,45 @@ ul.choose-language li{
 .signIn{
 	background:#fff
 }
+.panel-heading{
+	font-size:30px;
+	color:#2d2f37;
+	font-family: robotolight;
+}
+.panel-heading .inner{
+	font-family: robotobold;
+}
+.panel-heading .under{
+	display:block;
+	font-size:12px;
+}
+#email, #password, .ipModify, .slModify{
+	background:#fbfbfb;
+	border:1px solid #e4e9ec;
+	height:40px;
+	-webkit-box-shadow:none;
+	-webkit-box-shadow:none;
+	box-shadow:none
+}
+.forgoten_password{
+	font-style:italic;
+	padding-left:0px;
+}
+.signIn .btnLogin{
+	width:100%;
+	background:#3795fd;
+	border-color:#3795fd;
+	color:#fff;
+	padding-top:10px;
+	padding-bottom:10px;
+	font-size:16px
+}
+.form-row.clf.name{
+	margin-bottom:20px;
+	display:block;
+}
+.buttonSignIn span{
+	padding: 20px 0px;
+	display: block;
+	text-align: center;
+}

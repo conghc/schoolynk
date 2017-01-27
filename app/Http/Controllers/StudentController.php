@@ -127,12 +127,11 @@ class StudentController extends Controller
         $rqUser['remember_token'] = str_random(60);
         $rqUser['activate_token'] = str_random(60);
         $user = User::create($rqUser);
-        
         // Save user profile
-        $rqStudent = $request->only( 'user_mode', 'gender');
-        $rqStudent['user_id'] = $user->id;
-        $rqStudent['birthday'] = $request->only('year')['year'].'-'.$request->only('month')['month'].'-'.$request->only('day')['day'];
-        $student = Student::create($rqStudent);
+//        $rqStudent = $request->only( 'user_mode', 'gender');
+//        $rqStudent['user_id'] = $user->id;
+//        $rqStudent['birthday'] = $request->only('year')['year'].'-'.$request->only('month')['month'].'-'.$request->only('day')['day'];
+//        $student = Student::create($rqStudent);
         
         // Login user
         Auth::login($user);
@@ -140,16 +139,16 @@ class StudentController extends Controller
         $rs = 0;
         try {
             // Send email to user register
-            $rs = Mail::send('emails.active', ['user' => $user], function ($m) use ($request) {
-                $m->to($request['email'])->subject('【SchooLynk】マイアカウント認証メール');
-            });
+//            $rs = Mail::send('emails.active', ['user' => $user], function ($m) use ($request) {
+//                $m->to($request['email'])->subject('【SchooLynk】マイアカウント認証メール');
+//            });
         } catch (\Swift_TransportException $e) {
-            Flash::error($e->getMessage());
+            //Flash::error($e->getMessage());
         } catch (\Swift_RfcComplianceException $e) {
-            Flash::error($e->getMessage());
+            //Flash::error($e->getMessage());
         }
 
-        return redirect()->route('student.register-2');
+        return redirect('/');
     }
 
     /**

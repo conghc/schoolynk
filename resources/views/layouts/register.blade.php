@@ -63,7 +63,7 @@
 
         .dropdown-menu {
             left: inherit;
-            margin: inherit; 
+            margin: inherit;
             width: 210px;
         }
 
@@ -175,7 +175,7 @@
                                             <img src="/images/flags/sp.png"> Spanish
                                         </a>
                                     </li>
-                                </ul>  
+                                </ul>
                             </li> --}}
                             <li class="hm-menuitem menu-login">
                                 <a href="#" class="wl-btn-login login-btn" data-toggle="modal" data-target="#login-modal">{{ trans('label.login') }}</a>
@@ -318,7 +318,7 @@
                 $('.language-choose').removeClass('active-language');
                 $(this).addClass('active-language');
                 $('.title-language').html('<img class="current-language" src="/images/flags/' + $(this).data('flag') + '.png">' + $(this).text());
-                
+
                 var dataInput = {};
                 dataInput.language = $(this).data('language');
 

@@ -61,8 +61,8 @@
                                 <li><img class="flag" src="/frontend/img/flags/32/United-Kingdom.png" /><a href="#">Singapore</a></li>
                             </ul>
                         </li>
-                        <li class="sign-up"><button type = "button" class = "btn btn-default btn-modify">Sign up</button></li>
-                        <li class="login"><button type = "button" class = "btn btn-default btn-modify">Login</button></li>
+                        <li class="sign-up"><button onclick="window.location.href='/student/register'" type = "button" class = "btn btn-default btn-modify">Sign up</button></li>
+                        <li class="login"><button type="button" class="btn btn-default btn-modify" onclick="window.location.href='/doLogin'">Login</button></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

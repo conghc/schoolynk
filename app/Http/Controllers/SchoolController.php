@@ -67,11 +67,11 @@ class SchoolController extends Controller
         if($user){
             // If user is student
             if( $user->role == 0){
-                return redirect()->route('student.index');
+                //return redirect()->route('student.index');
             }
             // If user is university
             if($user->role == 3){
-                return redirect()->route('university.index');
+                //return redirect()->route('university.index');
             }
         }
         $schools = $schools->paginate(3);

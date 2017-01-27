@@ -32,18 +32,48 @@ class ScholarShipController extends Controller
     public function __construct()
     {
         // Set language session
-        if (\Session::has('locale')) {
-            app()->setLocale(\Session::get('locale'));
-        } else {
-            app()->setLocale(\Session::get('en'));
+//        if (\Session::has('locale')) {
+//            app()->setLocale(\Session::get('locale'));
+//        } else {
+//            app()->setLocale(\Session::get('en'));
+//        }
+    }
+
+    public function index(Scholarship $scholarships, Request $request)
+    {
+        $keyword = $request->input('keyword', '');
+        $type_of_scholarship = $request->input('type_of_scholarship', '');
+
+        if($keyword != ''){
+            $scholarships = $scholarships->where('name', 'LIKE', '%'. $keyword .'%');
+        }
+        if($type_of_scholarship > 0){
+            $scholarships = $scholarships->where('type_of_award', $type_of_scholarship);
+        }
+
+        $scholarships = $scholarships->paginate(4);
+
+        if($request->ajax()){
+            return view('scholarship.ajax-loadmore', compact('scholarships'))->render();
+        }else{
+            return view('scholarship.index', compact('scholarships'));
         }
     }
 
-    public function index(Scholarship $scholarship)
-    {
-        $scholarships = $scholarship->get();
+    public function listAjax(Request $request, Scholarship $scholarships){
+        $keyword = $request->input('keyword', '');
+        $type_of_scholarship = $request->input('type_of_scholarship', '');
 
-        return view('scholarship.index', compact('scholarships'));
+        if($keyword != ''){
+            $scholarships = $scholarships->where('name', 'LIKE', '%'. $keyword .'%');
+        }
+        if($type_of_scholarship > 0){
+            $scholarships = $scholarships->where('type_of_award', $type_of_scholarship);
+        }
+
+        $scholarships = $scholarships->get();
+
+        return view('scholarship.ajax-list', compact('scholarships'))->render();
     }
 
     /**
@@ -51,13 +81,16 @@ class ScholarShipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function detail($id)
+    public function detail($id, Scholarship $scholarship)
     {
         // Find schoolarship with id
-        $scholarship = Scholarship::find($id);
+        $countries = \CountryState::getCountries();
+        $states = \CountryState::getStates('JP');
+        $scholarship = $scholarship->with('sponsor.sponsorInfo');
+        $scholarship = $scholarship->find($id);
 
-        
-        return view('scholarship.detail', compact('schoolarship'));
+        //dd($scholarship->toArray());
+        return view('scholarship.detail', compact('scholarship', 'countries', 'states'));
     }
 
     /**

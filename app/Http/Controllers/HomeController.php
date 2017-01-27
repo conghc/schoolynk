@@ -54,22 +54,22 @@ class HomeController extends Controller
     public function login(Request $request)
     {
         $requests = $request->all();
-        
-        if ( Auth::attempt( ['email' => $requests['email'], 'password' => $requests['password']]) ) {
-            $user = Auth::user();
-
-            // If user login not student
-            if ($user->role != 0) {
-                Auth::logout();
-                Flash::error('The email and password incorrect.');
+        if ($request->isMethod('post')) {
+            if (Auth::attempt(['email' => $requests['email'], 'password' => $requests['password']])) {
+                $user = Auth::user();
+                // If user login not student
+                if ($user->role != 0) {
+                    Auth::logout();
+                    Flash::error('The email and password incorrect.');
+                } else {
+                    //Flash::success('Login success! Welcome ' . $user->name);
+                    return redirect('/');
+                }
             } else {
-                Flash::success('Login success! Welcome '.$user->name);
+                Flash::error('The email and password incorrect.');
             }
-            
-        } else{
-            Flash::error('The email and password incorrect.');
         }
-        return redirect('/');
+        return view('auth.login', compact('scholarship', 'countries', 'states'));
     }
     
     /**
@@ -87,7 +87,7 @@ class HomeController extends Controller
 
             // If user is student
             if( $user->role == 0){ 
-                return redirect()->route('student.index');
+                //return redirect()->route('student.index');
             }
 
             // If user is university
