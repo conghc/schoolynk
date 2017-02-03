@@ -959,3 +959,6 @@ ul.choose-language li{
 	width:50%;
 	height:29px;
 }
+#filterMajor:focus{
+	border-color:#ccc
+}
