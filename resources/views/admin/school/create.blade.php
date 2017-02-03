@@ -59,6 +59,32 @@
                 });
             });
         });
+
+        // check upload brochure
+        function getExtension(filename) {
+            var parts = filename.split('.');
+            return parts[parts.length - 1];
+        }
+        function isImage(filename) {
+            var ext = getExtension(filename);
+            switch (ext.toLowerCase()) {
+                case 'pdf':
+                    return true;
+            }
+            return false;
+        }
+        function submitProfileBoard(){
+            var file = $('#brochure');
+            if(file.val() != ''){
+                if (!isImage(file.val())) {
+                    alert('Please upload file PDF');
+                }else{
+                    $("#profile_board").submit();
+                }
+            }else{
+                $("#profile_board").submit();
+            }
+        };
     </script>
     @include('partials.form_errors_school')
 @endsection
@@ -120,7 +146,7 @@
                         <h5>{{ trans('school.profile_board') }}</h5>
                         <div class="ibox-tools col-hidden">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <button onclick="$('#profile_board').submit();" class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
+                                <button onclick="submitProfileBoard();" class="btn btn-primary btn-xs" type="submit">{{ trans('label.save_changes') }}</button>
                             </a>
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -211,7 +237,7 @@
                                 <select class="form-control m-b" name="tuition_fee_currency">
                                     @foreach($currencies as $currence)
                                         <option value='{{ $currence->sort_name }}' {{ $tuition_fee_currency == $currence->sort_name ? 'selected' : '' }}>
-                                            {{ $currence->full_name }}
+                                            {{ $currence->sort_name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -225,7 +251,7 @@
                                 <select class="form-control m-b" name="cost_of_living_currency">
                                     @foreach($currencies as $currence)
                                         <option value='{{ $currence->soft_name }}' {{ $cost_of_living_currency == $currence->sort_name ? 'selected' : '' }}>
-                                            {{ $currence->full_name }}
+                                            {{ $currence->sort_name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -245,7 +271,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.download_brochure') }}</label>
                             <div class="col-sm-10">
-                                <input type="file" name="brochure" >
+                                <input type="file" id="brochure" name="brochure" >
                                 <a target="_blank" href="/{{ $school->schoolInfo->brochure or '' }}">{{ $school->schoolInfo->brochure or '' }}</a>
                             </div>
                         </div>
@@ -589,7 +615,7 @@
                 </form>
             </div>
             <div class="ibox float-e-margins">
-                <form method="post" role="form"  action="/admin/school-info-update" class="form-horizontal" id="map" enctype="multipart/form-data">
+                <form method="post" role="form" action="/admin/school-info-update" class="form-horizontal" id="map" enctype="multipart/form-data">
                     <input type="hidden" name="school_id" value="{{ $school->id or 0 }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="school_info_id" value="{{ $school->schoolInfo->id or 0 }}">
@@ -622,18 +648,102 @@
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.google_map') }}</label>
                             <div class="col-sm-4">
-                                <input type="text" name="longitude" placeholder="{{ trans('label.longitude') }}" class="form-control" value="{{ $school->schoolInfo->longitude or '' }}" />
+                                <input type="text" name="longitude" id="longitude" placeholder="{{ trans('label.longitude') }}" class="form-control" value="{{ $school->schoolInfo->longitude or '35.689485' }}" />
                             </div>
                             <div class="col-md-1"><img class="ic-about" src="/img/ic-about.png" /></div>
                             <div class="col-sm-4">
-                                <input type="text" name="latitude" placeholder="{{ trans('label.latitude') }}" class="form-control" value="{{ $school->schoolInfo->latitude or '' }}" />
+                                <input type="text" name="latitude" id="latitude" placeholder="{{ trans('label.latitude') }}" class="form-control" value="{{ $school->schoolInfo->latitude or '139.7601328' }}" />
                             </div>
+                        </div>
+                        <div class="form-group"><label class="col-sm-2 control-label"></label>
+                            <input id="pac-input" style="width:70%;margin-top:10px;height:29px;" class="controls" type="text" placeholder="Search Box">
+                            <div class="col-sm-9" id="select_location" style="height:400px;"></div>
+                            <script >
+                                function initAutocomplete() {
+                                    var map = new google.maps.Map(document.getElementById('select_location'), {
+                                        center: {lat: 35.689485, lng: 139.7601328},
+                                        zoom: 7,
+                                    });
+
+                                    // Create the search box and link it to the UI element.
+                                    var input = document.getElementById('pac-input');
+                                    var searchBox = new google.maps.places.SearchBox(input);
+                                    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+                                    // Bias the SearchBox results towards current map's viewport.
+                                    map.addListener('bounds_changed', function() {
+                                        searchBox.setBounds(map.getBounds());
+                                    });
+
+                                    var markers = [];
+                                    // Listen for the event fired when the user selects a prediction and retrieve
+                                    // more details for that place.
+                                    searchBox.addListener('places_changed', function() {
+                                        var places = searchBox.getPlaces();
+                                        if (places.length == 0) {
+                                            return;
+                                        }
+                                        // Clear out the old markers.
+                                        markers.forEach(function(marker) {
+                                            marker.setMap(null);
+                                        });
+                                        markers = [];
+
+                                        // For each place, get the icon, name and location.
+                                        var bounds = new google.maps.LatLngBounds();
+                                        places.forEach(function(place) {
+                                            if (!place.geometry) {
+                                                console.log("Returned place contains no geometry");
+                                                return;
+                                            }
+                                            var icon = {
+                                                url: place.icon,
+                                                size: new google.maps.Size(71, 71),
+                                                origin: new google.maps.Point(0, 0),
+                                                anchor: new google.maps.Point(17, 34),
+                                                scaledSize: new google.maps.Size(25, 25)
+                                            };
+
+                                            // Create a marker for each place.
+                                            markers.push(new google.maps.Marker({
+                                                map: map,
+                                                icon: icon,
+                                                title: place.name,
+                                                position: place.geometry.location
+                                            }));
+
+                                            if (place.geometry.viewport) {
+                                                // Only geocodes have viewport.
+                                                bounds.union(place.geometry.viewport);
+                                            } else {
+                                                bounds.extend(place.geometry.location);
+                                            }
+                                        });
+                                        map.fitBounds(bounds);
+                                    });
+                                    google.maps.event.addDomListener(input, 'keydown', function (e) {
+                                        if (e.keyCode === 13) {
+                                            if (location_being_changed) {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                            }
+                                        } else {
+                                            // means the user is probably typing
+                                            location_being_changed = true;
+                                        }
+                                    });
+                                    google.maps.event.addListener(map, 'click', function (e) {
+                                        $('#longitude').val(e.latLng.lng());
+                                        $('#latitude').val(e.latLng.lat());
+                                    });
+                                }
+                            </script>
+                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVXF0yIJoMyVJ0F1zEc_ODEG_Ojn2B3ko&libraries=places&callback=initAutocomplete" async defer></script>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
     @include('partials.modal_admin_school')
 @endsection

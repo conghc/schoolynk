@@ -17,7 +17,7 @@
 					<img class="following" src="/frontend/img/icons/follow.png" />
 					<div class="block block-top">
 						<div class="col-sm-3">
-							<a href="" class="avatar"><img src="/frontend/img/avatar3.jpg"></a>
+							<a href="" class="avatar"><img src="/{{ $school->img_profile or 'img/no-image.png' }}"></a>
 						</div>
 						<div class="col-sm-9">
 							<a class="title" href="">
@@ -25,7 +25,7 @@
 								{{ $school->schoolInfo->location or '--' }}
 							</a>
 							@if($school->school_type != 'language')
-							<a href="" class="ranking"><span>R</span>{{ $school->schoolInfo->ranking or '--' }}</a>
+							<a href="" class="ranking"><span title="Ranking">R</span>{{ $school->schoolInfo->ranking or '--' }}</a>
 							@endif
 							<div class="inner-detail-left">
 								<div class="detail-row"><span class="label-left">School type:</span> {{ $school->schoolInfo->type_of_school or '--' }}</div>
@@ -114,6 +114,7 @@
 				<div class="detail-right">
 					@if($school->school_type != 'language')
 					<div class="col-sm-12 schoolDetailFilter {{ $school->school_type != 'vocational' ? '' : 'schoolDetailFilterV' }}">
+						@if($school->school_type != 'vocational')
 						<div class="col-sm-4 s-more-label">Faculty/Area of study</div>
 						<div class="col-sm-8 s-more-div">
 							<select class="form-control input-select" id="faculty">
@@ -122,7 +123,6 @@
 								@endforeach
 							</select>
 						</div>
-						@if($school->school_type != 'vocational')
 						<div class="col-sm-4 s-more-label">Academic level</div>
 						<div class="col-sm-8 s-more-div">
 							<button type = "button" class = "btn btn-default btn-modify academic_level btn-modify-active" d="undergraduate">Undergraduate</button>
@@ -407,7 +407,7 @@
 		function initMap(){
 			var map = new google.maps.Map(document.getElementById('map'), {
 				zoom: 12,
-				center: {lat: {{ $school->schoolInfo->longitude or '1' }}, lng: {{ $school->schoolInfo->latitude or '1' }}}
+				center: {lat: {{ $school->schoolInfo->latitude or '1' }}, lng: {{ $school->schoolInfo->longitude or '1' }}}
 			});
 
 			// Create an array of alphabetical characters used to label the markers.
@@ -430,7 +430,7 @@
 		}
 		var locations = [
 			@foreach($location as $lo)
-			{lat: {{ $lo['longitude'] or '1' }}, lng: {{ $lo['latitude'] or '1' }}},
+			{lat: {{ $lo['latitude'] or '1' }}, lng: {{ $lo['longitude'] or '1' }}},
 			@endforeach
 		];
 

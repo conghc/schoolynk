@@ -106,10 +106,8 @@
 				$('.filterState').removeClass('btn-modify-active');
 				$(this).addClass('btn-modify-active');
 			}
-
 			if(d != 13 && d != 26 && d != 27 && d != 40 && d != ''){
 				$('.filterStateOthers').addClass('btn-modify-active');
-
 			}
 			if(d != ''){
 				$('#filterState').val(d);
@@ -176,6 +174,7 @@
 			from: 1,
 			to: 300,
 			step: 1,
+			hide_min_max: true,
 			onStart: function (data) {
 			 //console.log(1);
 			},

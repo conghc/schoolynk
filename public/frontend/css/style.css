@@ -406,6 +406,7 @@ ul.choose-language li{
 }
 .s-more-label{
 	padding-top:5px;
+	font-family: 'robotolight';
 }
 .s-more-div button{
 	margin-right:5px;
@@ -760,6 +761,7 @@ ul.choose-language li{
 }
 #tab-major .major-option{
 	line-height:30px;
+	text-transform: capitalize;
 }
 #tab-major .interested button{
 	background:url(../img/icons/icon-heart.png) no-repeat 14px 8px;
@@ -952,4 +954,8 @@ ul.choose-language li{
 	padding: 20px 0px;
 	display: block;
 	text-align: center;
+}
+#pac-input{
+	width:50%;
+	height:29px;
 }

@@ -8,7 +8,7 @@
 			</a>
 			<div class="clear"></div>
 			<div class="col-sm-3"></div>
-			<div class="col-sm-3 storage-ranking"><a href="" class="ranking"><span>R</span>{{ $school->schoolInfo->ranking or 0 }}</a></div>
+			<div class="col-sm-3 storage-ranking"><a href="" class="ranking" title="Ranking"><span>R</span>{{ $school->schoolInfo->ranking or 0 }}</a></div>
 			<div class="col-sm-6"></div>
 			<div class="col-sm-8"></div>
 			<div class="col-sm-4"><button type="button" class="btn btn-default btn-modify">Follow</button></div>
