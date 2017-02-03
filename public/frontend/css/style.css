@@ -962,3 +962,30 @@ ul.choose-language li{
 #filterMajor:focus{
 	border-color:#ccc
 }
+
+/* only apply this to firefox: */
+@-moz-document url-prefix() {
+
+	/* Normally you can just apply this to all 'select's not just a classs selector */
+	select.input-select {
+		/* This removes the native down arrow: */
+		-moz-appearance: none;
+		text-indent: 0.01px;
+		text-overflow: "";
+		/* Add a new down arrow, probably shouldn't hotlink: */
+		background-image: url("../img/icons/icon-05.png");
+		background-position: right 10px center;
+		background-repeat: no-repeat;
+	}
+}
+
+/* Safari selects are sort of ugly too.  Unfortunately this applies to both Safari *and* Chrome */
+@media (-webkit-min-device-pixel-ratio: 0) {
+	select.input-select {
+		-webkit-appearance: none;
+		background-image: url("../img/icons/icon-05.png") !important;
+		background-position: right 10px center;
+		background-repeat: no-repeat;
+		padding-right: 20px;
+	}
+}
