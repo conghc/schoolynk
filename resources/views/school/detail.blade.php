@@ -106,7 +106,7 @@
 						</div>
 					</div>
 					<div class="numberFolllow">
-						<span class="numberF">35.545 follow</soan>
+						<span class="numberF">0 follow</soan>
 							<button type="button" class="btn btn-default btn-modify btnF">Follow</button>
 						<div class="clear"></div>
 					</div>
