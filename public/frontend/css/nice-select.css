@@ -19,7 +19,7 @@
 	padding-left: 18px;
 	padding-right: 30px;
 	position: relative;
-	text-align: left !important;
+	text-align: center !important;
 	-webkit-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 	-webkit-user-select: none;
@@ -33,7 +33,8 @@
 	border-color: #d0dae5; 
 }
 .nice-select:active, .nice-select.open, .nice-select:focus {
-	border-color: #88bfff; 
+	background: #0073fd;
+	color:#fff
 }
 .nice-select:after {
 	content: '';
@@ -133,7 +134,7 @@
 	outline: none;
 	padding-left: 18px;
 	padding-right: 29px;
-	text-align: left;
+	text-align: center;
 	-webkit-transition: all 0.2s;
 	transition: all 0.2s; 
 	border-bottom:1px solid #9ca5aa;

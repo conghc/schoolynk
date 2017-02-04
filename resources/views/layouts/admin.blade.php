@@ -27,9 +27,9 @@
     <div class="middle-box loginscreen animated fadeInDown">
         <div>
             <h3>Welcome to SchoLynk Dashboard</h3>
-            <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
-            </p>
-            <p>Login in. To see it in action.</p>
+            {{--<p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.--}}
+            {{--</p>--}}
+            {{--<p>Login in. To see it in action.</p>--}}
             <form class="m-t" role="form" method="POST" action="{{ route('admin.login') }}">
                 {!! csrf_field() !!}
                 <div class="form-group">

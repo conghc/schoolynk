@@ -95,4 +95,6 @@ return [
     'private_lesson'                        =>  'Private lesson',
     'group_private'                         =>  'Group & Private',
 
+    'map'                                   =>  'Map'
+
 ];

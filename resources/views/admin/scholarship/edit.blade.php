@@ -74,7 +74,7 @@
                 <div class="ibox-content">
                     <div class="row">
                             <div class="col-sm-8 b-r">
-                                <div class="form-group"><label class="col-sm-3 control-label">{{ trans('label.choose_sponsor') }}</label>
+                                <div class="form-group"><label class="col-sm-3 control-label">{{ trans('scholarship.choose_sponsor') }}</label>
                                     <div class="col-sm-9">
                                         <select name="sponsor_id" id="select-sponsor" class="chosen-select" style="width:100%" tabindex="4">
                                             <option value="0">{{ trans('label.create_new') }}</option>
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                     <div class="ibox-content ibc-hidden">
-                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.type_of_award') }}</label>
+                        <div class="form-group"><label class="col-sm-2 control-label">{{ trans('scholarship.type_of_award') }}</label>
                             <?php $type_of_award = $scholarship ? $scholarship->type_of_award : 0 ?>
                             <div class="col-sm-10">
                                 <div class="radio radio-info radio-inline">

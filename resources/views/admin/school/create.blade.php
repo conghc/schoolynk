@@ -156,7 +156,7 @@
                     <div class="ibox-content ibc-hidden">
                         @if($sType != 'language')
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.university_ranking') }}</label>
-                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->ranking or '' }}" name="ranking" class="form-control"></div>
+                            <div class="col-sm-10"><input min="0" type="number" value="{{ $school->schoolInfo->ranking or '' }}" name="ranking" class="form-control"></div>
                         </div>
                         @endif
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.type_of_school') }}</label>
@@ -214,24 +214,25 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.total_no_of_students') }}</label>
-                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_students or '' }}" name="total_no_of_students" class="form-control"></div>
+                            <div class="col-sm-10"><input min="0" type="number" value="{{ $school->schoolInfo->total_no_of_students or '' }}" name="total_no_of_students" class="form-control"></div>
                         </div>
                         @if($sType != 'language')
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.total_no_of_international_students') }}</label>
-                            <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_international_students or '' }}" name="total_no_of_international_students" class="form-control"></div>
+                            <div class="col-sm-10"><input min="0" type="number" value="{{ $school->schoolInfo->total_no_of_international_students or '' }}" name="total_no_of_international_students" class="form-control"></div>
                         </div>
                         @endif
                         @if($sType == 'language')
                             <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.no_of_students_per_class') }}</label>
-                                <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->no_of_students_per_class or '' }}" name="no_of_students_per_class" class="form-control"></div>
+                                <div class="col-sm-10"><input min="0" type="number" value="{{ $school->schoolInfo->no_of_students_per_class or '' }}" name="no_of_students_per_class" class="form-control"></div>
                             </div>
                             <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.total_no_of_teachers') }}</label>
-                                <div class="col-sm-10"><input type="number" value="{{ $school->schoolInfo->total_no_of_teachers or '' }}" name="total_no_of_teachers" class="form-control"></div>
+                                <div class="col-sm-10"><input min="0" type="number" value="{{ $school->schoolInfo->total_no_of_teachers or '' }}" name="total_no_of_teachers" class="form-control"></div>
                             </div>
                         @endif
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.tuition_fee') }}</label>
-                            <div class="col-md-2"><input name="tuition_fee" value="{{ $school->schoolInfo->tuition_fee or '' }}" type="number" placeholder="Number" class="form-control"></div>
-                            <div class="col-md-2"><input name="tuition_fee_max" value="{{ $school->schoolInfo->tuition_fee_max or '' }}" type="number" placeholder="Number" class="form-control"></div>
+                            <div class="col-md-2"><input min="0" name="tuition_fee" value="{{ $school->schoolInfo->tuition_fee or '' }}" type="number" placeholder="Number" class="form-control"></div>
+                            <div class="col-md-1" style="width:41px"><img class="ic-about" src="/img/icon-02.png" /></div>
+                            <div class="col-md-2"><input min="0" name="tuition_fee_max" value="{{ $school->schoolInfo->tuition_fee_max or '' }}" type="number" placeholder="Number" class="form-control"></div>
                             <div class="col-md-3">
                                 <?php $tuition_fee_currency = isset($school->schoolInfo) ? $school->schoolInfo->tuition_fee_currency : 'JPY'?>
                                 <select class="form-control m-b" name="tuition_fee_currency">
@@ -244,8 +245,9 @@
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('school.cost_of_living') }}</label>
-                            <div class="col-md-2"><input name="cost_of_living" value="{{ $school->schoolInfo->cost_of_living or '' }}" type="number" placeholder="Number" class="form-control"></div>
-                            <div class="col-md-2"><input name="cost_of_living_max" value="{{ $school->schoolInfo->cost_of_living_max or '' }}" type="number" placeholder="Number" class="form-control"></div>
+                            <div class="col-md-2"><input min="0" name="cost_of_living" value="{{ $school->schoolInfo->cost_of_living or '' }}" type="number" placeholder="Number" class="form-control"></div>
+                            <div class="col-md-1" style="width:41px"><img class="ic-about" src="/img/icon-02.png" /></div>
+                            <div class="col-md-2"><input min="0" name="cost_of_living_max" value="{{ $school->schoolInfo->cost_of_living_max or '' }}" type="number" placeholder="Number" class="form-control"></div>
                             <div class="col-md-3">
                                 <?php $cost_of_living_currency = isset($school->schoolInfo) ? $school->schoolInfo->cost_of_living_currency : 'JPY'?>
                                 <select class="form-control m-b" name="cost_of_living_currency">
@@ -650,7 +652,7 @@
                             <div class="col-sm-4">
                                 <input type="text" name="longitude" id="longitude" placeholder="{{ trans('label.longitude') }}" class="form-control" value="{{ $school->schoolInfo->longitude or '35.689485' }}" />
                             </div>
-                            <div class="col-md-1"><img class="ic-about" src="/img/ic-about.png" /></div>
+                            <div class="col-md-1" style="width:45px"><img class="ic-about" src="/img/ic-about.png" /></div>
                             <div class="col-sm-4">
                                 <input type="text" name="latitude" id="latitude" placeholder="{{ trans('label.latitude') }}" class="form-control" value="{{ $school->schoolInfo->latitude or '139.7601328' }}" />
                             </div>

@@ -63,7 +63,7 @@
                                 <span class="child-label">Sponsor :</span> {{ $ss->sponsor ? $ss->sponsor->name : 'n/a' }}
                             </div>
                             <div class="col-sm-5 wrap-deadline">
-                                <span class="deadline"><span>D</span>{{ $ss->deadline or '' }}</span>
+                                <span class="deadline"><span title="Deadline" style="cursor:pointer">D</span>{{ $ss->deadline_format or '' }}</span>
                             </div>
                             <div class="col-sm-12">
                                 <span class="child-label">Type :</span>
@@ -86,8 +86,8 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-7">
-                                <span class="child-label">Number of awards granted :</span> {{ $ss->number_of_awards_granted or 0 }} <br />
-                                <span class="child-label">Applicable scholarship year :</span> {{ $ss->applicable_year or '--' }} - {{ $ss->applicable_year_max or '--' }}
+                                <span class="child-label" style="line-height:41px">Number of awards granted :</span> {{ $ss->number_of_awards_granted or 0 }}
+                                {{--<span class="child-label">Applicable scholarship year :</span> {{ $ss->applicable_year or '--' }} - {{ $ss->applicable_year_max or '--' }}--}}
                             </div>
                             <div class="col-sm-5">
                                 <a href="" class="child-heart"></a>

@@ -38,7 +38,7 @@
 							@endforeach
 						</select>
 					</div>
-					<div class="col-sm-3 s-more-label">Ranking</div>
+					<div class="col-sm-3 s-more-label s-more-label-ranking">Ranking</div>
 					<div class="col-sm-6 s-more-div">
 						<input type="text" id="ranking-range" name="example_name" value="" />
 						<input type="hidden" id="rankingFrom" value="1" />

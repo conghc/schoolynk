@@ -43,5 +43,7 @@
 		'contact' => 'Contact',
 		'other_information' => 'Other information',
 		'no_of_followers' => 'No. of followers',
+		'choose_sponsor'	=>	'Name of sponsor',
+		'type_of_award'		=>	'Type of award',
 	];
 ?>

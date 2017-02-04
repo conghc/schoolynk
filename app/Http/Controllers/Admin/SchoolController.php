@@ -408,7 +408,7 @@ class SchoolController extends Controller
         $addNew = true;
         if($id != 0) $addNew = false;
 
-        $currencies = Currency::all();
+        $currencies = Currency::orderBy('full_name', 'DESC')->get();
         $countries = \CountryState::getCountries();
         $states = \CountryState::getStates('JP');
         $degreelevel = getDegreelevel();

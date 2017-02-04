@@ -155,7 +155,7 @@ ul.choose-language li{
 /* navbar main*/
 .nav_main{
 	border-top:1px solid #f5f7f8;
-	min-height:65px;
+	min-height:60px;
 	border-bottom:1px solid #f1f3f4;
 	background:#fff
 }
@@ -205,16 +205,21 @@ ul.choose-language li{
 	color: #999;
 	line-height: 30px;
 	display:inline-block;
-	padding:3px 12px 16px 41px;
+	padding:3px 12px 15px 41px;
 }
 .nav_main a:hover {
 	color: #000;
 	border-bottom: 2px solid #00d9d2
 }
+.nav_main .scholarship a:hover { border-bottom: 2px solid #ef7245  }
+.nav_main .coach a:hover { border-bottom: 2px solid #6877fc  }
+.nav_main .message-box a:hover { border-bottom: 2px solid #4cc159  }
+.nav_main .my-profile a:hover { border-bottom: 2px solid #ad72ef  }
 .nav_main .current a {
 	color: #000;
 	border-bottom: 2px solid #00d9d2
 }
+.nav_main .scholarship.current a{ border-bottom: 2px solid #ef7245  }
 .nav_main.center ul {
 	text-align: left;
 }
@@ -291,6 +296,10 @@ ul.choose-language li{
 	display:inline-block;
 	margin-top:7px;
 	margin-left:5px;
+	font-family: "robotolight";
+}
+.school-child .following{
+
 }
 .school-child{
 	width:100%;
@@ -304,6 +313,7 @@ ul.choose-language li{
 	-webkit-box-shadow: 0 3px 3px -3px black;
      -moz-box-shadow: 0 3px 3px -3px black;
           box-shadow: 0 3px 3px -3px black;
+	position:relative;
 }
 
 #home-load-more{
@@ -394,7 +404,21 @@ ul.choose-language li{
 	border-bottom:1px solid #e5eaed
 }
 .advanced-search .s-keyword input{
-	width:94%
+	width:94%;
+	background:#fff url('../img/icons/icon-search.png') no-repeat 11px 6px;
+	padding-left:36px;
+}
+.s-keyword input::-webkit-input-placeholder{
+	color: #b4bfc4;
+}
+.s-keyword input:-moz-placeholder{
+	color: #b4bfc4;
+}
+.s-keyword input::-moz-placeholder{
+	color: #b4bfc4;
+}
+.s-keyword input:-ms-input-placeholder{
+	color: #b4bfc4;
 }
 .advanced-search .s-more{
 	border-left:2px solid #eaeef0;
@@ -407,6 +431,9 @@ ul.choose-language li{
 .s-more-label{
 	padding-top:5px;
 	font-family: 'robotolight';
+}
+.s-more-label-ranking{
+	padding-top:20px;
 }
 .s-more-div button{
 	margin-right:5px;
@@ -461,6 +488,13 @@ ul.choose-language li{
 	border:1px solid #7b8b92;
 	padding-left: 25px;
     padding-right: 25px;
+	outline:none;
+}
+.scholarship-child .btn-modify:active:focus{
+	background:#7b8b92;
+	outline:none;
+	color:#fff;
+	box-shadow: none;
 }
 .wrap-deadline{
 	text-align:right

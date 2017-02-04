@@ -1,6 +1,7 @@
 @foreach($schools as $k=>$school)
 	<div class="col-sm-4">
 		<div class="school-child">
+			<img class="following" src="/frontend/img/icons/follow.png">
 			<a href="/school/detail/{{ $school->id }}" class="avatar"><img src="/{{ $school->img_profile != null ? $school->img_profile : 'img/no-image.png' }}"></a>
 			<a href="/school/detail/{{ $school->id }}" class="title">
 				<h5>{{ $school->name }}</h5>

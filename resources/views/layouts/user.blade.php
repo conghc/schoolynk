@@ -70,9 +70,9 @@
     </nav>
     <nav class="nav_main center">
         <ul>
-            <li class="school current"><a href="{{ route('index') }}">School</a></li>
+            <li class="school {{ Route::is('index') ? 'current' : ''}}"><a href="{{ route('index') }}">School</a></li>
             <li class="coach"><a href="#">Coach</a></li>
-            <li class="scholarship"><a href="{{ route('scholarship.index') }}">Scholarship</a></li>
+            <li class="scholarship {{ Route::is('scholarship.index') ? 'current' : ''}}"><a href="{{ route('scholarship.index') }}">Scholarship</a></li>
             <li class="message-box"><a href="#">Message box</a></li>
             <li class="my-profile"><a href="#">My profile</a></li>
         </ul>
