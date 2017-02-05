@@ -310,9 +310,9 @@ ul.choose-language li{
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	padding:20px;
-	-webkit-box-shadow: 0 3px 3px -3px black;
-     -moz-box-shadow: 0 3px 3px -3px black;
-          box-shadow: 0 3px 3px -3px black;
+	-webkit-box-shadow: 0 3px 3px -3px #979797;
+     -moz-box-shadow: 0 3px 3px -3px #979797;
+          box-shadow: 0 3px 3px -3px #979797;
 	position:relative;
 }
 
@@ -1022,4 +1022,8 @@ ul.choose-language li{
 		background-repeat: no-repeat;
 		padding-right: 20px;
 	}
+}
+
+.lg-social img{
+	width:24px
 }
