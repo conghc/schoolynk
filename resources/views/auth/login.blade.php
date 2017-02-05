@@ -31,6 +31,9 @@
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <div class="col-md-10">
+                                @include('flash::message')
+                            </div>
+                            <div class="col-md-10">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -63,7 +66,13 @@
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">{{ trans('label.forgoten_password') }}</a>
                             </div>
                         </div>
-
+                        <div class="form-group" style="text-align:right">
+                            <div class="col-md-10">
+                                <a href="redirect/facebook" class="lg-social lg-fb"><img src="../frontend/img/icons/icon-fb.png"></a>
+                                <a href="redirect/twitter" class="lg-social lg-tw"><img src="../frontend/img/icons/icon-tw.png"></a>
+                                <a href="redirect/google" class="lg-social lg-gg"><img src="../frontend/img/icons/icon-g.png"></a>
+                            </div>
+                        </div>
                         <div class="form-group buttonSignIn">
                             <div class="col-md-10">
                                 <button type="submit" class="btn btn-primary btn-modify btnLogin">Sign in</button>

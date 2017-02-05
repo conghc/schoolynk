@@ -42,9 +42,9 @@ return [
     // ],
 
     'facebook' => [
-        'client_id' => '338634183135873',
-        'client_secret' => '0fe3a9005f9ec3ff79dda4261f4757f6',
-        'redirect' => 'http://schoolynk.app/callback/facebook',
+        'client_id' => '1267804166645999',
+        'client_secret' => '4d317714abfca6d43a9b3a683d10cf2a',
+        'redirect' => 'http://schoolynk.dev/callback/facebook',
     ],
 
     'twitter' => [

@@ -27,7 +27,7 @@
                 <span class="under">SIGN UP TO CONTINUE</span>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal form-primary" role="form" method="POST" action="{{ route('student.store') }}" data-parsley-validate data-parsley-required-message="{{ trans('validation.required') }}" data-parsley-equalto-message="{{ trans('validation.invalid') }}" data-parsley-type-message="{{ trans('validation.invalid_email') }}" data-parsley-minlength-message="{{ trans('validation.min_length') }}" >
+                <form class="form-horizontal form-primary" id="register" role="form" method="POST" action="{{ route('student.store') }}" data-parsley-validate data-parsley-required-message="{{ trans('validation.required') }}" data-parsley-equalto-message="{{ trans('validation.invalid') }}" data-parsley-type-message="{{ trans('validation.invalid_email') }}" data-parsley-minlength-message="{{ trans('validation.min_length') }}" >
                     {!! csrf_field() !!}
                     <dl class="form-row clf name">
                         <dd class="clf">
@@ -128,6 +128,49 @@
 </div>
 <script src="/frontend/js/jquery-3.1.1.min.js"></script>
 <script src="/frontend/js/bootstrap.min.js"></script>
+<script src="/js/plugins/validate/jquery.validate.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#register").validate({
+            rules: {
+                name: {required: true},
+                last_name: {required: true},
+                email: {required: true, email: true},
+                password: {required: true, minlength: 5},
+                password_rp: {required: true, minlength: 5, equalTo : "#pwd"},
+                year: {required: true},
+                month: {required: true},
+                day: {required: true},
+                accept: {required: true}
+            },
+            messages: {
+                name: '{{ trans('form.this_field_is_required') }}',
+                email: {
+                    required: '{{ trans('form.this_field_is_required') }}',
+                    email: '{{ trans('form.valid_email_type') }}'
+                },
+                password: {
+                    minlength: '{{ trans('form.vali_leng_str_5') }}'
+                },
+                re_password: {
+                    minlength: '{{ trans('form.vali_leng_str_5') }}',
+                    equalTo: '{{ trans('form.vali_re_password') }}',
+                }
+            },
+            errorPlacement: function(error, element) {
+                if (element.attr("name") == "accept" ) {
+                    $(".checkbox").append(error);
+                }else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function(form) {
+                alert('go');
+            }
+        });
+    });
+</script>
 @yield('js')
 </body>
 </html>

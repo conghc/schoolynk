@@ -1027,3 +1027,9 @@ ul.choose-language li{
 .lg-social img{
 	width:24px
 }
+
+#register .error{
+	font-weight:normal;
+	color:red;
+	font-family: "robotolight";
+}
