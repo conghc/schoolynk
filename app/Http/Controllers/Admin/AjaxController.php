@@ -304,9 +304,11 @@ class AjaxController extends Controller
                         //File::exists(storage_path('files/profile/'));
                         File::makeDirectory(public_path('users/'. $user->id. '/'),0777, true, true);
                         $path = public_path('users/'. $user->id . '/' .$filename);
-                        Image::make($file->getRealPath())->resize(1200, null,function ($constraint) {
-                            $constraint->aspectRatio();
-                        })
+                        Image::make($file->getRealPath())
+                            ->fit(1200, 654, null , 'center')
+//                            ->resize(1200, null,function ($constraint) {
+//                                $constraint->aspectRatio();
+//                            })
                             //->resizeCanvas(1200, 654)
                             ->save($path);
                         //Image::make($file->getRealPath())->save($path);
