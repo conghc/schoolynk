@@ -299,19 +299,20 @@ class AjaxController extends Controller
                 $user = User::where('id',$record_id)->first();
                 if($user){
                     $files = $request->file;
+
                     foreach($files as $file){
                         $filename  = 'user-' . time() . rand() . '.' . $file->getClientOriginalExtension();
                         //File::exists(storage_path('files/profile/'));
                         File::makeDirectory(public_path('users/'. $user->id. '/'),0777, true, true);
                         $path = public_path('users/'. $user->id . '/' .$filename);
-                        Image::make($file->getRealPath())
-                            ->fit(1200, 654, null , 'center')
+                        $img = Image::make($file->getRealPath());
+                        $ratio = 734 / 400;
+                        $img->fit($img->width(), intval($img->width() / $ratio), null , 'center');
 //                            ->resize(1200, null,function ($constraint) {
 //                                $constraint->aspectRatio();
 //                            })
                             //->resizeCanvas(1200, 654)
-                            ->save($path);
-                        //Image::make($file->getRealPath())->save($path);
+                        $img->save($path);
                         // save to images table
                         $data = ['type' => 'school', 'record_id' => $user->id];
                         $data['name'] = $file->getClientOriginalName();
