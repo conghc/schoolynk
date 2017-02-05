@@ -307,7 +307,7 @@
                         @if(isset($school->images))
                             @if($school->images->count() > 0)
                                 @foreach($school->images as $image)
-                                    <li class="ui-state-default"><div><img class="child-image" id="{{ $image->id }}" width="128" height="128" src="/{{ $image->path }}" /></div></li>
+                                    <li class="ui-state-default"><div><img class="child-image" id="{{ $image->id }}" width="128" height="70" src="/{{ $image->path }}" /></div></li>
                                 @endforeach
                             @endif
                         @endif
