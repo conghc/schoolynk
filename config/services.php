@@ -42,8 +42,8 @@ return [
     // ],
 
     'facebook' => [
-        'client_id' => '1267804166645999',
-        'client_secret' => '4d317714abfca6d43a9b3a683d10cf2a',
+        'client_id' => '1824892721110292',
+        'client_secret' => '80e47d30b1591aa57019c27796d25ec6',
         'redirect' => 'http://schoolynk.apper.vn/callback/facebook',
     ],
 
