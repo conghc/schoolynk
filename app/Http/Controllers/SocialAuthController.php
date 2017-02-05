@@ -27,7 +27,6 @@ class SocialAuthController extends Controller
         //     Flash::error('An error occurred. Please login again!');
         //     return redirect('/');
         // }
-
     	//get user info from social
         $userRespone = Socialite::driver($provider)->user();
 
@@ -42,7 +41,7 @@ class SocialAuthController extends Controller
         $user = User::where('email', $email)->first();
         if($user){
         	Auth::login($user);
-        	return redirect()->route('student.index');
+        	return redirect('/');
         }
 
         //email not existed, create user
@@ -53,21 +52,21 @@ class SocialAuthController extends Controller
         $rqUser['remember_token'] = str_random(60);
         $rqUser['activate_token'] = str_random(60);
         $user = User::create($rqUser);
-        
-        //hardcode some require infos, then create student
-        $rqStudent['user_mode'] = 0;
-        $rqStudent['gender'] = 1;
-        $rqStudent['nationality'] = 'Albanians';
-        $rqStudent['user_id'] = $user->id;
-        $rqStudent['birthday'] = '1990-01-01';
-        $rqStudent['is_verify'] = 1;
-        $rqStudent['avatar'] = $userRespone->avatar;
-        $student = Student::create($rqStudent);
+
+//        //hardcode some require infos, then create student
+//        $rqStudent['user_mode'] = 0;
+//        $rqStudent['gender'] = 1;
+//        $rqStudent['nationality'] = 'Albanians';
+//        $rqStudent['user_id'] = $user->id;
+//        $rqStudent['birthday'] = '1990-01-01';
+//        $rqStudent['is_verify'] = 1;
+//        $rqStudent['avatar'] = $userRespone->avatar;
+//        $student = Student::create($rqStudent);
         
         //log the user in
         Auth::login($user);
 
         //redirect to result page
-        return redirect()->route('student.register-3');
+        return redirect('/');
     }
 }
