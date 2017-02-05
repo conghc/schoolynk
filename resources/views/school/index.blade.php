@@ -30,7 +30,7 @@
 						<input type="hidden" value="0" id="filterState">
 					</div>
 					<div class="col-sm-3 s-more-label">Major</div>
-					<div class="col-sm-9 s-more-div">
+					<div class="col-sm-5 s-more-div">
 						<select class="form-control input-select" id="filterMajor">
 							<option value="0" selected>All</option>
 							@foreach($majors as $major)
@@ -38,13 +38,14 @@
 							@endforeach
 						</select>
 					</div>
+					<div class="clear"></div>
 					<div class="col-sm-3 s-more-label s-more-label-ranking">Ranking</div>
-					<div class="col-sm-6 s-more-div">
+					<div class="col-sm-4 s-more-div">
 						<input type="text" id="ranking-range" name="example_name" value="" />
 						<input type="hidden" id="rankingFrom" value="1" />
 						<input type="hidden" id="rankingTo" value="300" />
 					</div>
-					<div class="col-sm-3"></div>
+					<div class="col-sm-5"></div>
 				</div>
 			</div>
 		</div>
