@@ -306,7 +306,7 @@ class AjaxController extends Controller
                         File::makeDirectory(public_path('users/'. $user->id. '/'),0777, true, true);
                         $path = public_path('users/'. $user->id . '/' .$filename);
                         $img = Image::make($file->getRealPath());
-                        $ratio = 734 / 400;
+                        $ratio = 750 / 400;
                         $img->fit($img->width(), intval($img->width() / $ratio), null , 'center');
 //                            ->resize(1200, null,function ($constraint) {
 //                                $constraint->aspectRatio();

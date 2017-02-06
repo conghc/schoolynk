@@ -5,75 +5,83 @@
 @endsection
 @section('content')
 	<div class="advanced-search">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-4 s-keyword">
-					<input type="text" id="keyword" class="form-control input-text-modify" placeholder="School name" />
-				</div>
-				<div class="col-sm-8 s-more">
-					<div class="col-sm-3 s-more-label">Type of school</div>
-					<div class="col-sm-9 s-more-div">
-						<button type="button" class="btn btn-default btn-modify typeSchool btn-modify-active" d="all">All</button>
-						<button type="button" class="btn btn-default btn-modify typeSchool" d="university">University</button>
-						<button type="button" class="btn btn-default btn-modify typeSchool" d="vocational" >Vocational School</button>
-						<button type="button" class="btn btn-default btn-modify typeSchool" d="language">Language School</button>
-						<input type="hidden" id="typeSchool" value="all">
+		<div class="container">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-3 s-keyword">
+						<input type="text" id="keyword" class="form-control input-text-modify" placeholder="School name" />
 					</div>
-					<div class="col-sm-3 s-more-label">Area</div>
-					<div class="col-sm-9 s-more-div">
-						<button type="button" class="btn btn-default btn-modify filterState btn-modify-active" d="0">All</button>
-						<button type="button" class="btn btn-default btn-modify filterState" d="13">Tokyo</button>
-						<button type="button" class="btn btn-default btn-modify filterState" d="27">Osaka</button>
-						<button type="button" class="btn btn-default btn-modify filterState" d="26">Kyoto</button>
-						<button type="button" class="btn btn-default btn-modify filterState" d="40">Fukuoka</button>
-						<button type="button" class="btn btn-default btn-modify filterState filterStateOthers" d="" data-toggle="modal" data-target="#otherState">Others</button>
-						<input type="hidden" value="0" id="filterState">
+					<div class="col-sm-9 s-more">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-2 s-more-label">Type of school</div>
+						<div class="col-sm-9 s-more-div">
+							<button type="button" class="btn btn-default btn-modify typeSchool btn-modify-active" d="all">All</button>
+							<button type="button" class="btn btn-default btn-modify typeSchool" d="university">University</button>
+							<button type="button" class="btn btn-default btn-modify typeSchool" d="vocational" >Vocational School</button>
+							<button type="button" class="btn btn-default btn-modify typeSchool" d="language">Language School</button>
+							<input type="hidden" id="typeSchool" value="all">
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-2 s-more-label">Area</div>
+						<div class="col-sm-9 s-more-div">
+							<button type="button" class="btn btn-default btn-modify filterState btn-modify-active" d="0">All</button>
+							<button type="button" class="btn btn-default btn-modify filterState" d="13">Tokyo</button>
+							<button type="button" class="btn btn-default btn-modify filterState" d="27">Osaka</button>
+							<button type="button" class="btn btn-default btn-modify filterState" d="26">Kyoto</button>
+							<button type="button" class="btn btn-default btn-modify filterState" d="40">Fukuoka</button>
+							<button type="button" class="btn btn-default btn-modify filterState filterStateOthers" d="" data-toggle="modal" data-target="#otherState">Others</button>
+							<input type="hidden" value="0" id="filterState">
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-2 s-more-label">Major</div>
+						<div class="col-sm-5 s-more-div">
+							<select class="form-control input-select" id="filterMajor">
+								<option value="0" selected>All</option>
+								@foreach($majors as $major)
+									<option value="{{ $major->id }}">{{ $major->text }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="clear"></div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-2 s-more-label s-more-label-ranking">Ranking</div>
+						<div class="col-sm-4 s-more-div">
+							<input type="text" id="ranking-range" name="example_name" value="" />
+							<input type="hidden" id="rankingFrom" value="1" />
+							<input type="hidden" id="rankingTo" value="300" />
+						</div>
+						<div class="col-sm-5"></div>
 					</div>
-					<div class="col-sm-3 s-more-label">Major</div>
-					<div class="col-sm-5 s-more-div">
-						<select class="form-control input-select" id="filterMajor">
-							<option value="0" selected>All</option>
-							@foreach($majors as $major)
-								<option value="{{ $major->id }}">{{ $major->text }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="clear"></div>
-					<div class="col-sm-3 s-more-label s-more-label-ranking">Ranking</div>
-					<div class="col-sm-4 s-more-div">
-						<input type="text" id="ranking-range" name="example_name" value="" />
-						<input type="hidden" id="rankingFrom" value="1" />
-						<input type="hidden" id="rankingTo" value="300" />
-					</div>
-					<div class="col-sm-5"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="container-fluid">
-		<div class="row count-and-sort">
-			<div class="col-sm-6">
-				<span><span class="number-records">{{ $schools->count() }}</span> search results</span>
-			</div>
-			<div class="col-sm-6">
-				<div class="col-sm-4"></div>
-				<div class="col-sm-2"></div>
-				<div class="col-sm-2"><span>Sort by</span></div>
-				<div class="col-sm-4">
-					<select class="form-control input-select">
-						<option value="0">All</option>
-						<option value="1">Following</option>
-						<option value="2">Not following</option>
-					</select>
+		<div class="container">
+			<div class="row count-and-sort">
+				<div class="col-sm-6">
+					<span class="count-number"><span class="number-records">{{ $schools->count() }}</span> search results</span>
+				</div>
+				<div class="col-sm-6">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-2"><span>Sort by</span></div>
+					<div class="col-sm-4">
+						<select class="form-control input-select">
+							<option value="0">All</option>
+							<option value="1">Following</option>
+							<option value="2">Not following</option>
+						</select>
+					</div>
 				</div>
 			</div>
-		</div>
-		<input type="hidden" id="page" value="{{ $schools->currentPage() }}">
-		<div class="row school-list">
+			<input type="hidden" id="page" value="{{ $schools->currentPage() }}">
+			<div class="row school-list">
 
-		</div>
-		<div class="col-sm-12" id="home-load-more">
-			<button type = "button" class = "btn btn-default btn-modify btn-modify-active btn-load-more" onclick="loadMore()">Load more</button>
+			</div>
+			<div class="col-sm-12" id="home-load-more">
+				<button type = "button" class = "btn btn-default btn-modify btn-modify-active btn-load-more" onclick="loadMore()">Load more</button>
+			</div>
 		</div>
 	</div>
 	<!-- Modal other State -->
@@ -151,7 +159,7 @@
 				}
 			});
 		}
-		
+
 		function listMajors() {
 			var values = {};
 			values['typeSchool'] = $('#typeSchool').val();

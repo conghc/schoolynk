@@ -65,7 +65,7 @@ h1 {
 	}
 }
 .navbar-collapse{
-	/*border:none*/
+	padding-right:0px;
 }
 .navbar-default .navbar-brand{
 	font-family: 'robotolight';
@@ -111,25 +111,41 @@ h1 {
 /* nav */
 /* navbar top*/
 .navBar-top-right ul li{
-	line-height:67px;
-	padding-bottom:7px;
+	line-height:75px;
+	padding-bottom:4px;
 }
 .navBar-top-right .change-language{
 	border-left:1px solid #e4e9ec;
 	border-right:1px solid #e4e9ec;
 	padding-bottom:12px;
+	width:110px;
+}
+.navBar-top-right .logged{
+	border:none;
+	padding-bottom:7px;
+	min-width:240px;
+	text-align:right
+}
+.navBar-top-right .logged img{
+	margin-left:10px;
 }
 .navbar-default .navbar-nav>.change-language.open>a, .navbar-default .navbar-nav>.change-language.open>a:hover, .navbar-default .navbar-nav>.change-language.open>a:focus{
 	background:none;
 }
 .navBar-top-right .change-language .dropdown-toggle{
-	padding-top:23px;
+	padding-top:28px;
+}
+.navBar-top-right .logged .dropdown-toggle{
+	padding-top:24px
 }
 .navBar-top-right .change-language .flag{
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border:2px solid #e4e9ec;
-	margin-right:9px;
+	margin-right:11px;
+}
+.navBar-top-right .logged .flag{
+	margin-right:3px
 }
 ul.choose-language li{
 	line-height:40px;
@@ -137,6 +153,14 @@ ul.choose-language li{
 .choose-language>li>a{
 	display:inline-block;
 	padding-left:0px;
+	color:#777
+}
+.choose-language>li>a:hover{
+	background:none;
+}
+.logged .choose-language>li>a{
+	padding-left:15px;
+	display:block;
 }
 .choose-language>li>.flag{
 	margin-left:5px;
@@ -147,27 +171,29 @@ ul.choose-language li{
 }
 .navBar-top-right .icon-social{
 	margin-right:0px;
-	padding-top:8px;
+	padding-top:13px;
 }
 .navBar-top-right .icon-social a{
 	padding-left:0px;
+	padding-right:17px
 }
 /* navbar main*/
 .nav_main{
 	border-top:1px solid #f5f7f8;
-	min-height:60px;
+	min-height:69px;
 	border-bottom:1px solid #f1f3f4;
-	background:#fff
+	background:#fff;
+	font-size:15px;
 }
 @media (min-width: 1200px){
 	.nav_main ul{
-		width: 1115px;
+		width: 1139px;
 		margin: auto
 	}
 }
 .nav_main ul {
 	padding: 0;
-	margin-top:12px;
+	margin-top:17px;
 }
 .nav_main li {
 	margin: 0;
@@ -283,20 +309,29 @@ ul.choose-language li{
 }
 @media (min-width: 1200px){
 	.container-fluid{
-		width:1145px
 	}
 }
 
 /*--List Schools--*/
 .count-and-sort{
-	margin-top:20px;	
-	margin-bottom:3px;
+	margin-top:19px;
+	margin-bottom:0px;
+}
+.count-and-sort .input-select{
+	font-size:14px;
+	height:30px;
+	padding-top:4px
 }
 .count-and-sort span{
 	display:inline-block;
 	margin-top:7px;
-	margin-left:5px;
 	font-family: "robotolight";
+	font-size:14px;
+	margin-left:1px
+}
+.count-and-sort .count-number, .count-and-sort .count-number span{
+	font-size:16px;
+	margin-top:3px;
 }
 .school-child .following{
 
@@ -315,7 +350,13 @@ ul.choose-language li{
           box-shadow: 0 3px 3px -3px #979797;
 	position:relative;
 }
-
+.school-child .following{
+	right:19px;
+}
+.school-child .btn-modify{
+	padding-left:29px;
+	padding-right:29px;
+}
 #home-load-more{
 	text-align:center;
 	margin-top:25px;
@@ -326,12 +367,19 @@ ul.choose-language li{
 	margin-right:15px;
 }
 .school-child .avatar img{
-	width:71px;
-	height:71px;
+	width:77px;
+	height:77px;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
 	border:1px solid #e8eff2;
+}
+.scholarship-child .avatar img{
+	width:60px;
+	height:60px;
+}
+.scholarship-child h4{
+	margin-top:4px
 }
 .school-child .btn-modify{
 	font-size:13px;
@@ -405,6 +453,7 @@ ul.choose-language li{
 }
 .advanced-search .s-keyword input{
 	width:94%;
+	margin-top:10px;
 	background:#fff url('../img/icons/icon-search.png') no-repeat 11px 6px;
 	padding-left:36px;
 }
@@ -446,7 +495,7 @@ ul.choose-language li{
 	border:1px solid #3795fd
 }
 .scholarship-child .title{
-	min-height:88px;
+	min-height:78px;
 }
 .scholarship-child h4, .scholarship-child .title h4 span{
 	font-size:20px;
@@ -497,7 +546,7 @@ ul.choose-language li{
 	box-shadow: none;
 }
 .wrap-deadline{
-	text-align:right
+	/*text-align:right*/
 }
 .deadline span{
 	line-height:23px;
@@ -516,7 +565,7 @@ ul.choose-language li{
 	margin-top:25px;
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
-    padding: 30px 40px;
+    padding: 30px 52px;
     -webkit-box-shadow: 0 3px 3px -3px black;
     -moz-box-shadow: 0 3px 3px -3px black;
     box-shadow: 0 3px 3px -3px black;
@@ -703,14 +752,14 @@ ul.choose-language li{
 	border-radius:10px;
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
-    -webkit-box-shadow: 0 3px 3px -3px black;
-    -moz-box-shadow: 0 3px 3px -3px black;
-    box-shadow: 0 3px 3px -3px black;
+    -webkit-box-shadow: 0 3px 3px -3px #979797;
+    -moz-box-shadow: 0 3px 3px -3px #979797;
+    box-shadow: 0 3px 3px -3px #979797;
 	position:relative;
 	margin-bottom:25px;
 }
 .numberFolllow{
-	padding:15px 25px;
+	padding:15px 25px 15px 33px
 }
 .numberF{
 	line-height:33px;
