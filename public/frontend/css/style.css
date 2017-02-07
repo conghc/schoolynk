@@ -262,7 +262,7 @@ ul.choose-language li{
 		top: 0;
 		left: 0;
 		border: solid 1px #aaa;
-		background: #fff url(images/icon-menu.png) no-repeat 10px 11px;
+		/*background: #fff url(images/icon-menu.png) no-repeat 10px 11px;*/
 		border-radius: 5px;
 		box-shadow: 0 1px 2px rgba(0,0,0,.3);
 		z-index:99999
@@ -293,7 +293,7 @@ ul.choose-language li{
 		margin: 0 0 5px;
 	}
 	.nav_main ul:hover .current {
-		background: url(images/icon-check.png) no-repeat 10px 7px;
+		/*background: url(images/icon-check.png) no-repeat 10px 7px;*/
 	}
 
 	/* center nav */
@@ -316,6 +316,9 @@ ul.choose-language li{
 .count-and-sort{
 	margin-top:19px;
 	margin-bottom:0px;
+	font-size: 16px;
+	font-family: 'Roboto-Regular';
+	color: #7B8B92;
 }
 .count-and-sort .input-select{
 	font-size:14px;
@@ -325,9 +328,9 @@ ul.choose-language li{
 .count-and-sort span{
 	display:inline-block;
 	margin-top:7px;
-	font-family: "robotolight";
+	/*font-family: "robotolight";*/
 	color:#7B8B92;
-	font-size:14px;
+	/*font-size:14px;*/
 	margin-left:1px
 }
 .count-and-sort .count-number, .count-and-sort .count-number span{
@@ -341,7 +344,7 @@ ul.choose-language li{
 }
 .school-child{
 	width:100%;
-	min-height:203px;
+	min-height:176px;
 	background:#fff;
 	margin-top:15px;
 	margin-bottom:15px;
@@ -571,6 +574,7 @@ ul.choose-language li{
     border-radius: 50%;
     text-align: center;
     margin-right: 10px;
+	font-family: "robotobold";
 }
 .inner-scholarship-details{
 	margin-top:25px;
@@ -583,6 +587,9 @@ ul.choose-language li{
 	width: 100%;
     min-height: 400px;
     background: #fff;
+	font-size: 13px;
+	font-family: "Roboto-Regular";
+	color: #2d2f37;
 }
 .inner-scholarship-details .title{
 	font-size:15px;
@@ -591,7 +598,9 @@ ul.choose-language li{
 	margin-bottom:15px;
 }
 .inner-scholarship-details .title h3{
-	font-size:23px;
+	font-size: 20px;
+	color: #2d2f37;
+	font-family: "robotomedium";
 	margin:10px 0px 8px 0px;
 }
 .inner-scholarship-details .title span{
@@ -648,11 +657,18 @@ ul.choose-language li{
 .inner-scholarship-details .value{
 	color:#23252e
 }
-
+.inner-scholarship-details .child .val-nationality{
+	text-transform: capitalize;
+}
+.inner-scholarship-details .child .dt-label{
+	color:#7b8b92
+}
 /** SChool details**/
 .school-details{
 	margin-top:15px;
 	margin-bottom:15px;
+	font-family:'Roboto-Regular';
+	color:#7B8B92
 }
 .detail-left{
 	width:100%;
@@ -665,6 +681,7 @@ ul.choose-language li{
     -moz-box-shadow: 0 3px 3px -3px #CAD2DA;
     box-shadow: 0 3px 3px -3px #CAD2DA;
 	position:relative;
+	font-size:13px
 }
 .following{
 	position:absolute;
@@ -677,8 +694,8 @@ ul.choose-language li{
 	display: inline-block;
 }
 .detail-left .avatar img{
-	width: 74px;
-    height: 74px;
+	width: 77px;
+    height: 77px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
@@ -693,12 +710,15 @@ ul.choose-language li{
 	border-top:1px solid #e6eaed
 }
 .block-top .title h4{
-	color:#21232c;
+	color:#2D2F37;
+	font-size:16px
+
 }
 .block-top .title{
 	display:block;
-	color:#7b8b92;
+	color:#7B8B92;
 	min-height:75px;
+	font-size:13px
 }
 .block-top .ranking span{
 	display: inline-block;
@@ -710,7 +730,7 @@ ul.choose-language li{
     -moz-border-radius: 50%;
     border-radius: 50%;
     text-align: center;
-	padding-top:1px;
+	padding-top:3px;
 	margin-right: 10px;
 }
 .block-top .ranking{
@@ -742,7 +762,7 @@ ul.choose-language li{
 	padding-bottom:0px;
 }
 .inner-detail-left{
-	color:#21232c;
+	color:#2D2F37;
 	line-height:28px
 }
 
@@ -753,7 +773,7 @@ ul.choose-language li{
 
 }
 .inner-detail-left .label-left{
-	color:#7b8b92;
+	color:#7B8B92;
 	text-transform: none;
 }
 .detail-right{
@@ -768,12 +788,15 @@ ul.choose-language li{
     box-shadow: 0 3px 3px -3px #CAD2DA;
 	position:relative;
 	margin-bottom:25px;
+	font-size:13px;
+	color:#2D2F37
 }
 .numberFolllow{
 	padding:15px 25px 15px 33px
 }
 .numberF{
 	line-height:33px;
+	color:#7B8B92
 }
 .btnF{
 	float:right;
@@ -804,17 +827,18 @@ ul.choose-language li{
 }
 .schoolDetailFilterResults .nav-tabs{padding-left:10px}
 .schoolDetailFilterResults .nav-tabs li a{
-	color:#4d626b
+	color:#7B8B92;
+	font-family:"robotomedium";
 }
 .schoolDetailFilterResults .nav-tabs li a:hover{
 	background:none;
 	border-color:#fff;
-	color:#000;
+	color:#2D2F37;
 	border-bottom:2px solid #057afd
 }
 .schoolDetailFilterResults .nav-tabs li.active a{
 	border-color:#fff;
-	color:#000;
+	color:#2D2F37;
 	border-bottom:2px solid #057afd
 }
 .schoolDetailFilterResults .tab-content{
@@ -848,7 +872,11 @@ ul.choose-language li{
 	color:#fff
 }
 #tab-major{
-	color:#000
+	color:#2D2F37
+}
+#tab-major .major-title{
+	font-size:14px;
+	font-family:'robotomedium';
 }
 #tab-major .major-label{
 	color:#7b8b92
@@ -888,7 +916,8 @@ ul.choose-language li{
 	margin-bottom:15px;
 	background:url(../img/icons/icon-02.png) no-repeat center left;
 	padding-left:20px;
-	display:block
+	display:block;
+	color:#7B8B92
 }
 .basicInfo .contentInfo{
 	color:#000

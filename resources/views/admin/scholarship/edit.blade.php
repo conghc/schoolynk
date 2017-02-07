@@ -2,11 +2,18 @@
 @section('header-2')
     {{ trans('label.schoolarship_create') }}
 @endsection
+<?php $for_all_school = isset($scholarship->for_all_school) ? $scholarship->for_all_school : 0; ?>
 @section('js')
     <link href="/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
     <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="/css/plugins/summernote/summernote.css" rel="stylesheet">
     <link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+
+    @if($for_all_school == 1)
+        <style type="text/css">
+            #designated_school_chosen .search-choice-close{display:none}
+        </style>
+    @endif
     <!-- Data picker -->
     <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
     <!-- TouchSpin -->
@@ -52,6 +59,22 @@
                     $(this).parent().parent().find('.chosen-select option').prop('selected', $(this).hasClass('select')).parent().trigger('chosen:updated');
                 });
             });
+
+            //select-all or deselect all
+            $('.select-all-school').on("click",function() {
+                $('#designated_school').val('').trigger('liszt:updated');
+                $("#designated_school option").hide();
+                var newOption = $('<option value="0" selected>All schools</option>');
+                $('#designated_school').append(newOption);
+                $('#designated_school').trigger("chosen:updated");
+                $('#designated_school_chosen .search-choice-close').remove();
+            });
+            $('.deselect-all-school').on("click",function() {
+                $("#designated_school option").show();
+                $("#designated_school option[value=0]").remove();
+                $('#designated_school').trigger("chosen:updated");
+            });
+
         });
     </script>
     @include('partials.form_errors')
@@ -190,7 +213,7 @@
                                 <select class="form-control m-b" name="currency">
                                     @foreach($currencies as $currence)
                                         <option value='{{ $currence->sort_name }}' {{ $currency_val == $currence->sort_name ? 'selected' : '' }}>
-                                            {{ $currence->full_name }}
+                                            {{ $currence->sort_name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -207,18 +230,19 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.type_of_cost_covered') }}</label>
-                            <?php $type_of_cost_covered = $scholarship ? $scholarship->type_of_cost_covered : 0 ?>
+                            <?php $type_of_cost_covered = $scholarship ? $scholarship->type_of_cost_covered : []; ?>
+                            <?php $type_of_cost_covered = $type_of_cost_covered != null ? $type_of_cost_covered : []; ?>
                             <div class="col-sm-10">
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="" value="1" name="type_of_cost_covered" {{ $type_of_cost_covered == 1 ? 'checked' : '' }}>
+                                <div class="checkbox checkbox-info checkbox-inline">
+                                    <input type="checkbox" id="" value="1" name="type_of_cost_covered" {{ in_array(1, $type_of_cost_covered) ? 'checked' : '' }}>
                                     <label for="type_of_cost_covered">Tuition fee</label>
                                 </div>
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="" value="2" name="type_of_cost_covered" {{ $type_of_cost_covered == 2 ? 'checked' : '' }}>
+                                <div class="checkbox checkbox-info checkbox-inline">
+                                    <input type="checkbox" id="" value="2" name="type_of_cost_covered" {{ in_array(2, $type_of_cost_covered) ? 'checked' : '' }}>
                                     <label for="type_of_cost_covered">Living cost</label>
                                 </div>
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="" value="3" name="type_of_cost_covered" {{ $type_of_cost_covered == 3 ? 'checked' : '' }}>
+                                <div class="checkbox checkbox-info checkbox-inline">
+                                    <input type="checkbox" id="" value="3" name="type_of_cost_covered" {{ in_array(3, $type_of_cost_covered) ? 'checked' : '' }}>
                                     <label for="type_of_cost_covered">Others</label>
                                 </div>
                             </div>
@@ -237,6 +261,7 @@
                                     <?php endfor; ?>
                                 </select>
                             </div>
+                            <div class="col-md-1" style="width:45px"><img class="ic-about" src="/img/ic-about.png"></div>
                             <div class="col-md-3">
                                 <?php $applicable_year_max = $scholarship ? $scholarship->applicable_year_max : 0 ?>
                                 <select class="form-control m-b" name="applicable_year_max">
@@ -274,6 +299,7 @@
                                     @endfor
                                 </select>
                             </div>
+                            <div class="col-md-1" style="width:45px"><img class="ic-about" src="/img/ic-about.png"></div>
                             <div class="col-md-3">
                                 <?php $age_max = $scholarship ? $scholarship->age_max : 0; ?>
                                 <select class="form-control m-b" name="age_max">
@@ -307,7 +333,7 @@
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.nationality') }}</label>
                             <div class="col-sm-7">
                                 <?php $nationality_arr = isset($scholarship->nationality_arr) ? $scholarship->nationality_arr : []; ?>
-                                <select id="nationality" name="nationality[]" data-placeholder="{{ trans('label.choice') }}" class="chosen-select" multiple style="width:100%" tabindex="4">
+                                <select id="nationality" name="nationality[]" data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
                                     @foreach($nationalities as $nationality)
                                         <option value='{{ $nationality }}' {{ in_array(strtolower($nationality), $nationality_arr) ? 'Selected' : '' }}>
                                             {{ $nationality }}
@@ -324,7 +350,7 @@
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.applicants_current_academic_level') }}</label>
                             <div class="col-sm-7">
                                 <?php $academic_level_arr = isset($scholarship->academic_level_arr) ? $scholarship->academic_level_arr : [];?>
-                                <select name="applicants_current_academic_level[]" data-placeholder="{{ trans('label.choice') }}" class="chosen-select" multiple style="width:100%" tabindex="4">
+                                <select name="applicants_current_academic_level[]" data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
                                     @foreach($academics as $academic)
                                         <option value="{{ $academic->id }}" {{ in_array($academic->id, $academic_level_arr) ? 'Selected' : '' }}>
                                             {{ $academic->name }}</option>
@@ -340,7 +366,7 @@
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.current_place_of_residence') }}</label>
                             <div class="col-sm-7">
                                 <?php $place_of_residence_arr = isset($scholarship->place_of_residence_arr) ? $scholarship->place_of_residence_arr : [];?>
-                                <select name="current_place_of_residence[]" data-placeholder="{{ trans('label.choice') }}" class="chosen-select" multiple style="width:100%" tabindex="4">
+                                <select name="current_place_of_residence[]" data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
                                     @foreach ( $countries as $k => $country)
                                         <option value="{{ $k }}" {{ in_array(strtolower($k), $place_of_residence_arr) ? 'Selected' : '' }}>
                                             {{ $country }}</option>
@@ -410,12 +436,12 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.designated_area') }}</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <select name="designated_country[]" data-placeholder="{{ trans('label.choice') }}" class="chosen-select" style="width:100%" tabindex="2">
                                     <option value="JP" selected>Japan</option>
                                 </select>
                             </div>
-                            <div class="col-sm-7">
+                            <div class="col-sm-5">
                                 <?php $designated_area_arr = isset($scholarship->designated_area_arr) ? $scholarship->designated_area_arr : []; ?>
                                 <select name="designated_state[]" data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
                                     @foreach ( $states as $k => $state)
@@ -424,20 +450,27 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-sm-3">
+                                <button type="button" class="btn btn-default btn-sm chosen-toggle select">Select All</button>
+                                <button type="button" class="btn btn-default btn-sm chosen-toggle deselect">Deselect All</button>
+                            </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.designated_school') }}</label>
                             <div class="col-sm-7">
                                 <?php $schools_arr = isset($scholarship->schools_arr) ? $scholarship->schools_arr : []; ?>
-                                <select name="designated_school[]" data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
+                                <select name="designated_school[]" id="designated_school" data-placeholder="..." class="chosen-select" multiple style="width:100%" tabindex="4">
+                                    @if($for_all_school == 1)
+                                    <option value="0" selected> All schools</option>
+                                    @endif
                                     @foreach($schools as $school)
-                                        <option value="{{ $school->id }}" {{ in_array($school->id, $schools_arr) ? 'Selected' : '' }}> {{ $school->name }}</option>
+                                        <option style="{{ $for_all_school==1 ? 'display:none' : '' }}" value="{{ $school->id }}" {{ in_array($school->id, $schools_arr) ? 'Selected' : '' }}> {{ $school->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-sm-3">
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle select">Select All</button>
-                                <button type="button" class="btn btn-default btn-sm chosen-toggle deselect">Deselect All</button>
+                                <button type="button" class="btn btn-default btn-sm chosen-toggle-school select-all-school">Select All</button>
+                                <button type="button" class="btn btn-default btn-sm chosen-toggle-school deselect-all-school">Deselect All</button>
                             </div>
                         </div>
                     </div>
@@ -458,17 +491,18 @@
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.application_method') }}</label>
                             <div class="col-sm-10">
                                 <div class="col-sm-10">
-                                    <?php $application_method = $scholarship ? $scholarship->application_method : 0 ?>
-                                    <div class="radio radio-info radio-inline">
-                                        <input type="radio" value="1" {{ $application_method == 1 ? 'checked' : '' }} name="application_method" >
+                                    <?php $application_method = $scholarship ? $scholarship->application_method : []; ?>
+                                    <?php $application_method = $application_method != null ? $application_method : []; ?>
+                                    <div class="checkbox checkbox-info checkbox-inline">
+                                        <input type="checkbox" value="1" {{ in_array(1, $application_method) ? 'checked' : '' }} name="application_method" >
                                         <label for="inlineRadio1">Document screening</label>
                                     </div>
-                                    <div class="radio radio-info radio-inline">
-                                        <input type="radio" value="2" {{ $application_method == 2 ? 'checked' : '' }} name="application_method">
+                                    <div class="checkbox checkbox-info checkbox-inline">
+                                        <input type="checkbox" value="2" {{ in_array(2, $application_method) ? 'checked' : '' }} name="application_method">
                                         <label for="inlineRadio2">Interview</label>
                                     </div>
-                                    <div class="radio radio-info radio-inline">
-                                        <input type="radio" value="3" {{ $application_method == 3 ? 'checked' : '' }} name="application_method">
+                                    <div class="checkbox checkbox-info checkbox-inline">
+                                        <input type="checkbox" value="3" {{ in_array(3, $application_method) ? 'checked' : '' }} name="application_method">
                                         <label for="inlineRadio2">Examination</label>
                                     </div>
                                 </div>

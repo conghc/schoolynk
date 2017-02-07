@@ -12,6 +12,7 @@ use App\Student;
 use App\Faculty;
 use App\FacultySchool;
 use App\OtherText;
+use App\Scholarship;
 use Flash;
 use DateTime;
 use Auth;
@@ -164,9 +165,7 @@ class SchoolController extends Controller
                 }
             }
         }
-        //$admission = $school->texts
-        //dd($school->toArray());
-//dd($school->toArray());
+
         // get all school for google map
         $schools = User::has('schoolInfo')->get();
         $location = [];
@@ -177,10 +176,15 @@ class SchoolController extends Controller
                 $location[$k]['latitude'] = $sc->schoolInfo->latitude;
             }
         }
+        $scholarshipForAll = Scholarship::where('for_all_school',1)->get();
+        $scholarshipForAll = $scholarshipForAll->count() > 0 ? $scholarshipForAll->toArray() : [];
+
+        $scholarships = $school->scholarships->count() > 0 ? $school->scholarships : [];
+        $allScholarship = array_merge($scholarships, $scholarshipForAll);
 
         $faculty = Faculty::where('school_id',$id)->get();
 
-        return view('school.detail', compact('faculty', 'location', 'school', 'admission', 'student', 'support', 'others'));
+        return view('school.detail', compact('allScholarship','faculty', 'location', 'school', 'admission', 'student', 'support', 'others'));
     }
 
     public function facultySchool(Request $request, FacultySchool $faSchool){

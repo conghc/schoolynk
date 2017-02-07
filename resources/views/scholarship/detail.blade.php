@@ -30,7 +30,7 @@
 					<div class="col-sm-12">
 						<h3 class="title-block">General Information</h3>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Type of award:</div>
+							<div class="col-sm-3 dt-label">Type of award:</div>
 							<div class="col-sm-8 value">
 								<?php
 								$type_of_award = $scholarship->type_of_award ? $scholarship->type_of_award : 0;
@@ -47,7 +47,7 @@
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Amound of award:</div>
+							<div class="col-sm-3 dt-label">Amound of award:</div>
 							<div class="col-sm-8 value">
 								{{ $scholarship->amount or '--' }}
 								{{ $scholarship->currency or '--' }}/
@@ -55,39 +55,41 @@
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Type of cost covered:</div>
+							<div class="col-sm-3 dt-label">Type of cost covered:</div>
 							<div class="col-sm-8 value">
 								<?php
-								$type_of_cost_covered = $scholarship->type_of_cost_covered ? $scholarship->type_of_cost_covered : 0;
-								if($type_of_cost_covered == 1){
-									echo('Tuition fee');
-								}elseif($type_of_cost_covered == 2){
-									echo('Living cost');
-								}elseif($type_of_cost_covered == 3){
-									echo('Others');
-								}else{
-									echo('--');
+								$type_of_cost_covered = $scholarship->type_of_cost_covered ? $scholarship->type_of_cost_covered : [];
+								for($i=0; $i<count($type_of_cost_covered); $i++){
+									if($type_of_cost_covered[$i] == 1){
+										echo('Tuition fee, ');
+									}elseif($type_of_cost_covered[$i] == 2){
+										echo('Living cost, ');
+									}elseif($type_of_cost_covered[$i] == 3){
+										echo('Others, ');
+									}else{
+										echo('--, ');
+									}
 								}
 								?>
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Number of awards granted:</div>
+							<div class="col-sm-3 dt-label">Number of awards granted:</div>
 							<div class="col-sm-8 value">{{ $scholarship->number_of_awards_granted or '--' }}</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Applicable scholarship year:</div>
+							<div class="col-sm-3 dt-label">Applicable scholarship year:</div>
 							<div class="col-sm-8 value">
 								{{ $scholarship->applicable_year or '--' }} -
 								{{ $scholarship->applicable_year_max or '--' }}
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Application deadline:</div>
+							<div class="col-sm-3 dt-label">Application deadline:</div>
 							<div class="col-sm-8 value">{{ $scholarship->deadline_format or '--' }}</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Scholarship URL:</div>
+							<div class="col-sm-3 dt-label">Scholarship URL:</div>
 							<div class="col-sm-8 value">{{ $scholarship->url ? $scholarship->url : '--' }}</div>
 						</div>
 					</div>
@@ -97,28 +99,28 @@
 					<div class="col-sm-12">
 						<h3 class="title-block">Eligibility Requirement</h3>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Age:</div>
+							<div class="col-sm-3 dt-label">Age:</div>
 							<div class="col-sm-8 value">
 								{{ $scholarship->age ? $scholarship->age : '--' }} -
 								{{ $scholarship->age_max ? $scholarship->age_max : '--' }}
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Gender:</div>
+							<div class="col-sm-3 dt-label">Gender:</div>
 							<div class="col-sm-8 value" style="text-transform: capitalize">{{ $scholarship->gender ? $scholarship->gender : '--' }}</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Nationality:</div>
-							<div class="col-sm-8 value">
+							<div class="col-sm-3 dt-label">Nationality:</div>
+							<div class="col-sm-8 value val-nationality">
 								@if($scholarship->nationality)
 									@foreach($scholarship->nationality as $rc)
-										{{ $rc->nationality }}
+										{{ $rc->nationality or '--'}},
 									@endforeach
 								@endif
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Current applicant academic level:</div>
+							<div class="col-sm-3 dt-label">Current applicant academic level:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->academicLevel)
 									@foreach($scholarship->academicLevel as $rc)
@@ -128,7 +130,7 @@
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Current place of residence:</div>
+							<div class="col-sm-3 dt-label">Current place of residence:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->placeOfResidence)
 									@foreach($scholarship->placeOfResidence as $rc)
@@ -145,7 +147,7 @@
 					<div class="col-sm-12">
 						<h3 class="title-block">Qualified school and academic level </h3>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Award can be used for:</div>
+							<div class="col-sm-3 dt-label">Award can be used for:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->awardUsedFor)
 									@foreach($scholarship->awardUsedFor as $rc)
@@ -155,7 +157,7 @@
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Award can be used at:</div>
+							<div class="col-sm-3 dt-label">Award can be used at:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->awardUsedAt)
 									@foreach($scholarship->awardUsedAt as $rc)
@@ -165,7 +167,7 @@
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Qualified majors:</div>
+							<div class="col-sm-3 dt-label">Qualified majors:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->majors)
 									@foreach($scholarship->majors as $rc)
@@ -175,7 +177,7 @@
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Designated area:</div>
+							<div class="col-sm-3 dt-label">Designated area:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->designatedArea)
 									@foreach($scholarship->designatedArea as $rc)
@@ -185,7 +187,7 @@
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Designated schools:</div>
+							<div class="col-sm-3 dt-label">Designated schools:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->schools)
 									@foreach($scholarship->schools as $rc)
@@ -201,26 +203,28 @@
 					<div class="col-sm-12">
 						<h3 class="title-block">Application requirement and process </h3>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Selection method:</div>
+							<div class="col-sm-3 dt-label">Selection method:</div>
 							<div class="col-sm-8 value">
 								<?php
-								$application_method = $scholarship->application_method ? $scholarship->application_method : 0;
-								if($application_method == 1){
-									echo('Document screening');
-								}elseif($application_method == 2){
-									echo('Interview');
-								}elseif($application_method == 3){
-									echo('Examination');
-								}else{
-									echo('--');
+								$application_method = $scholarship->application_method ? $scholarship->application_method : [];
+								for($i=0; $i<count($application_method); $i++){
+									if($application_method[$i] == 1){
+										echo('Document screening, ');
+									}elseif($application_method[$i] == 2){
+										echo('Interview, ');
+									}elseif($application_method[$i] == 3){
+										echo('Examination, ');
+									}else{
+										echo('--, ');
+									}
 								}
 								?>
 							</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Application requirements:</div>
+							<div class="col-sm-3 dt-label">Application requirements:</div>
 							<div class="col-sm-8 value">
-								{!! $scholarship->application_requirement or '' !!}}
+								{!! $scholarship->application_requirement or '' !!}
 							</div>
 						</div>
 					</div>
@@ -230,27 +234,27 @@
 					<div class="col-sm-12">
 						<h3 class="title-block">Sponsorʼs information </h3>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Name of sponsor:</div>
+							<div class="col-sm-3 dt-label">Name of sponsor:</div>
 							<div class="col-sm-8 value">{{ $scholarship->sponsor->name or '--' }}</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Sponsor type:</div>
+							<div class="col-sm-3 dt-label">Sponsor type:</div>
 							<div class="col-sm-8 value">{{ $scholarship->sponsor->sponsorInfo->sponsorType->name or '--' }}</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Sponsorʼs address:</div>
+							<div class="col-sm-3 dt-label">Sponsorʼs address:</div>
 							<div class="col-sm-8 value">{{ $scholarship->sponsor->sponsorInfo->address or '--' }}</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Sponsors website:</div>
+							<div class="col-sm-3 dt-label">Sponsors website:</div>
 							<div class="col-sm-8 value">{{ $scholarship->sponsor->sponsorInfo->website or '--' }}</div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Contact:</div>
+							<div class="col-sm-3 dt-label">Contact:</div>
 							<div class="col-sm-8 value"><a href="">{{ $scholarship->sponsor->email or '--' }}</a></div>
 						</div>
 						<div class="col-sm-12 child">
-							<div class="col-sm-3">Other information:</div>
+							<div class="col-sm-3 dt-label">Other information:</div>
 							<div class="col-sm-8 value">{{ $scholarship->sponsor->sponsorInfo->other_information or '' }}</div>
 						</div>
 					</div>

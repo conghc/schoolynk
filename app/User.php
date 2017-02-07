@@ -23,7 +23,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $appends = ['fullname'];    
+    protected $appends = ['fullname'];
     
     public function student()
     {
@@ -74,8 +74,7 @@ class User extends Authenticatable
     }
 
     public function scholarships(){
-        //return $this->hasManyThrough('App\Scholarship', 'App\ScholarshipSchool', 'school_id', 'id');
-        return $this->belongsToMany('App\Scholarship', 'scholarship_schools', 'school_id', 'scholarship_id');
+        return $this->hasManyThrough('App\Scholarship', 'App\ScholarshipSchool', 'school_id', 'id');
     }
 
     public function facultySchool(){

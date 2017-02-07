@@ -202,16 +202,16 @@
 									<div id="tab-tuitionFee" class="tab-pane fade"></div>
 								@endif
 									<div id="tab-scholarships" class="tab-pane fade">
-										@foreach($school->scholarships as $scholarship)
+										@foreach($allScholarship as $scholarship)
 											<div class="list-scholarships">
-												<div class="col-sm-6"><h4>{{ $scholarship->name or '--' }}</h4></div>
+												<div class="col-sm-6"><h4>{{ $scholarship['name'] or '--' }}</h4></div>
 												<div class="col-sm-6"><a href="" class="child-heart"></a></div>
-												<div class="col-sm-12"><span class="sc-label">Sponsor:</span> {{$scholarship->sponsor->name or '--'}}</div>
+												<div class="col-sm-12"><span class="sc-label">Sponsor:</span> {{$scholarship['sponsor']['name'] or '--'}}</div>
 												<div class="col-sm-12"><span class="sc-label">Type:</span> Scholarship</div>
 												<div class="col-sm-6"><span class="sc-label">Amount:</span>
-													{{ $scholarship->amount or '--' }} {{ $scholarship->currency or '--' }}/{{ $scholarship->frequency or '--' }}
+													{{ $scholarship['amount'] or '--' }} {{ $scholarship['currency'] or '--' }}/{{ $scholarship['frequency'] or '--' }}
 												</div>
-												<div class="col-sm-6 wrap-deadline"><span class="deadline"><span>D</span>{{ $scholarship->deadline_format or '--' }}</span></div>
+												<div class="col-sm-6 wrap-deadline"><span class="deadline"><span>D</span>{{ $scholarship['deadline_format'] or '--' }}</span></div>
 												<div class="clear"></div>
 											</div>
 										@endforeach

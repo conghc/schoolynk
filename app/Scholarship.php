@@ -14,8 +14,8 @@ class Scholarship extends Model
     protected $dates = ['deleted_at'];
 
     protected $casts = [
-//        'covering_cost' => 'array',
-//        'process' => 'array',
+        'application_method' => 'array',
+        'type_of_cost_covered' => 'array',
 //		'nationality' => 'array',
 //		'state' => 'array',
 //        'city' => 'array',

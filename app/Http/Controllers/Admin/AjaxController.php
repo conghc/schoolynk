@@ -179,7 +179,7 @@ class AjaxController extends Controller
             unset($data['designated_school']);
 
             $us = $scholarship->update($data);
-            $this->addRelationScholarship(array_merge($data_relation, ['scholarship_id'=>$scholarship_id]));
+            $this->addRelationScholarship(array_merge($data_relation, ['scholarship_id'=>$scholarship_id]), $scholarship);
             $returns = ['act'=>'edit'];
         }else{
             $scholarship = $scholarship->create($data);
@@ -188,7 +188,7 @@ class AjaxController extends Controller
         return response()->json($returns);
     }
 
-    public function addRelationScholarship($data){
+    public function addRelationScholarship($data, $scholarship){
         $scholarship_id = $data['scholarship_id'];
         $data['form'] = isset($data['form']) ? $data['form'] : '';
         if($data['form'] == 'eligibility_requirement'){
@@ -200,8 +200,8 @@ class AjaxController extends Controller
                     for($i=0; $i<count($data['nationality']); $i++){
                         $data_insert[] = ['scholarship_id' => $scholarship_id, 'nationality' => strtolower($data['nationality'][$i])];
                     }
+                    ScholarshipNationality::insert($data_insert);
                 }
-                ScholarshipNationality::insert($data_insert);
             }
 
             // inset into scholarship_academics
@@ -212,8 +212,8 @@ class AjaxController extends Controller
                     for($i=0; $i<count($data['applicants_current_academic_level']); $i++){
                         $data_insert[] = ['scholarship_id' => $scholarship_id, 'academic_id' => strtolower($data['applicants_current_academic_level'][$i])];
                     }
+                    ScholarshipAcademic::insert($data_insert);
                 }
-                ScholarshipAcademic::insert($data_insert);
             }
 
             // inset into scholarship_place_of_residence
@@ -224,8 +224,8 @@ class AjaxController extends Controller
                     for($i=0; $i<count($data['current_place_of_residence']); $i++){
                         $data_insert[] = ['scholarship_id' => $scholarship_id, 'country_code' => strtolower($data['current_place_of_residence'][$i])];
                     }
+                    ScholarshipPlaceOfResidence::insert($data_insert);
                 }
-                ScholarshipPlaceOfResidence::insert($data_insert);
             }
 
         }elseif($data['form'] == 'qualified_school_academics'){
@@ -237,8 +237,8 @@ class AjaxController extends Controller
                     for($i=0; $i<count($data['award_can_be_used_for']); $i++){
                         $data_insert[] = ['scholarship_id' => $scholarship_id, 'award_used_for_id' => strtolower($data['award_can_be_used_for'][$i])];
                     }
+                    ScholarshipAwardUsedFor::insert($data_insert);
                 }
-                ScholarshipAwardUsedFor::insert($data_insert);
             }
 
             // inset into scholarship_award_used_at
@@ -249,8 +249,8 @@ class AjaxController extends Controller
                     for($i=0; $i<count($data['award_can_be_used_at']); $i++){
                         $data_insert[] = ['scholarship_id' => $scholarship_id, 'school_type' => strtolower($data['award_can_be_used_at'][$i])];
                     }
+                    ScholarshipAwardUsedAt::insert($data_insert);
                 }
-                ScholarshipAwardUsedAt::insert($data_insert);
             }
             // inset into scholarship_place_of_residence
             ScholarshipMajor::where('scholarship_id', $scholarship_id)->delete();
@@ -260,8 +260,8 @@ class AjaxController extends Controller
                     for($i=0; $i<count($data['qualified_majors']); $i++){
                         $data_insert[] = ['scholarship_id' => $scholarship_id, 'major_id' => strtolower($data['qualified_majors'][$i])];
                     }
+                    ScholarshipMajor::insert($data_insert);
                 }
-                ScholarshipMajor::insert($data_insert);
             }
 
             // inset into scholarship_designated_area
@@ -272,20 +272,27 @@ class AjaxController extends Controller
                     for($i=0; $i<count($data['designated_state']); $i++){
                         $data_insert[] = ['scholarship_id' => $scholarship_id, 'country_code' => 'JP', 'state' => strtolower($data['designated_state'][$i])];
                     }
+                    ScholarshipDesignatedArea::insert($data_insert);
                 }
-                ScholarshipDesignatedArea::insert($data_insert);
             }
 
             // inset into scholarship_schools
             ScholarshipSchool::where('scholarship_id', $scholarship_id)->delete();
             if(isset($data['designated_school'])){
-                if(count($data['designated_school']) > 0){
-                    $data_insert = [];
-                    for($i=0; $i<count($data['designated_school']); $i++){
-                        $data_insert[] = ['scholarship_id' => $scholarship_id, 'school_id' => strtolower($data['designated_school'][$i])];
+                $designated_school = $data['designated_school'];
+                $count_designated_school = count($designated_school);
+                if($count_designated_school > 0){
+                    if($count_designated_school == 1 && $count_designated_school[0] == 0){
+                        $scholarship->update(['for_all_school' => 1]);
+                    }else{
+                        $scholarship->update(['for_all_school' => 0]);
+                        $data_insert = [];
+                        for($i=0; $i<$count_designated_school; $i++){
+                            $data_insert[] = ['scholarship_id' => $scholarship_id, 'school_id' => strtolower($designated_school[$i])];
+                        }
+                        ScholarshipSchool::insert($data_insert);
                     }
                 }
-                ScholarshipSchool::insert($data_insert);
             }
 
         }

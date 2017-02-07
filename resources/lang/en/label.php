@@ -121,7 +121,7 @@
 		'i_am_a'  					       => '私は',
 		'student'  					       => 'Student',
 		'parent_of_student'  		       => '生徒の親',
-		'choice'  		   			       => '選択',
+		'select'  		   			       => 'Select',
 		'street_address' 			       => 'Address',
 		'country' 			   		       => 'Country',
 		'school_year'  		   		       => '学年',

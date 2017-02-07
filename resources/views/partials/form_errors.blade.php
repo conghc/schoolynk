@@ -165,6 +165,9 @@
 				});
 				values['scholarship_id'] = $('#scholarship_id').val();
 				values['sponsor_id'] = $('#select-sponsor').val();
+				values['type_of_cost_covered'] = $('input[name=type_of_cost_covered]:checked').map(function(_, el) {
+					return $(el).val();
+				}).get();
 				$.ajax({
 					headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 					url: '/admin/add-scholarship',
@@ -272,6 +275,9 @@
 				});
 				values['scholarship_id'] = $('#scholarship_id').val();
 				values['sponsor_id'] = $('#select-sponsor').val();
+				values['application_method'] = $('input[name=application_method]:checked').map(function(_, el) {
+					return $(el).val();
+				}).get();
 				$.ajax({
 					headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 					url: '/admin/add-scholarship',
