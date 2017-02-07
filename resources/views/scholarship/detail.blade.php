@@ -8,7 +8,7 @@
 			<div class="inner-scholarship-details">
 				<div class="row">
 					<div class="col-sm-7">
-						<a href="" class="avatar"><img src="/frontend/img/avatar3.jpg"></a>
+						<a href="" class="avatar"><img src="/{{ $scholarship->sponsor->img_profile or 'img/no-image.png' }}"></a>
 						<a href="" class="title">
 							<h3>{{ $scholarship->name }}</h3>
 							<span>{{ $scholarship->name }}</span>
