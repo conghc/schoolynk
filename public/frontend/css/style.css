@@ -326,12 +326,15 @@ ul.choose-language li{
 	display:inline-block;
 	margin-top:7px;
 	font-family: "robotolight";
+	color:#7B8B92;
 	font-size:14px;
 	margin-left:1px
 }
 .count-and-sort .count-number, .count-and-sort .count-number span{
 	font-size:16px;
 	margin-top:3px;
+	font-family:'Roboto-Regular';
+	color:#7B8B92
 }
 .school-child .following{
 
@@ -345,10 +348,13 @@ ul.choose-language li{
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	padding:20px;
-	-webkit-box-shadow: 0 3px 3px -3px #979797;
-     -moz-box-shadow: 0 3px 3px -3px #979797;
-          box-shadow: 0 3px 3px -3px #979797;
+	-webkit-box-shadow: 0 3px 3px -3px #CAD2DA;
+     -moz-box-shadow: 0 3px 3px -3px #CAD2DA;
+          box-shadow: 0 3px 3px -3px #CAD2DA;
 	position:relative;
+	font-size:13px;
+	font-family: "Roboto-Regular";
+	color:#2d2f37
 }
 .school-child .following{
 	right:19px;
@@ -387,19 +393,23 @@ ul.choose-language li{
 .school-child .title{
 	display:inline-block;
 	min-height:105px
+	font-family: "Roboto-Regular";
 }
 
 .school-child .title h5{
 	color:#000;
-	font-size:15px
+	font-size:16px;
+	color:#2D2F37
 }
 .school-child .title span{
-	color:#819097;
+	color:#7B8B92;
 	font-size:13px;
 }
 .school-child .storage-ranking{
 	padding-right:0px;
 }
+.school-child .ranking{
+	color:#2D2F37}
 .school-child .ranking span{
 	display:inline-block;
 	width:23px;height:23px;
@@ -409,7 +419,7 @@ ul.choose-language li{
 	-moz-border-radius: 50%;
 	border-radius: 50%;
 	text-align:center;
-	padding-top:1px;
+	padding-top:3px;
 	margin-right:10px;
 }
 .school-child-applied{
@@ -479,7 +489,7 @@ ul.choose-language li{
 }
 .s-more-label{
 	padding-top:5px;
-	font-family: 'robotolight';
+	font-family: 'Roboto-Regular';
 }
 .s-more-label-ranking{
 	padding-top:20px;
@@ -489,7 +499,7 @@ ul.choose-language li{
 }
 .scholarship-child{
 	border:1px solid #fff;
-	padding:22px;
+	padding:18px 20px;
 }
 .scholarship-child:hover{
 	border:1px solid #3795fd
@@ -499,7 +509,8 @@ ul.choose-language li{
 }
 .scholarship-child h4, .scholarship-child .title h4 span{
 	font-size:20px;
-	color:#2d2f37;	
+	color:#2d2f37;
+	font-family:"robotomedium";
 }
 .scholarship-child h4 span{
 	display:block;
@@ -566,9 +577,9 @@ ul.choose-language li{
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     padding: 30px 52px;
-    -webkit-box-shadow: 0 3px 3px -3px black;
-    -moz-box-shadow: 0 3px 3px -3px black;
-    box-shadow: 0 3px 3px -3px black;
+    -webkit-box-shadow: 0 3px 3px -3px #CAD2DA;
+    -moz-box-shadow: 0 3px 3px -3px #CAD2DA;
+    box-shadow: 0 3px 3px -3px #CAD2DA;
 	width: 100%;
     min-height: 400px;
     background: #fff;
@@ -650,9 +661,9 @@ ul.choose-language li{
 	background:#fff;
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
-    -webkit-box-shadow: 0 3px 3px -3px black;
-    -moz-box-shadow: 0 3px 3px -3px black;
-    box-shadow: 0 3px 3px -3px black;
+    -webkit-box-shadow: 0 3px 3px -3px #CAD2DA;
+    -moz-box-shadow: 0 3px 3px -3px #CAD2DA;
+    box-shadow: 0 3px 3px -3px #CAD2DA;
 	position:relative;
 }
 .following{
@@ -752,9 +763,9 @@ ul.choose-language li{
 	border-radius:10px;
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
-    -webkit-box-shadow: 0 3px 3px -3px #979797;
-    -moz-box-shadow: 0 3px 3px -3px #979797;
-    box-shadow: 0 3px 3px -3px #979797;
+    -webkit-box-shadow: 0 3px 3px -3px #CAD2DA;
+    -moz-box-shadow: 0 3px 3px -3px #CAD2DA;
+    box-shadow: 0 3px 3px -3px #CAD2DA;
 	position:relative;
 	margin-bottom:25px;
 }
@@ -1081,4 +1092,9 @@ ul.choose-language li{
 	font-weight:normal;
 	color:red;
 	font-family: "robotolight";
+}
+#filterMajor{
+	-webkit-box-shadow:none;
+	-webkit-box-shadow:none;
+	border-color:#d0d9de
 }
