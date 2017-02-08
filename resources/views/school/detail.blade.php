@@ -76,7 +76,8 @@
 									<div class="detail-row"><span class="label-left">Cost of living:</span>
 										{{ $school->schoolInfo->cost_of_living or '--' }} -
 										{{ $school->schoolInfo->cost_of_living_max or '--' }}
-										{{ $school->schoolInfo->cost_of_living_currency or '--' }}/year
+										<?php $cost_of_living_currency = $school->schoolInfo->cost_of_living_currency ? $school->schoolInfo->cost_of_living_currency : '';?>
+										{{ $cost_of_living_currency == '' ? 'VND' : $cost_of_living_currency }}/year
 									</div>
 								</div>
 							</div>
@@ -107,7 +108,7 @@
 							</div>
 						</div>
 						<div class="numberFolllow">
-							<span class="numberF">0 follow</soan>
+							<span class="numberF">0 Follower</span>
 								<button type="button" class="btn btn-default btn-modify btnF">Follow</button>
 							<div class="clear"></div>
 						</div>
@@ -133,7 +134,8 @@
 							@endif
 							<div class="col-sm-4 s-more-label">School/Department</div>
 							<div class="col-sm-8 s-more-div">
-								<select class="form-control input-select" id="fa_school"></select>
+								<select class="form-control input-select" id="fa_school">
+								</select>
 							</div>
 						</div>
 						@endif
@@ -444,6 +446,8 @@
 		function faSchool(){
 			var values = {};
 			values['faculty'] = $('#faculty').val();
+			values['school_type'] = '{{ $school->school_type }}',
+			values['school_id'] = '{{ $school->id }}',
 			values['academic_level'] = $('#academic_level').val();
 			$.ajax({
 				headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},

@@ -13,7 +13,7 @@
 							<h3>{{ $scholarship->name }}</h3>
 							<span>{{ $scholarship->name }}</span>
 						</a>
-						<span class="deadline"><span>D</span>{{ $scholarship->deadline_format }}</span>
+						<span class="deadline"><span title="Deadline">D</span>{{ $scholarship->deadline_format }}</span>
 					</div>
 					<div class="col-sm-5" style="text-align:right">
 						<a href="" class="child-heart"></a>
@@ -103,18 +103,23 @@
 							<div class="col-sm-8 value">
 								{{ $scholarship->age ? $scholarship->age : '--' }} -
 								{{ $scholarship->age_max ? $scholarship->age_max : '--' }}
+								years old
 							</div>
 						</div>
 						<div class="col-sm-12 child">
 							<div class="col-sm-3 dt-label">Gender:</div>
-							<div class="col-sm-8 value" style="text-transform: capitalize">{{ $scholarship->gender ? $scholarship->gender : '--' }}</div>
+							<div class="col-sm-8 value" style="text-transform: capitalize">
+								<?php $gender = $scholarship->gender ? $scholarship->gender : '--';?>
+								{{ $gender== 'both' ? 'Male, Female' : $gender }}
+							</div>
 						</div>
 						<div class="col-sm-12 child">
 							<div class="col-sm-3 dt-label">Nationality:</div>
 							<div class="col-sm-8 value val-nationality">
 								@if($scholarship->nationality)
-									@foreach($scholarship->nationality as $rc)
-										{{ $rc->nationality or '--'}},
+									@foreach($scholarship->nationality as $k=>$rc)
+										{{ $rc->nationality or '--'}}
+										{{ $k < $scholarship->nationality->count() - 1 ? ',' : '' }}
 									@endforeach
 								@endif
 							</div>
@@ -123,8 +128,9 @@
 							<div class="col-sm-3 dt-label">Current applicant academic level:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->academicLevel)
-									@foreach($scholarship->academicLevel as $rc)
-										{{ $rc->academic->name or '--' }},
+									@foreach($scholarship->academicLevel as $k=>$rc)
+										{{ $rc->academic->name or '--' }}
+										{{ $k < $scholarship->academicLevel->count() - 1 ? ',' : '' }}
 									@endforeach
 								@endif
 							</div>
@@ -133,9 +139,10 @@
 							<div class="col-sm-3 dt-label">Current place of residence:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->placeOfResidence)
-									@foreach($scholarship->placeOfResidence as $rc)
+									@foreach($scholarship->placeOfResidence as $k=>$rc)
 										<?php $country_code = strtoupper($rc->country_code)?>
-										{{ $countries[$country_code] }},
+										{{ $countries[$country_code] }}
+											{{ $k < $scholarship->placeOfResidence->count() - 1 ? ',' : '' }}
 									@endforeach
 								@endif
 							</div>
@@ -150,18 +157,20 @@
 							<div class="col-sm-3 dt-label">Award can be used for:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->awardUsedFor)
-									@foreach($scholarship->awardUsedFor as $rc)
-										{{ $rc->awardUsedFor->name or '--' }},
+									@foreach($scholarship->awardUsedFor as $k=>$rc)
+										{{ $rc->awardUsedFor->name or '--' }}
+										{{ $k < $scholarship->awardUsedFor->count() - 1 ? ',' : '' }}
 									@endforeach
 								@endif
 							</div>
 						</div>
 						<div class="col-sm-12 child">
 							<div class="col-sm-3 dt-label">Award can be used at:</div>
-							<div class="col-sm-8 value">
+							<div class="col-sm-8 value award_can_be_used_at">
 								@if($scholarship->awardUsedAt)
-									@foreach($scholarship->awardUsedAt as $rc)
-										{{ $rc->school_type or '--' }},
+									@foreach($scholarship->awardUsedAt as $k=>$rc)
+										{{ $rc->school_type or '--' }}
+										{{ $k < $scholarship->awardUsedAt->count() - 1 ? ',' : '' }}
 									@endforeach
 								@endif
 							</div>
@@ -170,8 +179,9 @@
 							<div class="col-sm-3 dt-label">Qualified majors:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->majors)
-									@foreach($scholarship->majors as $rc)
-										{{ $rc->major->text or '--' }},
+									@foreach($scholarship->majors as $k=>$rc)
+										{{ $rc->major->text or '' }}
+										{{ $k < $scholarship->majors->count() - 1 ? ',' : '' }}
 									@endforeach
 								@endif
 							</div>
@@ -180,8 +190,9 @@
 							<div class="col-sm-3 dt-label">Designated area:</div>
 							<div class="col-sm-8 value">
 								@if($scholarship->designatedArea)
-									@foreach($scholarship->designatedArea as $rc)
-										{{ $states[$rc->state] }},
+									@foreach($scholarship->designatedArea as $k=>$rc)
+										{{ $states[$rc->state] }}
+										{{ $k < $scholarship->designatedArea->count() - 1 ? ',' : '' }}
 									@endforeach
 								@endif
 							</div>
@@ -189,10 +200,16 @@
 						<div class="col-sm-12 child">
 							<div class="col-sm-3 dt-label">Designated schools:</div>
 							<div class="col-sm-8 value">
-								@if($scholarship->schools)
-									@foreach($scholarship->schools as $rc)
-										{{ $rc->name or '--' }}<br />
+								@if($scholarship->for_all_school == 1)
+									@foreach($schools as $k=>$school)
+										{{ $school->name }} {{ $k < $schools->count() - 1 ? ',' : '' }}
 									@endforeach
+								@else
+									@if($scholarship->schools)
+										@foreach($scholarship->schools as $rc)
+											{{ $rc->name or '--' }}<br />
+										@endforeach
+									@endif
 								@endif
 							</div>
 						</div>

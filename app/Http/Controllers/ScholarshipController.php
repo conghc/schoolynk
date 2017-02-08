@@ -11,7 +11,7 @@ use App\Favorite;
 use App\Scholarship;
 use App\Message;
 use App\Academic;
-use App\Degree;
+use App\User;
 use App\OranizationType;
 use App\TypeOfStudy;
 use Auth;
@@ -88,9 +88,10 @@ class ScholarShipController extends Controller
         $states = \CountryState::getStates('JP');
         $scholarship = $scholarship->with('sponsor.sponsorInfo');
         $scholarship = $scholarship->find($id);
+        $schools = User::has('schoolInfo')->get();
 
         //dd($scholarship->toArray());
-        return view('scholarship.detail', compact('scholarship', 'countries', 'states'));
+        return view('scholarship.detail', compact('scholarship', 'countries', 'states', 'schools'));
     }
 
     /**

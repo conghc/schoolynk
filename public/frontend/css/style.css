@@ -88,11 +88,13 @@ h1 {
 	border-radius: 40px;
 	padding-left:20px;
 	padding-right:20px;
+	outline: none;
 }
-.btn-modify:hover, .btn-modify:focus, .btn-modify.focus, .btn-modify-active{
+.btn-modify:hover, .btn-modify:focus, .btn-modify:active, .btn-modify.focus, .btn-modify.active, .btn-modify-active{
 	color:#fff;
 	background:#3795fd;
 	border-color:#3795fd;
+	outline: none !important;
 }
 .btn-load-more{
 	padding-left:60px;
@@ -320,6 +322,10 @@ ul.choose-language li{
 	font-family: 'Roboto-Regular';
 	color: #7B8B92;
 }
+.count-and-sort .col-sm-2{
+	font-size:13px;
+	text-align:right
+}
 .count-and-sort .input-select{
 	font-size:13px;
 	height:30px;
@@ -344,7 +350,7 @@ ul.choose-language li{
 }
 .school-child{
 	width:100%;
-	min-height:176px;
+	min-height:200px;
 	background:#fff;
 	margin-top:15px;
 	margin-bottom:15px;
@@ -395,7 +401,7 @@ ul.choose-language li{
 }
 .school-child .title{
 	display:inline-block;
-	min-height:105px
+	min-height:105px;
 	font-family: "Roboto-Regular";
 }
 
@@ -411,8 +417,9 @@ ul.choose-language li{
 .school-child .storage-ranking{
 	padding-right:0px;
 }
-.school-child .ranking{
-	color:#2D2F37}
+.school-child .ranking, .school-details .ranking{
+	color:#2D2F37;
+}
 .school-child .ranking span{
 	display:inline-block;
 	width:23px;height:23px;
@@ -468,12 +475,16 @@ ul.choose-language li{
 .advanced-search .btn{
 	font-size:13px
 }
+.advanced-search .s-keyword{
+	padding-left:0px;
+}
 .advanced-search .s-keyword input{
 	width:94%;
 	margin-top:10px;
 	background:#fff url('../img/icons/icon-search.png') no-repeat 11px 6px;
 	padding-left:36px;
-	font-size:13px
+	font-size:13px;
+	font-family:'Roboto-Regular';
 }
 .s-keyword input::-webkit-input-placeholder{
 	color: #b4bfc4;
@@ -488,7 +499,7 @@ ul.choose-language li{
 	color: #b4bfc4;
 }
 .advanced-search .s-more{
-	border-left:2px solid #eaeef0;
+	border-left:1px solid #e4e9ec;
 	min-height:50px
 }
 .s-more-div, .s-more-label{
@@ -1135,4 +1146,13 @@ ul.choose-language li{
 }
 .navbar-right a, .navbar-right .btn{
 	font-size:13px;
+}
+.irs-from, .irs-to, .irs-single{
+	background:#3795fd !important;
+}
+.irs-from:after, .irs-to:after, .irs-single:after{
+	border-top-color:#3795fd !important;
+}
+.award_can_be_used_at{
+	text-transform: capitalize;
 }

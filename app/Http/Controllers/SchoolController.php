@@ -184,18 +184,25 @@ class SchoolController extends Controller
         $allScholarship = array_merge($scholarships, $scholarshipForAll);
 
         $faculty = Faculty::where('school_id',$id)->get();
-
         return view('school.detail', compact('allScholarship','faculty', 'location', 'school', 'admission', 'student', 'support', 'others'));
     }
 
     public function facultySchool(Request $request, FacultySchool $faSchool){
+        $sType = $request->input('school_type', '');
+        $sId = $request->input('school_id', 0);
+
         $faculty = $request->input('faculty', -1);
         $aLevel = $request->input('academic_level', '');
         $faculty = $faculty == '' ? -1 : $faculty;
-        $faSchool = $faSchool->where('faculty_id', $faculty);
-        if(in_array($aLevel, ['undergraduate', 'graduate'])){
-            $faSchool = $faSchool->where('academic_level', 'LIKE', $aLevel);
+        if($sType != 'vocational'){
+            $faSchool = $faSchool->where('faculty_id', $faculty);
+            if(in_array($aLevel, ['undergraduate', 'graduate'])){
+                $faSchool = $faSchool->where('academic_level', 'LIKE', $aLevel);
+            }
+        }else{
+            $faSchool = $faSchool->where('school_id', $sId);
         }
+
         $faSchool = $faSchool->get();
         $html ='';
         foreach($faSchool as $k=>$faS){
