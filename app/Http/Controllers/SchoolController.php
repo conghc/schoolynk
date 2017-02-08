@@ -180,6 +180,7 @@ class SchoolController extends Controller
         $scholarshipForAll = $scholarshipForAll->count() > 0 ? $scholarshipForAll->toArray() : [];
 
         $scholarships = $school->scholarships->count() > 0 ? $school->scholarships : [];
+        dd($scholarships, $scholarshipForAll);
         $allScholarship = array_merge($scholarships, $scholarshipForAll);
 
         $faculty = Faculty::where('school_id',$id)->get();
