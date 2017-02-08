@@ -462,7 +462,11 @@ ul.choose-language li{
 	background:#f8f9fa;
 	min-height:144px;
 	padding:25px 0px;
-	border-bottom:1px solid #e5eaed
+	border-bottom:1px solid #e5eaed;
+	font-size:13px
+}
+.advanced-search .btn{
+	font-size:13px
 }
 .advanced-search .s-keyword input{
 	width:94%;
@@ -1126,7 +1130,8 @@ ul.choose-language li{
 #filterMajor{
 	-webkit-box-shadow:none;
 	-webkit-box-shadow:none;
-	border-color:#d0d9de
+	border-color:#d0d9de;
+	font-size:13px
 }
 .navbar-right a, .navbar-right .btn{
 	font-size:13px;
