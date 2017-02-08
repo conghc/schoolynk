@@ -179,8 +179,8 @@ class SchoolController extends Controller
         $scholarshipForAll = Scholarship::where('for_all_school',1)->get();
         $scholarshipForAll = $scholarshipForAll->count() > 0 ? $scholarshipForAll->toArray() : [];
 
-        $scholarships = $school->scholarships->count() > 0 ? $school->scholarships : [];
-        dd($scholarships, $scholarshipForAll);
+        $scholarships = $school->scholarships->count() > 0 ? $school->scholarships->toArray() : [];
+
         $allScholarship = array_merge($scholarships, $scholarshipForAll);
 
         $faculty = Faculty::where('school_id',$id)->get();
