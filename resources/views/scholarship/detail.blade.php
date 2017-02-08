@@ -272,7 +272,7 @@
 						</div>
 						<div class="col-sm-12 child">
 							<div class="col-sm-3 dt-label">Other information:</div>
-							<div class="col-sm-8 value">{{ $scholarship->sponsor->sponsorInfo->other_information or '' }}</div>
+							<div class="col-sm-8 value">{!! $scholarship->sponsor->sponsorInfo->other_information or '' !!}}</div>
 						</div>
 					</div>
 				</div>
