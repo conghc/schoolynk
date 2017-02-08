@@ -469,6 +469,7 @@ ul.choose-language li{
 	margin-top:10px;
 	background:#fff url('../img/icons/icon-search.png') no-repeat 11px 6px;
 	padding-left:36px;
+	font-size:13px
 }
 .s-keyword input::-webkit-input-placeholder{
 	color: #b4bfc4;
@@ -1126,4 +1127,7 @@ ul.choose-language li{
 	-webkit-box-shadow:none;
 	-webkit-box-shadow:none;
 	border-color:#d0d9de
+}
+.navbar-right a, .navbar-right .btn{
+	font-size:13px;
 }
