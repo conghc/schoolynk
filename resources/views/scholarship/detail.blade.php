@@ -66,9 +66,8 @@
 										echo('Living cost, ');
 									}elseif($type_of_cost_covered[$i] == 3){
 										echo('Others, ');
-									}else{
-										echo('--, ');
 									}
+									if($i < count($type_of_cost_covered) - 1){echo(', ');}
 								}
 								?>
 							</div>
@@ -226,14 +225,13 @@
 								$application_method = $scholarship->application_method ? $scholarship->application_method : [];
 								for($i=0; $i<count($application_method); $i++){
 									if($application_method[$i] == 1){
-										echo('Document screening, ');
+										echo('Document screening');
 									}elseif($application_method[$i] == 2){
-										echo('Interview, ');
+										echo('Interview');
 									}elseif($application_method[$i] == 3){
-										echo('Examination, ');
-									}else{
-										echo('--, ');
+										echo('Examination');
 									}
+									if($i < count($application_method) - 1){echo(', ');}
 								}
 								?>
 							</div>
@@ -272,7 +270,7 @@
 						</div>
 						<div class="col-sm-12 child">
 							<div class="col-sm-3 dt-label">Other information:</div>
-							<div class="col-sm-8 value">{!! $scholarship->sponsor->sponsorInfo->other_information or '' !!}}</div>
+							<div class="col-sm-8 value">{!! $scholarship->sponsor->sponsorInfo->other_information or '' !!}</div>
 						</div>
 					</div>
 				</div>

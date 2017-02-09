@@ -650,11 +650,11 @@
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">{{ trans('label.google_map') }}</label>
                             <div class="col-sm-4">
-                                <input type="text" name="longitude" id="longitude" placeholder="{{ trans('label.longitude') }}" class="form-control" value="{{ $school->schoolInfo->longitude or '35.689485' }}" />
+                                <input type="text" name="longitude" id="longitude" placeholder="{{ trans('label.longitude') }}" class="form-control" value="{{ $school->schoolInfo->longitude or '' }}" />
                             </div>
                             <div class="col-md-1" style="width:45px"><img class="ic-about" src="/img/ic-about.png" /></div>
                             <div class="col-sm-4">
-                                <input type="text" name="latitude" id="latitude" placeholder="{{ trans('label.latitude') }}" class="form-control" value="{{ $school->schoolInfo->latitude or '139.7601328' }}" />
+                                <input type="text" name="latitude" id="latitude" placeholder="{{ trans('label.latitude') }}" class="form-control" value="{{ $school->schoolInfo->latitude or '' }}" />
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label"></label>
