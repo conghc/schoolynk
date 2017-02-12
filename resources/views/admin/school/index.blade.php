@@ -90,7 +90,7 @@
                                 <?php $img_profile = $school->img_profile != '' ? $school->img_profile : 'img/no-image.png' ?>
                                 <tr class="gradeX">
                                     <td><img class="sponsor-logo-list" src="/{{ $img_profile }}" /></td>
-                                    <td>{{ $school->name }}</td>
+                                    <td><a href="{{ route('admin.school.create') }}?id={{ $school->id }}">{{ $school->name }}</a></td>
                                     <td style="text-transform:capitalize">{{ $school->school_type }}</td>
                                     <td class="center">{{ $school->schoolInfo->country_code or '' }}</td>
                                     <td class="center">0</td>
@@ -99,6 +99,7 @@
                                     <td class="center">
                                         <a href="{{ route('admin.school.create') }}?id={{ $school->id }}" class="btn btn-default btn-xs">{{ trans('label.edit') }}</a>
                                         {{--<button type="button" class="btn btn-default btn-xs">Delete</button>--}}
+                                        <br />{{ $school->created_at->format('d/M/Y') }}
                                     </td>
                                 </tr>
                             @endforeach

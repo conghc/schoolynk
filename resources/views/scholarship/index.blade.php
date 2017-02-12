@@ -85,16 +85,13 @@
                                         }
                                     ?>
                                 </div>
-                                <div class="col-sm-12">
-                                    <span class="child-label">Amount :</span> {{$ss->amount or ''}} {{$ss->currency or ''}} / {{$ss->frequency or ''}}
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-7">
+                                    <span class="child-label">Amount :</span> {{$ss->amount or ''}} {{$ss->currency or ''}} / {{$ss->frequency or ''}}<br />
                                     <span class="child-label" style="line-height:41px">Number of awards granted :</span> {{ $ss->number_of_awards_granted or 0 }}
-                                    {{--<span class="child-label">Applicable scholarship year :</span> {{ $ss->applicable_year or '--' }} - {{ $ss->applicable_year_max or '--' }}--}}
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-5 heart_and_btn">
                                     <a href="" class="child-heart"></a>
                                     <button type="button" class="btn btn-default btn-modify">In Progess</button>
                                 </div>

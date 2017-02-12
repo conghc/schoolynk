@@ -61,11 +61,11 @@
 								$type_of_cost_covered = $scholarship->type_of_cost_covered ? $scholarship->type_of_cost_covered : [];
 								for($i=0; $i<count($type_of_cost_covered); $i++){
 									if($type_of_cost_covered[$i] == 1){
-										echo('Tuition fee, ');
+										echo('Tuition fee');
 									}elseif($type_of_cost_covered[$i] == 2){
-										echo('Living cost, ');
+										echo('Living cost');
 									}elseif($type_of_cost_covered[$i] == 3){
-										echo('Others, ');
+										echo('Others');
 									}
 									if($i < count($type_of_cost_covered) - 1){echo(', ');}
 								}

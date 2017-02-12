@@ -1,6 +1,6 @@
 @foreach($major as $k=>$mj)
 	<div class="list-major">
-		<div class="col-sm-1 major-level"><span title="Bachelor">B</span></div>
+		<div class="col-sm-1 major-level"><span data-placement="right" data-toggle="tooltip" title="{{ $mj->degree_lv['value'] }}">{{ $mj->degree_lv['label'] }}</span></div>
 		<div class="col-sm-11">
 			<div class="col-sm-6"><span class="major-title">{{ $mj->text or '--'}}</span></div>
 			<div class="col-sm-6 interested"><button type="button" class="btn btn-default btn-modify">Interested</button></div>

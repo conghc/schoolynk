@@ -56,7 +56,7 @@ class SchoolController extends Controller
      */
     public function index(User $user)
     {
-        $schools = $user->where('role',4)->with('schoolInfo')->get();
+        $schools = $user->where('role',4)->with('schoolInfo')->orderBy('created_at', 'DESC')->get();
         //dd($schools->toArray());
         return view('admin.school.index', compact('schools'));
     }

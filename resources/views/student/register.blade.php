@@ -65,6 +65,7 @@
                         <dd>
                             <div class="input-block">
                                 <select class="form-control slModify" id="sel1" >
+                                    <option value="">- Select Nationality -</option>
                                     @foreach($nationalities as $na)
                                         <option value="{{ $na }}">{{ $na }}</option>
                                     @endforeach
@@ -101,8 +102,6 @@
                             <div class="clear"></div>
                         </dd>
                     </dl>
-
-
                     <dl class="form-row clf">
                         <dd>
                             <div class="checkbox">
@@ -118,6 +117,15 @@
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary btn-modify btnLogin">Create new account</button>
                             <span>Already have an account? <a href="/doLogin">Sign in</a></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <a href="redirect/facebook" class="lg-social lg-fb">Facebook</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="redirect/google" class="lg-social lg-gg">Google</a>
                         </div>
                     </div>
                 </form>

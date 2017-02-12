@@ -317,7 +317,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 @endsection
@@ -328,6 +327,7 @@
 	<script src="/frontend/js/plugins/flexslider/gallery-allPhotos.js"></script>
 	<script>
 		$(function() {
+			$('[data-toggle="tooltip"]').tooltip();
 			/*tabs*/
 			$('.titleCourse').click(function(){
 				//$('.list-course').removeClass('list-course-active');
@@ -494,6 +494,7 @@
 				data: values,
 				success: function (data) {
 					$('#tab-major').html(data);
+					$('[data-toggle="tooltip"]').tooltip();
 				}
 			});
 		}

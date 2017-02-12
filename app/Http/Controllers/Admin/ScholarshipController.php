@@ -50,7 +50,7 @@ class ScholarshipController extends Controller
     public function index()
     {
         //if(Auth::user()->role == 1) {
-            $scholarships = Scholarship::orderBy('created_at', 'desc')->get();
+            $scholarships = Scholarship::orderBy('created_at', 'DESC')->get();
 //        } else {
 //            $scholarships = Scholarship::where('user_id', Auth::user()->id)->with('OranizationType')->orderBy('created_at', 'desc')->get();
 //        }

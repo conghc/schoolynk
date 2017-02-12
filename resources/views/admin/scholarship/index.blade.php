@@ -96,7 +96,7 @@
                             @foreach($scholarships as $scholarship)
                                 <tr class="gradeX">
                                     <td><img class="sponsor-logo-list" src="/{{ $scholarship->sponsor->img_profile or '/img/no-image.png' }}" /></td>
-                                    <td>{{ $scholarship->name or 'n/a' }}</td>
+                                    <td><a href="{{ route('admin.scholarship.create') }}?id={{ $scholarship->id }}">{{ $scholarship->name or 'n/a' }}</a></td>
                                     <td>{{ $scholarship->sponsor->name or 'n/a' }}</td>
                                     <td class="center">{{ $scholarship->type_of_award or 'n/a' }}</td>
                                     <td class="center">{{ $scholarship->amount or 0 }}</td>

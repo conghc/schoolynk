@@ -40,6 +40,9 @@ h1 {
   font-size: 30px;
   font-weight: 200;
 }
+ul{
+	padding-left:17px
+}
 .clear{clear:both}
 .navy-line {
   width: 60px;
@@ -886,7 +889,14 @@ ul.choose-language li{
 	border-radius: 50%;
 	text-align:center;
 	line-height:24px;
-	color:#fff
+	color:#fff;
+	cursor: pointer;
+}
+#tab-major .major-level .tooltip-inner{
+	background-color: #2d2f37;
+}
+#tab-major .major-level .tooltip-arrow{
+	border-right-color: #2d2f37;
 }
 #tab-major{
 	color:#2D2F37
@@ -1129,11 +1139,6 @@ ul.choose-language li{
 		padding-right: 20px;
 	}
 }
-
-.lg-social img{
-	width:24px
-}
-
 #register .error{
 	font-weight:normal;
 	color:red;
@@ -1156,4 +1161,39 @@ ul.choose-language li{
 }
 .award_can_be_used_at{
 	text-transform: capitalize;
+}
+
+.lg-social{
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+
+	width:100%;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	color:#fff
+}
+.lg-fb{
+	background:#3b579d url('../img/icons/lg-fb.png') no-repeat 15px 5px;
+}
+.lg-gg{
+	background:#df4a32 url('../img/icons/lg-gg.png') no-repeat 15px 4px;
+}
+.lg-social:hover, .lg-social:active{
+	color:#fff
+}
+.heart_and_btn{
+	padding-top:10px
 }
